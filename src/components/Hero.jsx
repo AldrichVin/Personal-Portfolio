@@ -1,26 +1,51 @@
-import { motion } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react'
+import { useRef, useEffect } from 'react'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import { ArrowDown, Github, Linkedin, Mail, Sparkles } from 'lucide-react'
+
+/**
+ * Hero Section - Premium Portfolio
+ *
+ * Design Decisions:
+ * - Reduced vertical whitespace for tighter, more impactful layout
+ * - Asymmetric layout creates visual interest
+ * - Scroll-triggered animations reveal content progressively
+ * - Value proposition clear within 5 seconds
+ * - Strong CTA placement for recruiter engagement
+ */
 
 const Hero = () => {
+  const containerRef = useRef(null)
+  const isInView = useInView(containerRef, { once: true })
+
+  // Scroll-based parallax effect
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 150])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+
+  // Staggered animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 40 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.16, 1, 0.3, 1],
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1], // Custom easing for smooth deceleration
       },
     },
   }
@@ -36,93 +61,179 @@ const Hero = () => {
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  // Highlight keywords for scanning recruiters
+  const highlightWords = ['Full-Stack Developer', 'React', 'Next.js', 'TypeScript']
+
   return (
     <section
+      ref={containerRef}
       id="hero"
-      className="min-h-screen flex items-center justify-center pt-20"
+      className="relative min-h-[90vh] flex items-center pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden"
     >
-      <div className="container-custom">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-transparent to-transparent pointer-events-none" />
+
+      {/* Animated background shapes */}
+      <motion.div
+        className="absolute top-20 right-[10%] w-72 h-72 bg-blue-100/40 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.3, 0.5, 0.3]
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-20 left-[5%] w-96 h-96 bg-purple-100/30 rounded-full blur-3xl"
+        animate={{
+          scale: [1.1, 1, 1.1],
+          opacity: [0.2, 0.4, 0.2]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <div className="container-custom relative z-10">
         <motion.div
-          className="max-w-3xl mx-auto text-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
+          style={{ y, opacity }}
+          className="max-w-4xl"
         >
-          {/* Status badge */}
-          <motion.div variants={itemVariants} className="mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-sm text-gray-600">
-              <span className="w-2 h-2 rounded-full bg-green-500" />
-              Available for opportunities
-            </span>
-          </motion.div>
-
-          {/* Main heading */}
-          <motion.h1
-            variants={itemVariants}
-            className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight"
-          >
-            Hi, I'm Aldrich
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            variants={itemVariants}
-            className="mt-6 text-xl sm:text-2xl text-gray-600 font-light"
-          >
-            Full Stack Developer & Creative Engineer
-          </motion.p>
-
-          {/* Description */}
-          <motion.p
-            variants={itemVariants}
-            className="mt-6 text-lg text-gray-500 max-w-xl mx-auto leading-relaxed"
-          >
-            I craft digital experiences that combine thoughtful design with clean code.
-            Passionate about building products that make a difference.
-          </motion.p>
-
-          {/* CTA buttons */}
           <motion.div
-            variants={itemVariants}
-            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
           >
-            <a
-              href="#projects"
-              onClick={(e) => handleNavClick(e, '#projects')}
-              className="btn-primary"
-            >
-              View My Work
-              <ArrowDown size={18} />
-            </a>
+            {/* Status badge - Grabs attention immediately */}
+            <motion.div variants={itemVariants} className="mb-6">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-sm font-medium text-emerald-700">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                Open to opportunities
+              </span>
+            </motion.div>
 
-            <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, '#contact')}
-              className="btn-secondary"
-            >
-              Get In Touch
-            </a>
-          </motion.div>
+            {/* Main heading - Maximum impact */}
+            <motion.div variants={itemVariants}>
+              <h1 className="text-hero mb-4">
+                I build{' '}
+                <span className="relative inline-block">
+                  <span className="gradient-text">digital products</span>
+                  <motion.span
+                    className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
+                  />
+                </span>
+                {' '}that users love.
+              </h1>
+            </motion.div>
 
-          {/* Social links */}
-          <motion.div
-            variants={itemVariants}
-            className="mt-12 flex items-center justify-center gap-4"
-          >
-            {socialLinks.map((social) => (
+            {/* Role statement - Clear positioning */}
+            <motion.p
+              variants={itemVariants}
+              className="text-lead mb-6 max-w-2xl"
+            >
+              <span className="text-primary font-medium">Full-Stack Developer</span> specializing in{' '}
+              <span className="font-medium text-primary">React</span>,{' '}
+              <span className="font-medium text-primary">Next.js</span>, and{' '}
+              <span className="font-medium text-primary">TypeScript</span>.
+              I turn complex problems into elegant, user-centric solutions.
+            </motion.p>
+
+            {/* Value proposition - Quick wins for recruiters */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap gap-3 mb-10"
+            >
+              {['6+ Production Projects', 'Monash University', 'Melbourne, AU'].map((item, i) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface border border-border text-sm text-secondary"
+                >
+                  <Sparkles size={14} className="text-accent" />
+                  {item}
+                </span>
+              ))}
+            </motion.div>
+
+            {/* CTA buttons - High contrast, clear action */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row items-start gap-4 mb-12"
+            >
               <motion.a
-                key={social.label}
-                href={social.href}
-                target={social.href.startsWith('http') ? '_blank' : undefined}
-                rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="p-3 rounded-full text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all"
-                whileHover={{ y: -2 }}
-                aria-label={social.label}
-                onClick={social.href === '#contact' ? (e) => handleNavClick(e, '#contact') : undefined}
+                href="#projects"
+                onClick={(e) => handleNavClick(e, '#projects')}
+                className="btn-primary group"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                <social.icon size={22} />
+                View My Work
+                <motion.span
+                  animate={{ y: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowDown size={18} />
+                </motion.span>
               </motion.a>
-            ))}
+
+              <motion.a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, '#contact')}
+                className="btn-secondary"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Get In Touch
+              </motion.a>
+            </motion.div>
+
+            {/* Social links - Secondary but accessible */}
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center gap-1"
+            >
+              <span className="text-small mr-3">Find me on</span>
+              {socialLinks.map((social, index) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target={social.href.startsWith('http') ? '_blank' : undefined}
+                  rel={social.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="p-2.5 rounded-lg text-tertiary hover:text-primary hover:bg-surface border border-transparent hover:border-border transition-all duration-200"
+                  whileHover={{ y: -3 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={social.label}
+                  onClick={social.href === '#contact' ? (e) => handleNavClick(e, '#contact') : undefined}
+                >
+                  <social.icon size={20} />
+                </motion.a>
+              ))}
+            </motion.div>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.6 }}
+        >
+          <motion.div
+            className="flex flex-col items-center gap-2 text-tertiary"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <span className="text-xs uppercase tracking-widest font-medium">Scroll</span>
+            <div className="w-5 h-8 rounded-full border-2 border-current flex justify-center pt-1.5">
+              <motion.div
+                className="w-1 h-1.5 bg-current rounded-full"
+                animate={{ y: [0, 8, 0], opacity: [1, 0, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              />
+            </div>
           </motion.div>
         </motion.div>
       </div>

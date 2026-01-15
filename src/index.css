@@ -1,37 +1,67 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ============================================
-   CLEAN MINIMAL PORTFOLIO - WHITE AESTHETIC
+   PREMIUM PORTFOLIO - DESIGN SYSTEM
+
+   Design Philosophy:
+   - Dramatic typography scale for clear hierarchy
+   - 8px spacing scale for rhythm and consistency
+   - Purposeful whitespace (not excessive)
+   - Micro-interactions that delight without distraction
+   - Scroll-based storytelling animations
    ============================================ */
 
 @theme {
-  /* Light, clean color palette */
-  --color-background: #ffffff;
-  --color-surface: #fafafa;
+  /* === COLOR PALETTE === */
+  --color-background: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #ffffff;
   --color-border: #e5e7eb;
   --color-border-light: #f3f4f6;
 
-  /* Text colors - high contrast for readability */
-  --color-text-primary: #111827;
-  --color-text-secondary: #4b5563;
-  --color-text-tertiary: #9ca3af;
+  /* Text hierarchy - distinct contrast levels */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-tertiary: #94a3b8;
+  --color-text-muted: #cbd5e1;
 
-  /* Single accent color - refined indigo */
-  --color-accent: #4f46e5;
-  --color-accent-light: #eef2ff;
-  --color-accent-hover: #4338ca;
+  /* Accent - refined blue-indigo */
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-accent-light: #eff6ff;
+  --color-accent-dark: #1d4ed8;
 
-  /* Typography */
-  --font-display: 'Syne', system-ui, sans-serif;
+  /* Status colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+
+  /* === TYPOGRAPHY SCALE ===
+     Based on 1.25 ratio for dramatic hierarchy */
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
+
+  /* === SPACING SCALE (8px base) === */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
 }
 
 /* ============================================
-   BASE STYLES
+   BASE RESET & DEFAULTS
    ============================================ */
 
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -41,17 +71,18 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
   background-color: var(--color-background);
   color: var(--color-text-primary);
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Smooth scroll with Lenis */
+/* Lenis smooth scroll */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -61,45 +92,119 @@ html.lenis, html.lenis body {
 }
 
 /* ============================================
-   TYPOGRAPHY
+   TYPOGRAPHY SYSTEM
+   Dramatic scale: 80px -> 56px -> 40px -> 32px -> 24px -> 18px -> 16px
    ============================================ */
 
 .font-display {
-  font-family: 'Syne', system-ui, sans-serif;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 .font-body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
 }
 
-/* Heading styles */
+/* Hero title - maximum impact */
+.text-hero {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+}
+
+/* Section headers - clear hierarchy */
+.text-section {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+}
+
+/* Sub-headers */
+.text-subheader {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+/* Lead text - hero descriptions */
+.text-lead {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* Body large */
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* Standard body */
+.text-body {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* Small text */
+.text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-tertiary);
+}
+
+/* Label/overline */
+.text-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-tertiary);
+}
+
+/* Heading defaults */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Syne', system-ui, sans-serif;
+  font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.2;
   color: var(--color-text-primary);
 }
+
+h1 { font-size: clamp(2.5rem, 6vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
+h4 { font-size: 1.125rem; }
 
 /* ============================================
    SELECTION & SCROLLBAR
    ============================================ */
 
 ::selection {
-  background-color: var(--color-accent-light);
-  color: var(--color-accent);
+  background-color: var(--color-accent);
+  color: white;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-surface);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -107,63 +212,234 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================
-   UTILITY CLASSES
+   LAYOUT UTILITIES
    ============================================ */
 
-/* Container with max-width */
+/* Main container - optimized width */
 .container-custom {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding-left: var(--space-6);
+  padding-right: var(--space-6);
 }
 
 @media (min-width: 768px) {
   .container-custom {
-    padding: 0 48px;
+    padding-left: var(--space-12);
+    padding-right: var(--space-12);
   }
 }
 
 @media (min-width: 1024px) {
   .container-custom {
-    padding: 0 64px;
+    padding-left: var(--space-16);
+    padding-right: var(--space-16);
   }
 }
 
-/* Section spacing */
+/* Narrow container for text-heavy sections */
+.container-narrow {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Wide container for full-bleed effects */
+.container-wide {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Section spacing - consistent rhythm */
 .section-padding {
-  padding: 80px 0;
+  padding-top: var(--space-20);
+  padding-bottom: var(--space-20);
 }
 
 @media (min-width: 768px) {
   .section-padding {
-    padding: 120px 0;
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
   }
 }
 
-/* Subtle border */
-.border-subtle {
-  border: 1px solid var(--color-border);
+@media (min-width: 1024px) {
+  .section-padding {
+    padding-top: var(--space-32);
+    padding-bottom: var(--space-32);
+  }
 }
 
-/* Card hover effect - subtle and clean */
-.card-hover {
-  transition: all 0.3s ease;
+/* Section header spacing */
+.section-header {
+  margin-bottom: var(--space-12);
 }
 
-.card-hover:hover {
-  border-color: var(--color-text-tertiary);
+@media (min-width: 768px) {
+  .section-header {
+    margin-bottom: var(--space-16);
+  }
+}
+
+/* ============================================
+   BUTTON SYSTEM
+   ============================================ */
+
+/* Primary button - high emphasis */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  background-color: var(--color-text-primary);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent);
   transform: translateY(-2px);
+  box-shadow: 0 8px 16px -4px rgba(59, 130, 246, 0.3);
 }
 
-/* Text gradient - minimal use */
-.text-accent {
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary button - medium emphasis */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-radius: 10px;
+  border: 1.5px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-text-primary);
+  background-color: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+/* Ghost button - subtle */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-ghost:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-border-light);
+}
+
+/* ============================================
+   CARD SYSTEM
+   ============================================ */
+
+/* Base card */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: var(--space-6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Interactive card with hover effects */
+.card-interactive {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: var(--space-8);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-interactive:hover {
+  border-color: var(--color-text-tertiary);
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 40px -12px rgba(0, 0, 0, 0.08),
+    0 4px 8px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Feature card - larger padding */
+.card-feature {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: var(--space-8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+  .card-feature {
+    padding: var(--space-10);
+  }
+}
+
+/* ============================================
+   TAG / BADGE SYSTEM
+   ============================================ */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.tag-accent {
   color: var(--color-accent);
+  background-color: var(--color-accent-light);
+  border-color: transparent;
 }
 
-/* Link underline animation */
+.tag-sm {
+  padding: 2px var(--space-2);
+  font-size: 0.6875rem;
+}
+
+/* ============================================
+   LINK STYLES
+   ============================================ */
+
 .link-underline {
   position: relative;
   text-decoration: none;
+  color: inherit;
 }
 
 .link-underline::after {
@@ -172,81 +448,56 @@ h1, h2, h3, h4, h5, h6 {
   bottom: -2px;
   left: 0;
   width: 0;
-  height: 1px;
+  height: 1.5px;
   background-color: currentColor;
-  transition: width 0.3s ease;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .link-underline:hover::after {
   width: 100%;
 }
 
-/* Button styles */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background-color: var(--color-text-primary);
-  color: white;
-  font-weight: 500;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  border: none;
-  cursor: pointer;
-}
+/* ============================================
+   DIVIDERS
+   ============================================ */
 
-.btn-primary:hover {
-  background-color: var(--color-accent);
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background-color: transparent;
-  color: var(--color-text-primary);
-  font-weight: 500;
-  border-radius: 8px;
-  border: 1px solid var(--color-border);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.btn-secondary:hover {
-  border-color: var(--color-text-primary);
-  background-color: var(--color-surface);
-}
-
-/* Tag/Badge style */
-.tag {
-  display: inline-block;
-  padding: 4px 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 100px;
-}
-
-/* Divider */
 .divider {
   height: 1px;
-  background-color: var(--color-border);
-  margin: 48px 0;
+  background: var(--color-border);
+  margin: var(--space-12) 0;
+}
+
+.divider-sm {
+  margin: var(--space-6) 0;
 }
 
 /* ============================================
-   ANIMATIONS - SUBTLE & REFINED
+   UTILITY CLASSES
    ============================================ */
 
+/* Text colors */
+.text-primary { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.text-accent { color: var(--color-accent); }
+
+/* Background colors */
+.bg-surface { background-color: var(--color-surface); }
+.bg-background { background-color: var(--color-background); }
+.bg-accent-light { background-color: var(--color-accent-light); }
+
+/* Border */
+.border-subtle { border: 1px solid var(--color-border); }
+
+/* ============================================
+   ANIMATION UTILITIES
+   ============================================ */
+
+/* Smooth reveal animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -259,34 +510,87 @@ h1, h2, h3, h4, h5, h6 {
   to { opacity: 1; }
 }
 
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Pulse for status indicators */
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animation classes */
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s ease forwards;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.6s ease forwards;
+  animation: fadeIn 0.5s ease forwards;
 }
 
-/* Stagger delays */
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger delays for sequential animations */
 .delay-100 { animation-delay: 100ms; }
 .delay-200 { animation-delay: 200ms; }
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* ============================================
+   GRADIENT ACCENTS
+   ============================================ */
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--color-accent-light) 0%, #faf5ff 100%);
+}
 
 /* ============================================
    RESPONSIVE UTILITIES
    ============================================ */
 
 @media (max-width: 768px) {
-  .hide-mobile {
-    display: none;
-  }
+  .hide-mobile { display: none; }
 }
 
 @media (min-width: 769px) {
-  .hide-desktop {
-    display: none;
-  }
+  .hide-desktop { display: none; }
 }
 
 /* ============================================
@@ -299,4 +603,29 @@ h1, h2, h3, h4, h5, h6 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+/* ============================================
+   FOCUS STATES (Accessibility)
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
