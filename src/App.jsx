@@ -9,8 +9,6 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
-import CursorGlow from './components/CursorGlow'
-import ParticleField from './components/ParticleField'
 import './index.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -21,16 +19,13 @@ function App() {
   useEffect(() => {
     // Initialize Lenis smooth scroll
     lenisRef.current = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
-      gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      touchMultiplier: 2,
     })
 
-    // Connect Lenis to GSAP ScrollTrigger
     lenisRef.current.on('scroll', ScrollTrigger.update)
 
     gsap.ticker.add((time) => {
@@ -41,26 +36,14 @@ function App() {
 
     return () => {
       lenisRef.current?.destroy()
-      gsap.ticker.remove(lenisRef.current?.raf)
     }
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-void">
-      {/* Noise texture overlay */}
-      <div className="noise-overlay" />
-
-      {/* Cursor glow effect */}
-      <CursorGlow />
-
-      {/* Background particle field */}
-      <ParticleField />
-
-      {/* Fixed navigation */}
+    <div className="min-h-screen bg-white">
       <Navbar />
 
-      {/* Main content sections */}
-      <main className="relative z-10">
+      <main>
         <Hero />
         <About />
         <Projects />
@@ -69,9 +52,17 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 py-8 text-center text-sm text-white/40 border-t border-white/5">
-        <p>Designed & Built by Aldrich Vincent Liem</p>
-        <p className="mt-1 text-xs">© {new Date().getFullYear()} All rights reserved</p>
+      <footer className="py-12 border-t border-gray-100">
+        <div className="container-custom">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-gray-500">
+              © {new Date().getFullYear()} Aldrich Vincent Liem
+            </p>
+            <p className="text-sm text-gray-400">
+              Built with React & Tailwind
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
   )
