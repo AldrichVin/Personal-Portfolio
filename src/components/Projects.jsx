@@ -31,7 +31,7 @@ const ProjectCard = ({ project, index, onClick }) => {
     <motion.article
       ref={cardRef}
       initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       onClick={() => onClick(project)}
       className="group cursor-pointer"
@@ -261,7 +261,7 @@ const Projects = () => {
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="section-header"
         >
@@ -279,7 +279,7 @@ const Projects = () => {
         {/* Category Filters */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           className="flex flex-wrap gap-2 mb-12"
         >

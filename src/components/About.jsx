@@ -113,7 +113,7 @@ const About = () => {
           ref={contentRef}
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate="visible"
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="section-header">
@@ -178,7 +178,7 @@ const About = () => {
                       key={stat.label}
                       className="flex items-center gap-4"
                       initial={{ opacity: 0, x: 20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
                     >
                       <div className="w-12 h-12 rounded-xl bg-accent-light flex items-center justify-center">
@@ -207,7 +207,7 @@ const About = () => {
                   custom={index}
                   variants={cardVariants}
                   initial="hidden"
-                  animate={isInView ? "visible" : "hidden"}
+                  animate="visible"
                   whileHover={{ y: -4, transition: { duration: 0.2 } }}
                   className="card group"
                 >

@@ -182,7 +182,7 @@ const Contact = () => {
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
+          animate="visible"
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="section-header text-center">
@@ -301,7 +301,7 @@ const Contact = () => {
                   <motion.div
                     key={item.label}
                     initial={{ opacity: 0, x: 20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + index * 0.1 }}
                     className="card group"
                   >
@@ -338,7 +338,7 @@ const Contact = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       initial={{ opacity: 0, x: 20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : {}}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.5 + index * 0.1 }}
                       className="group flex items-center justify-between p-3 -mx-3 rounded-xl hover:bg-background transition-all"
                     >
@@ -366,7 +366,7 @@ const Contact = () => {
               {/* Availability card */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
                 className="card-feature bg-gradient-to-br from-emerald-50 to-blue-50"
               >

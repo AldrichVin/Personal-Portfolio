@@ -17,14 +17,13 @@ const Hero = () => {
   const containerRef = useRef(null)
   const isInView = useInView(containerRef, { once: true })
 
-  // Scroll-based parallax effect
+  // Subtle scroll-based parallax (no opacity fade to avoid blank page)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, 150])
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const y = useTransform(scrollYProgress, [0, 1], [0, 50])
 
   // Staggered animation variants
   const containerVariants = {
@@ -93,7 +92,7 @@ const Hero = () => {
 
       <div className="container-custom relative z-10">
         <motion.div
-          style={{ y, opacity }}
+          style={{ y }}
           className="max-w-4xl"
         >
           <motion.div

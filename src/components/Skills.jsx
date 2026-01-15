@@ -96,7 +96,7 @@ const SkillBar = ({ skill, delay, color }) => {
     <motion.div
       ref={barRef}
       initial={{ opacity: 0, x: -20 }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay }}
       className="group"
     >
@@ -114,7 +114,7 @@ const SkillBar = ({ skill, delay, color }) => {
       <div className="h-2 bg-background rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
-          animate={isInView ? { width: `${skill.level}%` } : {}}
+          animate={{ width: `${skill.level}%` }}
           transition={{ duration: 0.8, delay: delay + 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="h-full rounded-full"
           style={{ backgroundColor: color }}
@@ -132,7 +132,7 @@ const SkillCategory = ({ category, index }) => {
     <motion.div
       ref={cardRef}
       initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="card group"
     >
@@ -213,7 +213,7 @@ const Skills = () => {
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate="visible"
         >
           {/* Section Header */}
           <motion.div variants={itemVariants} className="section-header">
@@ -242,7 +242,7 @@ const Skills = () => {
                 <motion.span
                   key={skill.name}
                   initial={{ opacity: 0, scale: 0.8 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.3 + index * 0.05 }}
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-border shadow-sm hover:shadow-md transition-shadow"
                 >
@@ -290,7 +290,7 @@ const Skills = () => {
                   <motion.div
                     key={item.name}
                     initial={{ opacity: 0, x: -20 }}
-                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
                   >
                     <div className="flex items-center justify-between mb-2">
@@ -302,7 +302,7 @@ const Skills = () => {
                     <div className="h-2 bg-background rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={isInView ? { width: `${item.progress}%` } : {}}
+                        animate={{ width: `${item.progress}%` }}
                         transition={{ duration: 1, delay: 0.6 + index * 0.1 }}
                         className="h-full rounded-full bg-gradient-to-r from-accent to-purple-500"
                       />
