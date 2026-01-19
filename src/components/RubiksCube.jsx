@@ -50,13 +50,26 @@ const generateCubeData = () => {
 
 const CUBE_DATA = generateCubeData()
 
+// Global physics state - persists across renders
 const PhysicsState = {
   velocities: CUBE_DATA.map(() => ({ x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 })),
   positions: CUBE_DATA.map(c => ({ x: c.position[0], y: c.position[1], z: c.position[2] })),
   rotations: CUBE_DATA.map(() => ({ x: 0, y: 0, z: 0 })),
+  groupY: 0,
+  lastScrollProgress: 0,
 }
 
-const SingleCube = ({ data, index, phase }) => {
+const resetPhysicsState = () => {
+  CUBE_DATA.forEach((cube, i) => {
+    PhysicsState.positions[i] = { x: cube.position[0], y: cube.position[1], z: cube.position[2] }
+    PhysicsState.rotations[i] = { x: 0, y: 0, z: 0 }
+    PhysicsState.velocities[i] = { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 }
+  })
+  PhysicsState.groupY = 0
+  PhysicsState.lastScrollProgress = 0
+}
+
+const SingleCube = ({ data, index, phase, scrollProgress }) => {
   const meshRef = useRef()
   const [hovered, setHovered] = useState(false)
   const { viewport } = useThree()
@@ -66,6 +79,7 @@ const SingleCube = ({ data, index, phase }) => {
 
     const clampedDelta = Math.min(delta, 0.05)
 
+    // Hover effect only in idle phase
     if (hovered && phase === 'idle') {
       meshRef.current.scale.lerp(new THREE.Vector3(1.15, 1.15, 1.15), 0.1)
     } else {
@@ -76,53 +90,54 @@ const SingleCube = ({ data, index, phase }) => {
     const pos = PhysicsState.positions[index]
     const rot = PhysicsState.rotations[index]
 
-    if (phase === 'explode') {
-      vel.y -= 20 * clampedDelta
+    if (phase === 'explode' || phase === 'falling') {
+      // Apply gravity
+      vel.y -= 25 * clampedDelta
 
+      // Update positions
       pos.x += vel.x * clampedDelta
       pos.y += vel.y * clampedDelta
       pos.z += vel.z * clampedDelta
 
+      // Update rotations
       rot.x += vel.rx * clampedDelta
       rot.y += vel.ry * clampedDelta
       rot.z += vel.rz * clampedDelta
 
-      const boundsX = viewport.width * 0.6
-      const boundsY = viewport.height * 0.5
-      const boundsZ = 6
+      // Boundary collisions - wide bounds since we're full screen now
+      const boundsX = viewport.width * 0.8
+      const boundsZ = 8
 
       if (Math.abs(pos.x) > boundsX) {
-        vel.x *= -0.5
+        vel.x *= -0.4
         pos.x = Math.sign(pos.x) * boundsX
       }
-      if (pos.y < -boundsY) {
-        vel.y *= -0.4
-        pos.y = -boundsY
-        vel.x *= 0.8
-        vel.z *= 0.8
-        vel.rx *= 0.6
-        vel.ry *= 0.6
-        vel.rz *= 0.6
-      }
       if (Math.abs(pos.z) > boundsZ) {
-        vel.z *= -0.5
+        vel.z *= -0.4
         pos.z = Math.sign(pos.z) * boundsZ
       }
+
+      // Apply friction
+      vel.x *= 0.995
+      vel.z *= 0.995
+      vel.rx *= 0.99
+      vel.ry *= 0.99
+      vel.rz *= 0.99
 
       meshRef.current.position.set(pos.x, pos.y, pos.z)
       meshRef.current.rotation.set(rot.x, rot.y, rot.z)
 
     } else if (phase === 'reassemble') {
       const target = data.position
-      const lerpFactor = 0.06
+      const lerpFactor = 0.08
 
       pos.x += (target[0] - pos.x) * lerpFactor
       pos.y += (target[1] - pos.y) * lerpFactor
       pos.z += (target[2] - pos.z) * lerpFactor
 
-      rot.x *= 0.9
-      rot.y *= 0.9
-      rot.z *= 0.9
+      rot.x *= 0.92
+      rot.y *= 0.92
+      rot.z *= 0.92
 
       vel.x = vel.y = vel.z = 0
       vel.rx = vel.ry = vel.rz = 0
@@ -132,15 +147,15 @@ const SingleCube = ({ data, index, phase }) => {
 
     } else if (phase === 'idle') {
       const target = data.position
-      const lerpFactor = 0.1
+      const lerpFactor = 0.12
 
       pos.x += (target[0] - pos.x) * lerpFactor
       pos.y += (target[1] - pos.y) * lerpFactor
       pos.z += (target[2] - pos.z) * lerpFactor
 
-      rot.x *= 0.92
-      rot.y *= 0.92
-      rot.z *= 0.92
+      rot.x *= 0.95
+      rot.y *= 0.95
+      rot.z *= 0.95
 
       meshRef.current.position.set(pos.x, pos.y, pos.z)
       meshRef.current.rotation.set(rot.x, rot.y, rot.z)
@@ -169,40 +184,35 @@ const SingleCube = ({ data, index, phase }) => {
   )
 }
 
-const RubiksCubeGroup = ({ phase }) => {
+const RubiksCubeGroup = ({ phase, scrollProgress, groupYOffset }) => {
   const groupRef = useRef()
   const prevPhaseRef = useRef(phase)
 
+  // Trigger explosion when entering explode phase
   useEffect(() => {
     if (phase === 'explode' && prevPhaseRef.current !== 'explode') {
       CUBE_DATA.forEach((cube, i) => {
         const dir = new THREE.Vector3(...cube.position).normalize()
         PhysicsState.velocities[i] = {
-          x: dir.x * 10 + (Math.random() - 0.5) * 5,
-          y: Math.random() * 8 + 5,
-          z: dir.z * 10 + (Math.random() - 0.5) * 5,
-          rx: (Math.random() - 0.5) * 12,
-          ry: (Math.random() - 0.5) * 12,
-          rz: (Math.random() - 0.5) * 12
+          x: dir.x * 12 + (Math.random() - 0.5) * 6,
+          y: Math.random() * 10 + 6,
+          z: dir.z * 12 + (Math.random() - 0.5) * 6,
+          rx: (Math.random() - 0.5) * 15,
+          ry: (Math.random() - 0.5) * 15,
+          rz: (Math.random() - 0.5) * 15
         }
       })
     }
 
+    // Reset when going back to idle
     if (phase === 'idle' && prevPhaseRef.current !== 'idle') {
-      CUBE_DATA.forEach((cube, i) => {
-        PhysicsState.positions[i] = {
-          x: cube.position[0],
-          y: cube.position[1],
-          z: cube.position[2]
-        }
-        PhysicsState.rotations[i] = { x: 0, y: 0, z: 0 }
-        PhysicsState.velocities[i] = { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 }
-      })
+      resetPhysicsState()
     }
 
     prevPhaseRef.current = phase
   }, [phase])
 
+  // Idle rotation animation
   useEffect(() => {
     if (!groupRef.current) return
 
@@ -227,6 +237,14 @@ const RubiksCubeGroup = ({ phase }) => {
     return () => ctx.revert()
   }, [])
 
+  // Apply scroll-based Y offset to group
+  useFrame(() => {
+    if (groupRef.current) {
+      // Smooth lerp to target Y position
+      groupRef.current.position.y += (groupYOffset - groupRef.current.position.y) * 0.1
+    }
+  })
+
   return (
     <group ref={groupRef}>
       {CUBE_DATA.map((cube, i) => (
@@ -235,13 +253,14 @@ const RubiksCubeGroup = ({ phase }) => {
           data={cube}
           index={i}
           phase={phase}
+          scrollProgress={scrollProgress}
         />
       ))}
     </group>
   )
 }
 
-const Scene = ({ phase }) => {
+const Scene = ({ phase, scrollProgress, groupYOffset }) => {
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -261,51 +280,108 @@ const Scene = ({ phase }) => {
         floatIntensity={0.4}
         enabled={phase === 'idle'}
       >
-        <RubiksCubeGroup phase={phase} />
+        <RubiksCubeGroup
+          phase={phase}
+          scrollProgress={scrollProgress}
+          groupYOffset={groupYOffset}
+        />
       </Float>
     </>
   )
 }
 
-const RubiksCube = () => {
+const RubiksCube = ({ isVisible = true }) => {
   const containerRef = useRef()
   const [phase, setPhase] = useState('idle')
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [opacity, setOpacity] = useState(1)
+  const [groupYOffset, setGroupYOffset] = useState(0)
+  const [shouldRender, setShouldRender] = useState(true)
 
   useEffect(() => {
+    // Reset physics when component mounts
+    resetPhysicsState()
+
     const ctx = gsap.context(() => {
+      // ScrollTrigger that spans from hero through about section
+      // This gives us enough scroll distance for the full animation
       ScrollTrigger.create({
-        trigger: '#hero',
+        trigger: 'body',
         start: 'top top',
-        end: 'bottom top',
-        scrub: 0.5,
+        end: '+=2500', // 2500px of scroll distance
+        scrub: 0.3,
         onUpdate: (self) => {
-          if (self.progress < 0.25) {
+          const progress = self.progress
+          setScrollProgress(progress)
+
+          // Phase transitions based on scroll progress
+          if (progress < 0.15) {
+            // Idle phase - cube floats in place
             setPhase('idle')
-          } else if (self.progress < 0.7) {
+            setOpacity(1)
+            setGroupYOffset(0)
+          } else if (progress < 0.25) {
+            // Transition to explode - start breaking apart
             setPhase('explode')
+            setOpacity(1)
+            setGroupYOffset(0)
+          } else if (progress < 0.7) {
+            // Falling phase - cubes fall with gravity
+            setPhase('falling')
+            // Gradually move the view down as cubes fall
+            const fallProgress = (progress - 0.25) / 0.45
+            setGroupYOffset(-fallProgress * 15) // Move camera focus down
+            setOpacity(1 - fallProgress * 0.3) // Start fading
+          } else if (progress < 0.85) {
+            // Fade out phase
+            setPhase('falling')
+            const fadeProgress = (progress - 0.7) / 0.15
+            setOpacity(Math.max(0, 0.7 - fadeProgress * 0.7))
+            setGroupYOffset(-15 - fadeProgress * 5)
           } else {
-            setPhase('reassemble')
+            // Fully faded - stop rendering
+            setOpacity(0)
+            setShouldRender(false)
+          }
+
+          // Re-enable rendering if scrolling back up
+          if (progress < 0.85 && !shouldRender) {
+            setShouldRender(true)
           }
         }
       })
     })
 
-    return () => ctx.revert()
+    return () => {
+      ctx.revert()
+      resetPhysicsState()
+    }
   }, [])
+
+  // Don't render if fully faded out
+  if (!shouldRender || !isVisible) return null
 
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0"
-      style={{ zIndex: 0 }}
+      className="fixed inset-0 pointer-events-none hidden md:block"
+      style={{
+        zIndex: 1,
+        opacity: opacity,
+        transition: 'opacity 0.1s ease-out',
+      }}
     >
       <Canvas
-        camera={{ position: [0, 0.5, 9], fov: 45 }}
+        camera={{ position: [4, 1, 9], fov: 45 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
       >
-        <Scene phase={phase} />
+        <Scene
+          phase={phase}
+          scrollProgress={scrollProgress}
+          groupYOffset={groupYOffset}
+        />
       </Canvas>
     </div>
   )
