@@ -1,4 +1,4 @@
-import { useRef, useMemo, useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { RoundedBox, Float } from '@react-three/drei'
 import { gsap } from 'gsap'
@@ -37,6 +37,7 @@ const generateCubeData = () => {
       for (let z = -1; z <= 1; z++) {
         data.push({
           id: index,
+          gridPos: { x, y, z },
           position: [x * TOTAL_SIZE, y * TOTAL_SIZE, z * TOTAL_SIZE],
           color: cubeColorArray[(index + Math.floor(Math.random() * 3)) % cubeColorArray.length],
         })
@@ -53,7 +54,6 @@ const PhysicsState = {
   velocities: CUBE_DATA.map(() => ({ x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 })),
   positions: CUBE_DATA.map(c => ({ x: c.position[0], y: c.position[1], z: c.position[2] })),
   rotations: CUBE_DATA.map(() => ({ x: 0, y: 0, z: 0 })),
-  explosionTriggered: false,
 }
 
 const SingleCube = ({ data, index, phase }) => {
