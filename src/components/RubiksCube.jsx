@@ -300,7 +300,7 @@ const RubiksCube = () => {
       style={{ zIndex: 0 }}
     >
       <Canvas
-        camera={{ position: [0, 0, 10], fov: 40 }}
+        camera={{ position: [0, 0.5, 9], fov: 45 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}

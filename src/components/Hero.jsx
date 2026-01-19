@@ -15,8 +15,8 @@ const Hero = () => {
       id="hero"
       className="min-h-[85vh] flex flex-col justify-center pt-24 pb-16 relative overflow-hidden"
     >
-      {/* 3D Rubik's Cube Background */}
-      <div className="absolute right-0 top-0 w-full md:w-1/2 h-full pointer-events-auto">
+      {/* 3D Rubik's Cube Background - Hidden on mobile */}
+      <div className="hidden md:block absolute right-0 top-0 w-1/2 h-full pointer-events-auto opacity-90">
         <RubiksCube />
       </div>
       <div className="container relative z-10">
