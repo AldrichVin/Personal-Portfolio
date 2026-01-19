@@ -11,6 +11,11 @@ const CUBE_SIZE = 0.85
 const GAP = 0.1
 const TOTAL_SIZE = CUBE_SIZE + GAP
 
+// Starting position (right side) and center position
+const START_X = 4.5
+const CENTER_X = 0
+const CUBE_Y = 0.8
+
 const COLORS = {
   primary: '#6366f1',
   secondary: '#8b5cf6',
@@ -35,11 +40,25 @@ const generateCubeData = () => {
   for (let x = -1; x <= 1; x++) {
     for (let y = -1; y <= 1; y++) {
       for (let z = -1; z <= 1; z++) {
+        // Calculate spread direction for deconstruction
+        const spreadDir = new THREE.Vector3(x, y, z).normalize()
         data.push({
           id: index,
           gridPos: { x, y, z },
           position: [x * TOTAL_SIZE, y * TOTAL_SIZE, z * TOTAL_SIZE],
           color: cubeColorArray[(index + Math.floor(Math.random() * 3)) % cubeColorArray.length],
+          // Each cube spreads outward based on its position in the grid
+          spreadDirection: [
+            spreadDir.x * 3 + (Math.random() - 0.5) * 0.5,
+            spreadDir.y * 2.5 + (Math.random() - 0.5) * 0.5,
+            spreadDir.z * 2 + (Math.random() - 0.5) * 0.5
+          ],
+          // Random rotation offset for variety during deconstruction
+          rotationSpeed: [
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2
+          ]
         })
         index++
       }
@@ -50,115 +69,57 @@ const generateCubeData = () => {
 
 const CUBE_DATA = generateCubeData()
 
-// Global physics state - persists across renders
-const PhysicsState = {
-  velocities: CUBE_DATA.map(() => ({ x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 })),
-  positions: CUBE_DATA.map(c => ({ x: c.position[0], y: c.position[1], z: c.position[2] })),
-  rotations: CUBE_DATA.map(() => ({ x: 0, y: 0, z: 0 })),
-  groupY: 0,
-  lastScrollProgress: 0,
-}
-
-const resetPhysicsState = () => {
-  CUBE_DATA.forEach((cube, i) => {
-    PhysicsState.positions[i] = { x: cube.position[0], y: cube.position[1], z: cube.position[2] }
-    PhysicsState.rotations[i] = { x: 0, y: 0, z: 0 }
-    PhysicsState.velocities[i] = { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 }
-  })
-  PhysicsState.groupY = 0
-  PhysicsState.lastScrollProgress = 0
-}
-
-const SingleCube = ({ data, index, phase, scrollProgress }) => {
+/**
+ * SingleCube - Individual cubelet with scroll-driven position
+ *
+ * During deconstruction, position is interpolated based on scroll progress
+ * (not physics-based) for smooth, controlled animation
+ */
+const SingleCube = ({ data, index, phase, deconstructProgress }) => {
   const meshRef = useRef()
   const [hovered, setHovered] = useState(false)
-  const { viewport } = useThree()
 
   useFrame((state, delta) => {
     if (!meshRef.current) return
 
-    const clampedDelta = Math.min(delta, 0.05)
-
-    // Hover effect only in idle phase
-    if (hovered && phase === 'idle') {
-      meshRef.current.scale.lerp(new THREE.Vector3(1.15, 1.15, 1.15), 0.1)
+    // Hover effect during idle/moving/centered phases
+    if (hovered && (phase === 'idle' || phase === 'moving' || phase === 'centered')) {
+      meshRef.current.scale.lerp(new THREE.Vector3(1.1, 1.1, 1.1), 0.1)
     } else {
       meshRef.current.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1)
     }
 
-    const vel = PhysicsState.velocities[index]
-    const pos = PhysicsState.positions[index]
-    const rot = PhysicsState.rotations[index]
+    // Calculate target position based on phase
+    if (phase === 'deconstructing' || phase === 'fadeout') {
+      // Spread outward based on scroll progress (0 to 1)
+      const spread = deconstructProgress
+      const easeSpread = easeOutCubic(spread)
 
-    if (phase === 'explode' || phase === 'falling') {
-      // Apply gentle gravity for slower falling
-      vel.y -= 8 * clampedDelta
+      const targetX = data.position[0] + data.spreadDirection[0] * easeSpread
+      const targetY = data.position[1] + data.spreadDirection[1] * easeSpread
+      const targetZ = data.position[2] + data.spreadDirection[2] * easeSpread
 
-      // Update positions
-      pos.x += vel.x * clampedDelta
-      pos.y += vel.y * clampedDelta
-      pos.z += vel.z * clampedDelta
+      // Smooth lerp to target
+      meshRef.current.position.lerp(
+        new THREE.Vector3(targetX, targetY, targetZ),
+        0.08
+      )
 
-      // Update rotations
-      rot.x += vel.rx * clampedDelta
-      rot.y += vel.ry * clampedDelta
-      rot.z += vel.rz * clampedDelta
+      // Add subtle rotation during deconstruction
+      meshRef.current.rotation.x += data.rotationSpeed[0] * delta * spread * 0.5
+      meshRef.current.rotation.y += data.rotationSpeed[1] * delta * spread * 0.5
+      meshRef.current.rotation.z += data.rotationSpeed[2] * delta * spread * 0.3
+    } else {
+      // Assembled state - return to original position
+      meshRef.current.position.lerp(
+        new THREE.Vector3(...data.position),
+        0.12
+      )
 
-      // Boundary collisions - wide bounds since we're full screen now
-      const boundsX = viewport.width * 0.8
-      const boundsZ = 8
-
-      if (Math.abs(pos.x) > boundsX) {
-        vel.x *= -0.4
-        pos.x = Math.sign(pos.x) * boundsX
-      }
-      if (Math.abs(pos.z) > boundsZ) {
-        vel.z *= -0.4
-        pos.z = Math.sign(pos.z) * boundsZ
-      }
-
-      // Apply friction
-      vel.x *= 0.995
-      vel.z *= 0.995
-      vel.rx *= 0.99
-      vel.ry *= 0.99
-      vel.rz *= 0.99
-
-      meshRef.current.position.set(pos.x, pos.y, pos.z)
-      meshRef.current.rotation.set(rot.x, rot.y, rot.z)
-
-    } else if (phase === 'reassemble') {
-      const target = data.position
-      const lerpFactor = 0.08
-
-      pos.x += (target[0] - pos.x) * lerpFactor
-      pos.y += (target[1] - pos.y) * lerpFactor
-      pos.z += (target[2] - pos.z) * lerpFactor
-
-      rot.x *= 0.92
-      rot.y *= 0.92
-      rot.z *= 0.92
-
-      vel.x = vel.y = vel.z = 0
-      vel.rx = vel.ry = vel.rz = 0
-
-      meshRef.current.position.set(pos.x, pos.y, pos.z)
-      meshRef.current.rotation.set(rot.x, rot.y, rot.z)
-
-    } else if (phase === 'idle') {
-      const target = data.position
-      const lerpFactor = 0.12
-
-      pos.x += (target[0] - pos.x) * lerpFactor
-      pos.y += (target[1] - pos.y) * lerpFactor
-      pos.z += (target[2] - pos.z) * lerpFactor
-
-      rot.x *= 0.95
-      rot.y *= 0.95
-      rot.z *= 0.95
-
-      meshRef.current.position.set(pos.x, pos.y, pos.z)
-      meshRef.current.rotation.set(rot.x, rot.y, rot.z)
+      // Gradually reset rotation
+      meshRef.current.rotation.x *= 0.95
+      meshRef.current.rotation.y *= 0.95
+      meshRef.current.rotation.z *= 0.95
     }
   })
 
@@ -184,51 +145,35 @@ const SingleCube = ({ data, index, phase, scrollProgress }) => {
   )
 }
 
-const RubiksCubeGroup = ({ phase, scrollProgress, groupYOffset }) => {
+// Easing function for smooth deconstruction
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3)
+const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
+
+/**
+ * RubiksCubeGroup - Contains all 27 cubelets
+ * Handles group-level rotation animation
+ */
+const RubiksCubeGroup = ({ phase, deconstructProgress }) => {
   const groupRef = useRef()
-  const prevPhaseRef = useRef(phase)
 
-  // Trigger explosion when entering explode phase
-  useEffect(() => {
-    if (phase === 'explode' && prevPhaseRef.current !== 'explode') {
-      CUBE_DATA.forEach((cube, i) => {
-        const dir = new THREE.Vector3(...cube.position).normalize()
-        // Wide explosion - spread across most of the screen
-        PhysicsState.velocities[i] = {
-          x: dir.x * 12 + (Math.random() - 0.5) * 8,
-          y: Math.random() * 4 + 3,
-          z: dir.z * 6 + (Math.random() - 0.5) * 4,
-          rx: (Math.random() - 0.5) * 6,
-          ry: (Math.random() - 0.5) * 6,
-          rz: (Math.random() - 0.5) * 6
-        }
-      })
-    }
-
-    // Reset when going back to idle
-    if (phase === 'idle' && prevPhaseRef.current !== 'idle') {
-      resetPhysicsState()
-    }
-
-    prevPhaseRef.current = phase
-  }, [phase])
-
-  // Idle rotation animation
+  // Subtle idle rotation animation
   useEffect(() => {
     if (!groupRef.current) return
 
     const ctx = gsap.context(() => {
+      // Slow continuous Y rotation
       gsap.to(groupRef.current.rotation, {
         y: Math.PI * 2,
-        duration: 30,
+        duration: 35,
         repeat: -1,
         ease: 'none'
       })
 
+      // Gentle tilt animation
       gsap.to(groupRef.current.rotation, {
-        x: 0.2,
-        z: 0.1,
-        duration: 8,
+        x: 0.15,
+        z: 0.08,
+        duration: 10,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut'
@@ -238,14 +183,6 @@ const RubiksCubeGroup = ({ phase, scrollProgress, groupYOffset }) => {
     return () => ctx.revert()
   }, [])
 
-  // Apply scroll-based Y offset to group
-  useFrame(() => {
-    if (groupRef.current) {
-      // Smooth lerp to target Y position
-      groupRef.current.position.y += (groupYOffset - groupRef.current.position.y) * 0.1
-    }
-  })
-
   return (
     <group ref={groupRef}>
       {CUBE_DATA.map((cube, i) => (
@@ -254,14 +191,29 @@ const RubiksCubeGroup = ({ phase, scrollProgress, groupYOffset }) => {
           data={cube}
           index={i}
           phase={phase}
-          scrollProgress={scrollProgress}
+          deconstructProgress={deconstructProgress}
         />
       ))}
     </group>
   )
 }
 
-const Scene = ({ phase, scrollProgress, groupYOffset }) => {
+/**
+ * Scene - Three.js scene with lighting and cube group
+ *
+ * The outer group position is controlled by scroll progress
+ * to move the cube from right side to center
+ */
+const Scene = ({ phase, scrollProgress, deconstructProgress, groupXPosition }) => {
+  const groupRef = useRef()
+
+  // Smoothly interpolate group X position
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.position.x += (groupXPosition - groupRef.current.position.x) * 0.08
+    }
+  })
+
   return (
     <>
       <ambientLight intensity={0.5} />
@@ -275,18 +227,17 @@ const Scene = ({ phase, scrollProgress, groupYOffset }) => {
       <pointLight position={[0, 5, 0]} intensity={0.4} color={COLORS.primary} />
       <pointLight position={[-3, -3, 3]} intensity={0.2} color={COLORS.secondary} />
 
-      {/* Position the cube group aligned with hero text - higher and more right */}
-      <group position={[4.5, 0.8, 0]} scale={1.4}>
+      {/* Outer group for horizontal translation (right → center) */}
+      <group ref={groupRef} position={[START_X, CUBE_Y, 0]} scale={1.4}>
         <Float
           speed={1.5}
-          rotationIntensity={0.15}
-          floatIntensity={0.4}
-          enabled={phase === 'idle'}
+          rotationIntensity={0.12}
+          floatIntensity={0.3}
+          enabled={phase === 'idle' || phase === 'moving' || phase === 'centered'}
         >
           <RubiksCubeGroup
             phase={phase}
-            scrollProgress={scrollProgress}
-            groupYOffset={groupYOffset}
+            deconstructProgress={deconstructProgress}
           />
         </Float>
       </group>
@@ -294,76 +245,93 @@ const Scene = ({ phase, scrollProgress, groupYOffset }) => {
   )
 }
 
+/**
+ * RubiksCube - Main component with scroll-driven animation
+ *
+ * Scroll Progress Model:
+ * - 0.00–0.25: Move from right to center (cube intact)
+ * - 0.25–0.45: Hold at center with subtle motion
+ * - 0.45–0.85: Gradual deconstruction (spread outward)
+ * - 0.85–1.00: Fade out and cleanup
+ */
 const RubiksCube = ({ isVisible = true }) => {
   const containerRef = useRef()
   const [phase, setPhase] = useState('idle')
   const [scrollProgress, setScrollProgress] = useState(0)
   const [opacity, setOpacity] = useState(1)
-  const [groupYOffset, setGroupYOffset] = useState(0)
+  const [groupXPosition, setGroupXPosition] = useState(START_X)
+  const [deconstructProgress, setDeconstructProgress] = useState(0)
   const [shouldRender, setShouldRender] = useState(true)
 
   useEffect(() => {
-    // Reset physics when component mounts
-    resetPhysicsState()
-
     const ctx = gsap.context(() => {
-      // ScrollTrigger that spans from hero through about section
-      // This gives us enough scroll distance for the full animation
       ScrollTrigger.create({
         trigger: 'body',
         start: 'top top',
-        end: '+=2500', // 2500px of scroll distance
-        scrub: 0.3,
+        end: '+=2500',
+        scrub: 0.5,
         onUpdate: (self) => {
           const progress = self.progress
           setScrollProgress(progress)
 
-          // Phase transitions based on scroll progress
-          // Explode early after tiny scroll (~100px)
-          if (progress < 0.04) {
-            // Idle phase - cube floats in place (first ~100px)
-            setPhase('idle')
+          // Phase 1: Moving from right to center (0 - 0.25)
+          if (progress < 0.25) {
+            setPhase('moving')
             setOpacity(1)
-            setGroupYOffset(0)
-          } else if (progress < 0.12) {
-            // Transition to explode - start breaking apart
-            setPhase('explode')
+
+            // Interpolate X position: START_X → CENTER_X
+            const moveProgress = progress / 0.25
+            const easedProgress = easeInOutCubic(moveProgress)
+            setGroupXPosition(START_X + (CENTER_X - START_X) * easedProgress)
+            setDeconstructProgress(0)
+          }
+          // Phase 2: Centered / Hold (0.25 - 0.45)
+          else if (progress < 0.45) {
+            setPhase('centered')
             setOpacity(1)
-            setGroupYOffset(0)
-          } else if (progress < 0.55) {
-            // Falling phase - cubes fall with gravity
-            setPhase('falling')
-            // Gradually move the view down as cubes fall
-            const fallProgress = (progress - 0.12) / 0.43
-            setGroupYOffset(-fallProgress * 15) // Move camera focus down
-            setOpacity(1 - fallProgress * 0.3) // Start fading
-          } else if (progress < 0.75) {
-            // Fade out phase
-            setPhase('falling')
-            const fadeProgress = (progress - 0.55) / 0.2
-            setOpacity(Math.max(0, 0.7 - fadeProgress * 0.7))
-            setGroupYOffset(-15 - fadeProgress * 5)
-          } else {
-            // Fully faded - stop rendering
-            setOpacity(0)
-            setShouldRender(false)
+            setGroupXPosition(CENTER_X)
+            setDeconstructProgress(0)
+          }
+          // Phase 3: Deconstruction (0.45 - 0.85)
+          else if (progress < 0.85) {
+            setPhase('deconstructing')
+
+            // Calculate deconstruction progress (0 to 1)
+            const deconProgress = (progress - 0.45) / 0.4
+            setDeconstructProgress(deconProgress)
+            setGroupXPosition(CENTER_X)
+
+            // Start fading in the later part of deconstruction
+            if (deconProgress > 0.6) {
+              const fadeStart = (deconProgress - 0.6) / 0.4
+              setOpacity(1 - fadeStart * 0.4)
+            } else {
+              setOpacity(1)
+            }
+          }
+          // Phase 4: Fade out (0.85 - 1.0)
+          else {
+            setPhase('fadeout')
+            const fadeProgress = (progress - 0.85) / 0.15
+            setOpacity(Math.max(0, 0.6 - fadeProgress * 0.6))
+            setDeconstructProgress(1)
+
+            if (progress > 0.95) {
+              setShouldRender(false)
+            }
           }
 
           // Re-enable rendering if scrolling back up
-          if (progress < 0.85 && !shouldRender) {
+          if (progress < 0.9 && !shouldRender) {
             setShouldRender(true)
           }
         }
       })
     })
 
-    return () => {
-      ctx.revert()
-      resetPhysicsState()
-    }
-  }, [])
+    return () => ctx.revert()
+  }, [shouldRender])
 
-  // Don't render if fully faded out
   if (!shouldRender || !isVisible) return null
 
   return (
@@ -373,7 +341,7 @@ const RubiksCube = ({ isVisible = true }) => {
       style={{
         zIndex: 20,
         opacity: opacity,
-        transition: 'opacity 0.1s ease-out',
+        transition: 'opacity 0.15s ease-out',
       }}
     >
       <Canvas
@@ -385,7 +353,8 @@ const RubiksCube = ({ isVisible = true }) => {
         <Scene
           phase={phase}
           scrollProgress={scrollProgress}
-          groupYOffset={groupYOffset}
+          deconstructProgress={deconstructProgress}
+          groupXPosition={groupXPosition}
         />
       </Canvas>
     </div>
