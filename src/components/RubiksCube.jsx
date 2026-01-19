@@ -371,7 +371,7 @@ const RubiksCube = ({ isVisible = true }) => {
       ref={containerRef}
       className="fixed inset-0 pointer-events-none hidden md:block"
       style={{
-        zIndex: 0,
+        zIndex: 20,
         opacity: opacity,
         transition: 'opacity 0.1s ease-out',
       }}
