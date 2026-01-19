@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -7,8 +8,35 @@ import Contact from './components/Contact'
 import './index.css'
 
 function App() {
+  // Initialize intersection observer for reveal animations
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, options)
+
+    // Observe all reveal elements
+    const revealElements = document.querySelectorAll('.reveal, .reveal-image')
+    revealElements.forEach(el => observer.observe(el))
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FAFAFA]">
+      {/* Noise Texture Overlay */}
+      <div className="noise-overlay" />
+
       <Navbar />
 
       <main>
@@ -18,20 +46,6 @@ function App() {
         <Skills />
         <Contact />
       </main>
-
-      {/* Footer */}
-      <footer className="py-12 border-t border-border">
-        <div className="container-custom">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-small">
-              © {new Date().getFullYear()} Aldrich Vincent Liem
-            </p>
-            <p className="text-small text-tertiary">
-              Built with React & Tailwind
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
