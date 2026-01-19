@@ -276,7 +276,7 @@ const Scene = ({ phase, scrollProgress, groupYOffset }) => {
       <pointLight position={[-3, -3, 3]} intensity={0.2} color={COLORS.secondary} />
 
       {/* Position the cube group aligned with hero text - higher and more right */}
-      <group position={[4.5, 1.5, 0]} scale={1.4}>
+      <group position={[4.5, 0.8, 0]} scale={1.4}>
         <Float
           speed={1.5}
           rotationIntensity={0.15}
