@@ -315,27 +315,28 @@ const RubiksCube = ({ isVisible = true }) => {
           setScrollProgress(progress)
 
           // Phase transitions based on scroll progress
-          if (progress < 0.15) {
-            // Idle phase - cube floats in place
+          // Explode early after tiny scroll (~100px)
+          if (progress < 0.04) {
+            // Idle phase - cube floats in place (first ~100px)
             setPhase('idle')
             setOpacity(1)
             setGroupYOffset(0)
-          } else if (progress < 0.25) {
+          } else if (progress < 0.12) {
             // Transition to explode - start breaking apart
             setPhase('explode')
             setOpacity(1)
             setGroupYOffset(0)
-          } else if (progress < 0.7) {
+          } else if (progress < 0.55) {
             // Falling phase - cubes fall with gravity
             setPhase('falling')
             // Gradually move the view down as cubes fall
-            const fallProgress = (progress - 0.25) / 0.45
+            const fallProgress = (progress - 0.12) / 0.43
             setGroupYOffset(-fallProgress * 15) // Move camera focus down
             setOpacity(1 - fallProgress * 0.3) // Start fading
-          } else if (progress < 0.85) {
+          } else if (progress < 0.75) {
             // Fade out phase
             setPhase('falling')
-            const fadeProgress = (progress - 0.7) / 0.15
+            const fadeProgress = (progress - 0.55) / 0.2
             setOpacity(Math.max(0, 0.7 - fadeProgress * 0.7))
             setGroupYOffset(-15 - fadeProgress * 5)
           } else {
