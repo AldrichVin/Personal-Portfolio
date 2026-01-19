@@ -268,7 +268,7 @@ const RubiksCube = ({ isVisible = true }) => {
       ScrollTrigger.create({
         trigger: 'body',
         start: 'top top',
-        end: '+=2500',
+        end: '+=3200', // Spans all 4 Hero sections (~330vh)
         scrub: 0.5,
         onUpdate: (self) => {
           const progress = self.progress
