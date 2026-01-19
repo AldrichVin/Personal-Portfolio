@@ -364,15 +364,15 @@ const RubiksCube = ({ isVisible = true }) => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none hidden md:block"
+      className="fixed top-0 right-0 w-1/2 h-full pointer-events-none hidden md:block"
       style={{
-        zIndex: 1,
+        zIndex: 0,
         opacity: opacity,
         transition: 'opacity 0.1s ease-out',
       }}
     >
       <Canvas
-        camera={{ position: [4, 1, 9], fov: 45 }}
+        camera={{ position: [0, 0.5, 9], fov: 45 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
