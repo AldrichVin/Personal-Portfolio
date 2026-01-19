@@ -18,7 +18,7 @@ const Hero = () => {
           Scroll: 0-25% | Cube: Right side, intact
           ============================================ */}
       <section
-        id="hero"
+        id="hero-section"
         className="min-h-[100vh] flex flex-col justify-center relative"
       >
         <div className="container">
@@ -89,7 +89,7 @@ const Hero = () => {
           SECTION 2: Details / About Preview
           Scroll: 25-45% | Cube: Moving to center, intact
           ============================================ */}
-      <section className="min-h-[80vh] flex items-center justify-center relative py-24">
+      <section id="details-section" className="min-h-[80vh] flex items-center justify-center relative py-24">
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <span className="text-label text-indigo-500 mb-6 block reveal">
@@ -112,7 +112,7 @@ const Hero = () => {
           SECTION 3: Stats / Skills Grid
           Scroll: 45-85% | Cube: Center, deconstructing
           ============================================ */}
-      <section className="min-h-[90vh] flex items-center relative py-24">
+      <section id="breakdown-section" className="min-h-[90vh] flex items-center relative py-24">
         <div className="container">
           {/* Section header */}
           <div className="text-center mb-16">
@@ -184,7 +184,7 @@ const Hero = () => {
           SECTION 4: CTA
           Scroll: 85-100% | Cube: Fading out
           ============================================ */}
-      <section className="min-h-[60vh] flex items-center justify-center relative py-24">
+      <section id="footer-section" className="min-h-[60vh] flex items-center justify-center relative py-24">
         <div className="container">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-display mb-6 reveal">
