@@ -193,14 +193,14 @@ const RubiksCubeGroup = ({ phase, scrollProgress, groupYOffset }) => {
     if (phase === 'explode' && prevPhaseRef.current !== 'explode') {
       CUBE_DATA.forEach((cube, i) => {
         const dir = new THREE.Vector3(...cube.position).normalize()
-        // Slower, more graceful explosion
+        // Wide explosion - spread across most of the screen
         PhysicsState.velocities[i] = {
-          x: dir.x * 4 + (Math.random() - 0.5) * 2,
-          y: Math.random() * 3 + 2,
-          z: dir.z * 4 + (Math.random() - 0.5) * 2,
-          rx: (Math.random() - 0.5) * 5,
-          ry: (Math.random() - 0.5) * 5,
-          rz: (Math.random() - 0.5) * 5
+          x: dir.x * 12 + (Math.random() - 0.5) * 8,
+          y: Math.random() * 4 + 3,
+          z: dir.z * 6 + (Math.random() - 0.5) * 4,
+          rx: (Math.random() - 0.5) * 6,
+          ry: (Math.random() - 0.5) * 6,
+          rz: (Math.random() - 0.5) * 6
         }
       })
     }
