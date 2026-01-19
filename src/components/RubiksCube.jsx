@@ -91,8 +91,8 @@ const SingleCube = ({ data, index, phase, scrollProgress }) => {
     const rot = PhysicsState.rotations[index]
 
     if (phase === 'explode' || phase === 'falling') {
-      // Apply gravity
-      vel.y -= 25 * clampedDelta
+      // Apply gentle gravity for slower falling
+      vel.y -= 8 * clampedDelta
 
       // Update positions
       pos.x += vel.x * clampedDelta
@@ -193,13 +193,14 @@ const RubiksCubeGroup = ({ phase, scrollProgress, groupYOffset }) => {
     if (phase === 'explode' && prevPhaseRef.current !== 'explode') {
       CUBE_DATA.forEach((cube, i) => {
         const dir = new THREE.Vector3(...cube.position).normalize()
+        // Slower, more graceful explosion
         PhysicsState.velocities[i] = {
-          x: dir.x * 12 + (Math.random() - 0.5) * 6,
-          y: Math.random() * 10 + 6,
-          z: dir.z * 12 + (Math.random() - 0.5) * 6,
-          rx: (Math.random() - 0.5) * 15,
-          ry: (Math.random() - 0.5) * 15,
-          rz: (Math.random() - 0.5) * 15
+          x: dir.x * 4 + (Math.random() - 0.5) * 2,
+          y: Math.random() * 3 + 2,
+          z: dir.z * 4 + (Math.random() - 0.5) * 2,
+          rx: (Math.random() - 0.5) * 5,
+          ry: (Math.random() - 0.5) * 5,
+          rz: (Math.random() - 0.5) * 5
         }
       })
     }
@@ -274,18 +275,21 @@ const Scene = ({ phase, scrollProgress, groupYOffset }) => {
       <pointLight position={[0, 5, 0]} intensity={0.4} color={COLORS.primary} />
       <pointLight position={[-3, -3, 3]} intensity={0.2} color={COLORS.secondary} />
 
-      <Float
-        speed={1.5}
-        rotationIntensity={0.15}
-        floatIntensity={0.4}
-        enabled={phase === 'idle'}
-      >
-        <RubiksCubeGroup
-          phase={phase}
-          scrollProgress={scrollProgress}
-          groupYOffset={groupYOffset}
-        />
-      </Float>
+      {/* Position the cube group on the right side of the viewport */}
+      <group position={[3.5, 0, 0]}>
+        <Float
+          speed={1.5}
+          rotationIntensity={0.15}
+          floatIntensity={0.4}
+          enabled={phase === 'idle'}
+        >
+          <RubiksCubeGroup
+            phase={phase}
+            scrollProgress={scrollProgress}
+            groupYOffset={groupYOffset}
+          />
+        </Float>
+      </group>
     </>
   )
 }
@@ -365,7 +369,7 @@ const RubiksCube = ({ isVisible = true }) => {
   return (
     <div
       ref={containerRef}
-      className="fixed top-0 right-0 w-1/2 h-full pointer-events-none hidden md:block"
+      className="fixed inset-0 pointer-events-none hidden md:block"
       style={{
         zIndex: 0,
         opacity: opacity,
@@ -373,7 +377,7 @@ const RubiksCube = ({ isVisible = true }) => {
       }}
     >
       <Canvas
-        camera={{ position: [0, 0.5, 9], fov: 45 }}
+        camera={{ position: [0, 0, 12], fov: 50 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
         style={{ background: 'transparent' }}
