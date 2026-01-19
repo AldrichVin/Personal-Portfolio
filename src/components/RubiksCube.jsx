@@ -272,9 +272,9 @@ const RubiksCubeGroup = () => {
       const { isMobile } = context.conditions
       const screenWidth = viewport.width
 
-      // Initial position
-      const startPos = isMobile ? [0, -2.8, 0] : [3.5, 0, 0]
-      const startScale = isMobile ? 0.65 : 0.95
+      // Initial position - cube on right side of hero
+      const startPos = isMobile ? [0, 0, 0] : [4, 0.5, 0]
+      const startScale = isMobile ? 0.7 : 1.1
 
       mainGroupRef.current.position.set(...startPos)
       mainGroupRef.current.scale.set(startScale, startScale, startScale)
@@ -297,9 +297,9 @@ const RubiksCubeGroup = () => {
         .to(topSliceRef.current.rotation, { y: 0, duration: t }, '<')
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
-      // Timeline 1: Hero → Details
-      const centerPosDetails = isMobile ? [0, 0.5, 0] : [0, -2.5, 0]
-      const detailScale = isMobile ? 0.6 : 0.9
+      // Timeline 1: Hero → Details - cube moves to center below text
+      const centerPosDetails = isMobile ? [0, -1, 0] : [0, -1.5, 0]
+      const detailScale = isMobile ? 0.8 : 1.0
 
       const tl1 = gsap.timeline({
         scrollTrigger: {
@@ -322,9 +322,9 @@ const RubiksCubeGroup = () => {
         x: detailScale, y: detailScale, z: detailScale, ease: 'power1.inOut'
       }, 0)
 
-      // Timeline 2: Details → Breakdown (Explosion)
+      // Timeline 2: Details → Breakdown (Explosion) - cube at center, explodes
       const centerPosBreakdown = [0, 0, 0]
-      const breakdownScale = isMobile ? 0.55 : 0.8
+      const breakdownScale = isMobile ? 0.7 : 0.9
 
       const tl2 = gsap.timeline({
         scrollTrigger: {
@@ -532,7 +532,6 @@ const RubiksCube = ({ isVisible = true }) => {
         dpr={[1, 2]}
         camera={{ position: [0, 0, 12], fov: 35 }}
         gl={{ antialias: true, alpha: true }}
-        style={{ background: 'transparent' }}
       >
         <color attach="background" args={['#FAFAFA']} />
         <Scene />
