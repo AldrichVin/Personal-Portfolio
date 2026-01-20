@@ -32,9 +32,10 @@ const Contact = () => {
               </span>
             </div>
 
-            {/* Description - better contrast */}
+            {/* Description - data focused */}
             <p className="text-base text-neutral-600 max-w-md mb-6 reveal delay-2">
-              Open to full-time roles, freelance projects, and collaborations.
+              Open to data analyst roles, analytics projects, and opportunities
+              to drive business impact through data.
             </p>
 
             {/* Email link - refined styling */}

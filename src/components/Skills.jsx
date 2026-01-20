@@ -1,24 +1,29 @@
 /**
- * Skills Section - Premium Editorial Design
+ * Skills Section - Data Analytics Focus
  *
- * Design improvements:
- * - Better visual hierarchy with refined typography
- * - Subtle styling on skill items
- * - Consistent spacing
+ * Categories:
+ * - Data Analysis & Modeling
+ * - Databases & Warehousing
+ * - Visualization & BI
+ * - Engineering & Tools
  */
 
 const skillGroups = [
   {
-    name: 'Frontend',
-    skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Three.js'],
+    name: 'Data Analysis & Modeling',
+    skills: ['Python', 'R', 'SQL', 'Pandas', 'NumPy', 'EDA'],
   },
   {
-    name: 'Backend',
-    skills: ['Node.js', 'PostgreSQL', 'Prisma', 'Firebase', 'REST APIs'],
+    name: 'Databases & Warehousing',
+    skills: ['PostgreSQL (Supabase)', 'MongoDB', 'Oracle SQL'],
   },
   {
-    name: 'Tools & Other',
-    skills: ['Git', 'Docker', 'AWS', 'Solana/Web3', 'Python', 'Figma'],
+    name: 'Visualization & BI',
+    skills: ['Power BI', 'Tableau', 'Vega-Lite'],
+  },
+  {
+    name: 'Engineering & Tools',
+    skills: ['Flask (APIs)', 'Git/GitHub', 'Docker'],
   },
 ]
 
@@ -34,19 +39,19 @@ const Skills = () => {
 
           {/* Skills Grid */}
           <div className="lg:col-span-9">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
               {skillGroups.map((group, groupIndex) => (
                 <div key={group.name} className={`reveal delay-${groupIndex + 1}`}>
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-5">
+                  <h3 className="text-base font-semibold text-neutral-900 mb-4">
                     {group.name}
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2.5">
                     {group.skills.map((skill) => (
                       <li
                         key={skill}
-                        className="text-base text-neutral-600 flex items-center gap-2"
+                        className="text-sm text-neutral-600 flex items-center gap-2"
                       >
-                        <span className="w-1 h-1 rounded-full bg-neutral-300" />
+                        <span className="w-1 h-1 rounded-full bg-neutral-300 flex-shrink-0" />
                         {skill}
                       </li>
                     ))}
