@@ -155,15 +155,15 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
       onClick={() => onClick(project)}
     >
       <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center`}>
-        {/* Image - more balanced size */}
+        {/* Image - with subtle shadow for depth */}
         <div
           className={`lg:col-span-5 ${isReversed ? 'lg:order-2' : 'lg:order-1'} reveal-image`}
         >
-          <div className="project-image aspect-[4/3] rounded-lg overflow-hidden">
+          <div className="project-image aspect-[4/3] rounded-xl overflow-hidden shadow-lg shadow-neutral-900/[0.08] ring-1 ring-neutral-900/[0.05]">
             <img
               src={imageUrl}
               alt={project.name}
-              className="w-full h-full object-cover opacity-90"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
           </div>
@@ -175,32 +175,43 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
         >
           {/* Meta */}
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-small font-medium text-neutral-400">
+            <span className="text-sm font-medium text-neutral-400">
               {projectNumber}
             </span>
-            <span className="tag">{project.category}</span>
+            <span className="px-2.5 py-1 text-xs font-medium text-neutral-500 bg-neutral-100 rounded-md">
+              {project.category}
+            </span>
           </div>
 
           {/* Title */}
-          <h3 className="project-title text-h2 mb-2">{project.name}</h3>
+          <h3 className="project-title text-xl md:text-2xl font-semibold text-neutral-900 mb-2">
+            {project.name}
+          </h3>
 
           {/* Tagline */}
-          <p className="text-small font-medium text-neutral-500 mb-4">
+          <p className="text-sm font-medium text-neutral-500 mb-4">
             {project.tagline}
           </p>
 
-          {/* Description */}
-          <p className="text-body mb-5 line-clamp-2">
+          {/* Description - better contrast */}
+          <p className="text-base text-neutral-600 leading-relaxed mb-5 line-clamp-2">
             {project.description}
           </p>
 
-          {/* Tech tags */}
+          {/* Tech tags - refined */}
           <div className="flex flex-wrap gap-2">
             {project.techStack.slice(0, 4).map((tech) => (
-              <span key={tech} className="tag">{tech}</span>
+              <span
+                key={tech}
+                className="px-2.5 py-1 text-xs font-medium text-neutral-500 bg-neutral-50 border border-neutral-200 rounded-md"
+              >
+                {tech}
+              </span>
             ))}
             {project.techStack.length > 4 && (
-              <span className="tag">+{project.techStack.length - 4}</span>
+              <span className="px-2.5 py-1 text-xs font-medium text-neutral-400 bg-neutral-50 border border-neutral-200 rounded-md">
+                +{project.techStack.length - 4}
+              </span>
             )}
           </div>
         </div>
