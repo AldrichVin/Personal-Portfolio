@@ -1,12 +1,13 @@
 import { ArrowDown, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 
 /**
- * Hero Section - Premium Editorial Design
+ * Hero Section - High-End Portfolio Standard
  *
- * Visual hierarchy:
- * - Clear primary/secondary CTA distinction
- * - Stats with consistent alignment and weight
- * - Reduced visual competition with 3D elements
+ * Premium design showcase with:
+ * - Refined typography hierarchy
+ * - Polished CTA interactions
+ * - Subtle visual depth
+ * - Tasteful micro-interactions
  */
 
 /**
@@ -31,73 +32,123 @@ const Hero = () => {
           ============================================ */}
       <section
         id="hero-section"
-        className="relative min-h-[100dvh] flex flex-col w-full pl-12 pr-6 sm:pl-24 sm:pr-12 md:pl-32 md:pr-16 lg:pl-48 lg:pr-24"
+        className="relative min-h-[100dvh] flex flex-col w-full overflow-hidden"
+        style={{ paddingLeft: '200px', paddingRight: '24px' }}
       >
-        <main className="flex-1 flex flex-col justify-center max-w-3xl pt-28 pb-16">
+        {/* Subtle radial gradient for depth */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.05), transparent)',
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 60% 40% at 80% 60%, rgba(99, 102, 241, 0.03), transparent)',
+          }}
+        />
+
+        <main className="relative z-10 flex-1 flex flex-col justify-center max-w-3xl pt-32 pb-20">
           {/* Overline */}
-          <div className="reveal delay-1 mb-8">
-            <div className="inline-flex items-center gap-3 text-neutral-600 font-medium text-sm tracking-wide">
-              <span className="w-8 h-px bg-neutral-400" />
+          <div className="reveal delay-1 mb-10">
+            <div className="inline-flex items-center gap-4 text-neutral-500 font-medium text-sm tracking-widest uppercase">
+              <span className="w-10 h-px bg-neutral-300" />
               <span>Full-Stack Developer</span>
             </div>
           </div>
 
-          {/* Headline - Increased contrast for secondary text */}
-          <h1 className="reveal delay-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] font-semibold text-neutral-900 tracking-[-0.02em] mb-8">
-            Building{' '}
-            <span className="font-serif italic font-medium">digital</span>
-            <br />
-            <span className="text-neutral-500">products with</span>
-            <br />
-            clarity<span className="text-indigo-500">.</span>
+          {/* Headline - Refined typography hierarchy */}
+          <h1 className="reveal delay-1 text-[2.75rem] sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5.5rem] leading-[1.05] font-semibold text-neutral-900 tracking-[-0.03em] mb-12">
+            <span className="block mb-2">Building{' '}
+              <span className="font-serif italic font-normal text-neutral-800">digital</span>
+            </span>
+            <span className="block text-neutral-400 mb-2">products with</span>
+            <span className="block">
+              clarity<span className="text-indigo-500">.</span>
+            </span>
           </h1>
 
-          {/* Lead text - Better contrast */}
-          <p className="reveal delay-2 text-neutral-600 text-lg md:text-xl leading-relaxed mb-10 max-w-lg">
+          {/* Subtitle - Increased separation */}
+          <p className="reveal delay-2 text-neutral-500 text-lg md:text-xl leading-relaxed mb-12 max-w-md font-normal">
             Turning complex problems into elegant, user-centric solutions
             with modern web technologies.
           </p>
 
-          {/* CTA Buttons - Fixed alignment, clear hierarchy */}
-          <div className="reveal delay-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-            {/* Primary CTA */}
+          {/* CTA Buttons - Polished with refined hover states */}
+          <div className="reveal delay-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-5">
+            {/* Primary CTA - Shadow bloom, gentle scale */}
             <a
               href="#projects"
-              className="group inline-flex items-center justify-center gap-3 bg-neutral-900 text-white rounded-full px-7 h-14 hover:bg-neutral-800 transition-all duration-200 shadow-lg shadow-neutral-900/10"
+              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full px-8 py-4
+                         shadow-[0_2px_20px_-4px_rgba(0,0,0,0.2)]
+                         hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
+                         hover:scale-[1.02]
+                         transition-all duration-300 ease-out"
             >
-              <span className="text-[15px] font-medium leading-none">View Projects</span>
-              <div className="w-8 h-8 bg-white/15 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                <ArrowUpRight className="w-4 h-4" />
+              <span className="text-[15px] font-medium tracking-wide">View Projects</span>
+              <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center
+                              group-hover:bg-white/20 transition-all duration-300">
+                <ArrowUpRight
+                  className="w-[18px] h-[18px] transition-transform duration-300 ease-out
+                             group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  strokeWidth={2}
+                />
               </div>
             </a>
 
-            {/* Secondary CTA */}
+            {/* Secondary CTA - Subtle border animation */}
             <a
               href="#contact"
-              className="inline-flex items-center justify-center gap-2 px-7 h-14 border border-neutral-300 text-neutral-700 text-[15px] font-medium rounded-full hover:border-neutral-400 hover:bg-neutral-50 transition-all duration-200"
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4
+                         text-neutral-600 text-[15px] font-medium tracking-wide rounded-full
+                         border border-neutral-200
+                         hover:border-neutral-400 hover:text-neutral-900 hover:bg-neutral-50/50
+                         transition-all duration-300 ease-out"
             >
-              Get in Touch
+              <span>Get in Touch</span>
             </a>
           </div>
 
-          {/* Social links */}
-          <div className="reveal delay-4 flex items-center gap-5 mt-10">
-            <a href="https://github.com" className="text-neutral-400 hover:text-neutral-700 transition-colors p-1">
-              <Github size={20} strokeWidth={1.5} />
+          {/* Social links - Enhanced with micro-interactions */}
+          <div className="reveal delay-4 flex items-center gap-2 mt-14">
+            <a
+              href="https://github.com"
+              className="group relative p-3 text-neutral-400 hover:text-neutral-900
+                         transition-all duration-300 ease-out"
+              aria-label="GitHub"
+            >
+              <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
+                               group-hover:scale-100 transition-transform duration-300 ease-out" />
+              <Github size={22} strokeWidth={1.5} className="relative z-10" />
             </a>
-            <a href="https://linkedin.com" className="text-neutral-400 hover:text-neutral-700 transition-colors p-1">
-              <Linkedin size={20} strokeWidth={1.5} />
+            <a
+              href="https://linkedin.com"
+              className="group relative p-3 text-neutral-400 hover:text-neutral-900
+                         transition-all duration-300 ease-out"
+              aria-label="LinkedIn"
+            >
+              <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
+                               group-hover:scale-100 transition-transform duration-300 ease-out" />
+              <Linkedin size={22} strokeWidth={1.5} className="relative z-10" />
             </a>
-            <a href="mailto:hello@example.com" className="text-neutral-400 hover:text-neutral-700 transition-colors p-1">
-              <Mail size={20} strokeWidth={1.5} />
+            <a
+              href="mailto:hello@example.com"
+              className="group relative p-3 text-neutral-400 hover:text-neutral-900
+                         transition-all duration-300 ease-out"
+              aria-label="Email"
+            >
+              <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
+                               group-hover:scale-100 transition-transform duration-300 ease-out" />
+              <Mail size={22} strokeWidth={1.5} className="relative z-10" />
             </a>
           </div>
         </main>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 reveal delay-5">
-          <div className="animate-subtle-bounce opacity-50">
-            <ArrowDown size={18} className="text-neutral-400" strokeWidth={1.5} />
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 reveal delay-5">
+          <div className="animate-subtle-bounce opacity-40 hover:opacity-70 transition-opacity duration-300">
+            <ArrowDown size={20} className="text-neutral-400" strokeWidth={1.5} />
           </div>
         </div>
       </section>
@@ -118,12 +169,12 @@ const Hero = () => {
 
           {/* Headline */}
           <h2 className="reveal delay-1 text-3xl sm:text-4xl md:text-5xl font-semibold text-neutral-900 leading-tight tracking-tight mb-6">
-            <span className="font-serif italic font-medium">Precision</span> meets{' '}
-            <span className="font-serif italic font-medium">creativity</span>
+            <span className="font-serif italic font-normal">Precision</span> meets{' '}
+            <span className="font-serif italic font-normal">creativity</span>
           </h2>
 
-          {/* Description - Better contrast */}
-          <p className="reveal delay-2 text-neutral-600 text-base sm:text-lg leading-relaxed max-w-md">
+          {/* Description */}
+          <p className="reveal delay-2 text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md">
             From data platforms to interactive applications, I bring
             analytical depth and creative problem-solving to every project.
           </p>
@@ -138,14 +189,14 @@ const Hero = () => {
           ============================================ */}
       <section
         id="breakdown-section"
-        className="relative w-full min-h-[90dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[80dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
       >
         {/* Section header */}
         <div className="text-center mb-16">
           <h3 className="reveal text-2xl md:text-4xl font-semibold text-neutral-900 tracking-tight mb-3">
-            Technical <span className="font-serif italic font-medium">Expertise</span>
+            Technical <span className="font-serif italic font-normal">Expertise</span>
           </h3>
-          <p className="reveal delay-1 text-sm font-medium text-neutral-500 uppercase tracking-widest">
+          <p className="reveal delay-1 text-sm font-medium text-neutral-400 uppercase tracking-widest">
             Building blocks of innovation
           </p>
         </div>
@@ -162,20 +213,6 @@ const Hero = () => {
 
         {/* Center space for cube */}
         <div className="w-full h-[25vh] md:h-[30vh]" />
-
-        {/* Tech stack */}
-        <div className="reveal delay-3 w-full max-w-3xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-2.5">
-            {['React', 'TypeScript', 'Next.js', 'Python', 'Node.js', 'PostgreSQL', 'Tailwind', 'Three.js'].map((tech) => (
-              <span
-                key={tech}
-                className="px-4 py-2 bg-white border border-neutral-200 rounded-full text-sm font-medium text-neutral-600 hover:border-neutral-300 hover:text-neutral-800 transition-colors shadow-sm"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* ============================================
@@ -193,24 +230,33 @@ const Hero = () => {
 
           {/* Headline */}
           <h2 className="reveal delay-1 text-4xl sm:text-5xl md:text-6xl font-semibold text-neutral-900 leading-[1.1] tracking-tight mb-4">
-            <span className="font-serif italic font-medium">Order</span> from{' '}
-            <span className="font-serif italic font-medium">Chaos</span>
+            <span className="font-serif italic font-normal">Order</span> from{' '}
+            <span className="font-serif italic font-normal">Chaos</span>
           </h2>
 
           {/* Subtext */}
-          <p className="reveal delay-2 text-neutral-600 text-lg mb-10 max-w-sm">
+          <p className="reveal delay-2 text-neutral-500 text-lg mb-12 max-w-sm">
             Let's build something extraordinary together.
           </p>
 
-          {/* CTA Button - Fixed alignment */}
+          {/* CTA Button - Matching primary style */}
           <div className="reveal delay-3">
             <a
               href="#contact"
-              className="group inline-flex items-center justify-center gap-3 bg-neutral-900 text-white rounded-full px-8 h-14 hover:bg-neutral-800 transition-all duration-200 shadow-lg shadow-neutral-900/10"
+              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full px-8 py-4
+                         shadow-[0_2px_20px_-4px_rgba(0,0,0,0.2)]
+                         hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
+                         hover:scale-[1.02]
+                         transition-all duration-300 ease-out"
             >
-              <span className="text-[15px] font-medium leading-none">Start a Conversation</span>
-              <div className="w-8 h-8 bg-white/15 rounded-full flex items-center justify-center group-hover:bg-white/20 group-hover:rotate-45 transition-all duration-300">
-                <ArrowUpRight className="w-4 h-4" />
+              <span className="text-[15px] font-medium tracking-wide">Start a Conversation</span>
+              <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center
+                              group-hover:bg-white/20 transition-all duration-300">
+                <ArrowUpRight
+                  className="w-[18px] h-[18px] transition-transform duration-300 ease-out
+                             group-hover:rotate-45"
+                  strokeWidth={2}
+                />
               </div>
             </a>
           </div>
