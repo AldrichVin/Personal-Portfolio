@@ -1,11 +1,10 @@
 /**
  * Skills Section - Data Analytics Focus
  *
- * Categories:
- * - Data Analysis & Modeling
- * - Databases & Warehousing
- * - Visualization & BI
- * - Engineering & Tools
+ * Typography System (consistent with Hero/About):
+ * - H3: text-lg, font-semibold, text-neutral-900
+ * - Body: text-sm, text-neutral-600
+ * - Label: text-xs, font-semibold, uppercase, tracking-widest
  */
 
 const skillGroups = [
@@ -31,7 +30,7 @@ const Skills = () => {
   return (
     <section id="skills" className="section section-border bg-white">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           {/* Section Label */}
           <div className="lg:col-span-3">
             <span className="text-label reveal">Expertise</span>
@@ -39,19 +38,20 @@ const Skills = () => {
 
           {/* Skills Grid */}
           <div className="lg:col-span-9">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 sm:gap-10">
               {skillGroups.map((group, groupIndex) => (
                 <div key={group.name} className={`reveal delay-${groupIndex + 1}`}>
-                  <h3 className="text-base font-semibold text-neutral-900 mb-4">
+                  {/* H3 style */}
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-6">
                     {group.name}
                   </h3>
-                  <ul className="space-y-2.5">
+                  <ul className="space-y-3.5">
                     {group.skills.map((skill) => (
                       <li
                         key={skill}
-                        className="text-sm text-neutral-600 flex items-center gap-2"
+                        className="text-sm text-neutral-600 flex items-center gap-3"
                       >
-                        <span className="w-1 h-1 rounded-full bg-neutral-300 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-neutral-300 flex-shrink-0" />
                         {skill}
                       </li>
                     ))}

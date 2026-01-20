@@ -1,10 +1,10 @@
 /**
  * About Section - Data Analytics Focus
  *
- * Emphasizes:
- * - Data analysis, SQL, ETL pipelines
- * - Dashboarding and data visualization
- * - Turning data into business insights
+ * Typography System (consistent with Hero):
+ * - H2: text-2xl md:text-3xl, font-semibold
+ * - Body: text-base, text-neutral-600, leading-relaxed
+ * - Label: text-xs, font-semibold, uppercase, tracking-widest
  */
 
 const About = () => {
@@ -20,7 +20,7 @@ const About = () => {
       className="section section-border bg-white"
     >
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           {/* Section Label */}
           <div className="lg:col-span-3">
             <span className="text-label reveal">About</span>
@@ -28,14 +28,14 @@ const About = () => {
 
           {/* Content */}
           <div className="lg:col-span-9">
-            {/* Lead statement */}
-            <p className="text-2xl md:text-3xl font-medium text-neutral-800 leading-snug mb-10 reveal delay-1 max-w-2xl">
+            {/* Lead statement - H2 style */}
+            <p className="text-2xl md:text-3xl font-semibold text-neutral-800 leading-snug mb-14 reveal delay-1 max-w-2xl">
               Computer Science graduate from Monash University with a passion
               for turning raw data into meaningful business insights.
             </p>
 
             {/* Body paragraphs */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-2xl mb-14">
               <p className="text-base text-neutral-600 leading-relaxed reveal delay-2">
                 I specialize in data analysis, building ETL pipelines, and creating
                 interactive dashboards that help stakeholders make informed decisions.
@@ -52,14 +52,15 @@ const About = () => {
 
             {/* Tech Stack */}
             <div className="reveal delay-4">
-              <span className="text-xs font-semibold uppercase tracking-widest text-neutral-400 block mb-4">
+              {/* Label style */}
+              <span className="text-xs font-semibold uppercase tracking-widest text-neutral-400 block mb-5">
                 Core Tools
               </span>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1.5 text-sm font-medium text-neutral-600 bg-neutral-50 border border-neutral-200 rounded-md
+                    className="px-4 py-2 text-sm font-medium text-neutral-600 bg-neutral-50 border border-neutral-200 rounded-md
                                hover:border-neutral-300 hover:bg-neutral-100 transition-colors duration-200"
                   >
                     {tech}

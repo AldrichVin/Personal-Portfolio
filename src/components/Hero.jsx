@@ -3,18 +3,20 @@ import { ArrowDown, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 /**
  * Hero Section - Data Analytics Portfolio
  *
- * Focused on:
- * - Data analysis and business insights
- * - Clean, professional aesthetic
- * - Recruiter-readable content
+ * Typography System:
+ * - H1: text-[2.5rem] to text-[4.5rem], font-semibold
+ * - H2: text-2xl to text-4xl, font-semibold
+ * - H3: text-xl, font-semibold
+ * - Body: text-base/text-lg, text-neutral-600
+ * - Label: text-xs, uppercase, tracking-widest
  */
 
 const StatCard = ({ value, label }) => (
   <div className="flex flex-col items-start">
-    <span className="text-4xl md:text-5xl font-semibold text-neutral-900 tracking-tight leading-none mb-2">
+    <span className="text-4xl md:text-5xl font-semibold text-neutral-900 tracking-tight leading-none mb-3">
       {value}
     </span>
-    <span className="text-sm font-medium text-neutral-500 tracking-wide uppercase">
+    <span className="text-xs font-semibold text-neutral-400 tracking-widest uppercase">
       {label}
     </span>
   </div>
@@ -40,34 +42,34 @@ const Hero = () => {
         />
 
         <main className="relative z-10 flex-1 flex flex-col justify-center max-w-2xl pt-32 pb-20">
-          {/* Overline */}
-          <div className="reveal delay-1 mb-10">
-            <div className="inline-flex items-center gap-4 text-neutral-500 font-medium text-sm tracking-widest uppercase">
+          {/* Overline - Label style */}
+          <div className="reveal delay-1 mb-14">
+            <div className="inline-flex items-center gap-4 text-neutral-400 text-xs font-semibold tracking-widest uppercase">
               <span className="w-10 h-px bg-neutral-300" />
               <span>Data Analyst / Data Science Graduate</span>
             </div>
           </div>
 
-          {/* Headline */}
-          <h1 className="reveal delay-1 text-[2.5rem] sm:text-[3rem] md:text-[4rem] lg:text-[4.5rem] leading-[1.1] font-semibold text-neutral-900 tracking-[-0.03em] mb-12">
-            <span className="block mb-2">
+          {/* Headline - H1 */}
+          <h1 className="reveal delay-1 text-[2.5rem] sm:text-[3rem] md:text-[4rem] lg:text-[4.5rem] leading-[1.15] font-semibold text-neutral-900 tracking-[-0.03em] mb-16">
+            <span className="block mb-4">
               Turning <span className="font-serif italic font-normal text-neutral-700">data</span>
             </span>
-            <span className="block text-neutral-400 mb-2">into actionable</span>
+            <span className="block text-neutral-400 mb-4">into actionable</span>
             <span className="block">
               insights<span className="text-indigo-500">.</span>
             </span>
           </h1>
 
-          {/* Subtitle - Data focused */}
-          <p className="reveal delay-2 text-neutral-600 text-lg leading-relaxed mb-12 max-w-md">
+          {/* Subtitle - Body text */}
+          <p className="reveal delay-2 text-neutral-600 text-lg leading-relaxed mb-16 max-w-md">
             Leveraging SQL, Python, and visualization tools to uncover
             patterns, drive decisions, and deliver business value through data.
           </p>
 
           {/* CTA Buttons */}
-          <div className="reveal delay-3 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            {/* Primary CTA - Analytics Projects */}
+          <div className="reveal delay-3 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+            {/* Primary CTA */}
             <a
               href="#projects"
               className="group inline-flex items-center bg-neutral-900 text-white rounded-full
@@ -98,7 +100,7 @@ const Hero = () => {
           </div>
 
           {/* Social links */}
-          <div className="reveal delay-4 flex items-center gap-1 mt-14">
+          <div className="reveal delay-4 flex items-center gap-1 mt-16">
             <a
               href="https://github.com/AldrichVin"
               target="_blank"
@@ -146,22 +148,22 @@ const Hero = () => {
           ============================================ */}
       <section
         id="details-section"
-        className="relative w-full min-h-[85dvh] flex flex-col items-center justify-center py-24 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[85dvh] flex flex-col items-center justify-center py-28 px-6 sm:px-12 md:px-16"
       >
         <div className="flex flex-col items-center text-center max-w-xl mx-auto">
           {/* Label */}
-          <div className="reveal inline-flex items-center gap-2 text-indigo-500 font-medium uppercase tracking-widest text-xs mb-6">
+          <div className="reveal inline-flex items-center gap-2 text-indigo-500 text-xs font-semibold uppercase tracking-widest mb-8">
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
             <span>What I Do</span>
           </div>
 
-          {/* Headline */}
-          <h2 className="reveal delay-1 text-3xl sm:text-4xl md:text-5xl font-semibold text-neutral-900 leading-tight tracking-tight mb-6">
+          {/* Headline - H2 */}
+          <h2 className="reveal delay-1 text-2xl sm:text-3xl md:text-4xl font-semibold text-neutral-900 leading-tight tracking-tight mb-8">
             <span className="font-serif italic font-normal">Analysis</span> meets{' '}
             <span className="font-serif italic font-normal">insight</span>
           </h2>
 
-          {/* Description */}
+          {/* Description - Body */}
           <p className="reveal delay-2 text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md">
             From exploratory data analysis to interactive dashboards,
             I transform raw data into clear, actionable business intelligence.
@@ -176,21 +178,23 @@ const Hero = () => {
           ============================================ */}
       <section
         id="breakdown-section"
-        className="relative w-full min-h-[75dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[75dvh] flex flex-col items-center justify-center py-24 px-6 sm:px-12 md:px-16"
       >
         {/* Section header */}
-        <div className="text-center mb-14">
-          <h3 className="reveal text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight mb-3">
+        <div className="text-center mb-16">
+          {/* H2 */}
+          <h2 className="reveal text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight mb-4">
             Technical <span className="font-serif italic font-normal">Background</span>
-          </h3>
-          <p className="reveal delay-1 text-sm font-medium text-neutral-400 uppercase tracking-widest">
+          </h2>
+          {/* Label */}
+          <p className="reveal delay-1 text-xs font-semibold text-neutral-400 uppercase tracking-widest">
             Education & Experience
           </p>
         </div>
 
         {/* Stats grid */}
         <div className="reveal delay-2 w-full max-w-3xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             <StatCard value="6+" label="Projects" />
             <StatCard value="3yr" label="Experience" />
             <StatCard value="10+" label="Tools" />
@@ -206,23 +210,23 @@ const Hero = () => {
           ============================================ */}
       <section
         id="footer-section"
-        className="relative w-full min-h-[65dvh] flex flex-col items-center justify-center py-16 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[65dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
       >
         <div className="relative z-20 flex flex-col items-center text-center max-w-lg">
           {/* Label */}
-          <span className="reveal text-xs font-medium text-neutral-400 uppercase tracking-[0.2em] mb-6">
+          <span className="reveal text-xs font-semibold text-neutral-400 uppercase tracking-widest mb-8">
             Open to opportunities
           </span>
 
-          {/* Headline */}
-          <h2 className="reveal delay-1 text-3xl sm:text-4xl md:text-5xl font-semibold text-neutral-900 leading-[1.15] tracking-tight mb-5">
+          {/* Headline - H2 */}
+          <h2 className="reveal delay-1 text-2xl sm:text-3xl md:text-4xl font-semibold text-neutral-900 leading-[1.2] tracking-tight mb-8">
             Let's turn your{' '}
             <span className="font-serif italic font-normal">data</span>
             <br />into decisions
           </h2>
 
-          {/* Subtext */}
-          <p className="reveal delay-2 text-neutral-500 text-base mb-10 max-w-sm">
+          {/* Subtext - Body */}
+          <p className="reveal delay-2 text-neutral-500 text-base leading-relaxed mb-12 max-w-sm">
             Looking for data analyst roles where I can drive impact through insights.
           </p>
 

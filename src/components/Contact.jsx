@@ -1,19 +1,19 @@
 import { ArrowUpRight } from 'lucide-react'
 
 /**
- * Contact Section - Premium Editorial Design
+ * Contact Section - Data Analytics Focus
  *
- * Design improvements:
- * - Better text contrast and hierarchy
- * - Refined email link styling
- * - Cleaner footer with proper spacing
+ * Typography System (consistent with other sections):
+ * - H2: text-2xl md:text-3xl, font-semibold
+ * - Body: text-base, text-neutral-600, leading-relaxed
+ * - Label: text-xs, font-semibold, uppercase, tracking-widest
  */
 
 const Contact = () => {
   return (
     <section id="contact" className="section">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
           {/* Section Label */}
           <div className="lg:col-span-3">
             <span className="text-label reveal">Contact</span>
@@ -21,24 +21,24 @@ const Contact = () => {
 
           {/* Content */}
           <div className="lg:col-span-9">
-            {/* Heading with availability */}
-            <div className="flex flex-wrap items-center gap-3 mb-4 reveal delay-1">
+            {/* Heading with availability - H2 style */}
+            <div className="flex flex-wrap items-center gap-4 mb-6 reveal delay-1">
               <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900">
                 Let's work together.
               </h2>
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-emerald-700 bg-emerald-50 rounded-full">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full uppercase tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 Available
               </span>
             </div>
 
-            {/* Description - data focused */}
-            <p className="text-base text-neutral-600 max-w-md mb-6 reveal delay-2">
+            {/* Description - Body style */}
+            <p className="text-base text-neutral-600 leading-relaxed max-w-md mb-8 reveal delay-2">
               Open to data analyst roles, analytics projects, and opportunities
               to drive business impact through data.
             </p>
 
-            {/* Email link - refined styling */}
+            {/* Email link */}
             <a
               href="mailto:aldrichvin040205@gmail.com"
               className="group inline-flex items-center gap-2 text-base font-medium text-neutral-900 hover:text-neutral-600 transition-colors reveal delay-3"
@@ -52,9 +52,9 @@ const Contact = () => {
         </div>
 
         {/* Footer */}
-        <footer className="mt-16 pt-6 border-t border-neutral-200 reveal delay-4">
+        <footer className="mt-20 pt-8 border-t border-neutral-200 reveal delay-4">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-8">
               <a
                 href="https://github.com/AldrichVin"
                 target="_blank"
