@@ -7,29 +7,30 @@ import * as THREE from 'three'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Physics floor position
-const PHYSICS_FLOOR_Y = -5.0
+// Physics constants
+const PHYSICS_FLOOR_Y = -4.5
 
+// Refined color palette - softer, less competing
 const COLORS = {
   white: '#FFFFFF',
-  slate: '#94A3B8',
-  dark: '#1A1A1A',
-  lightSlate: '#CBD5E1',
+  slate: '#E2E8F0',
+  lightSlate: '#F1F5F9',
   offWhite: '#F8FAFC',
-  darkSlate: '#475569',
+  accent1: '#CBD5E1',
+  accent2: '#94A3B8',
 }
 
 const cubeColors = [
   COLORS.white,
   COLORS.slate,
-  COLORS.dark,
   COLORS.lightSlate,
   COLORS.offWhite,
-  COLORS.darkSlate,
+  COLORS.accent1,
+  COLORS.accent2,
 ]
 
 /**
- * SingleCube - Individual cubelet component
+ * SingleCube - Individual cubelet with refined materials
  */
 const SingleCube = ({
   position,
@@ -37,7 +38,8 @@ const SingleCube = ({
   scale = 1,
   innerRef,
   onPointerDown,
-  userData
+  userData,
+  opacity = 1
 }) => {
   const localRef = useRef()
   const ref = innerRef || localRef
@@ -45,8 +47,8 @@ const SingleCube = ({
 
   useFrame((state, delta) => {
     if (ref.current) {
-      const targetScale = hovered ? scale * 1.05 : scale
-      ref.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), delta * 10)
+      const targetScale = hovered ? scale * 1.03 : scale
+      ref.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), delta * 8)
     }
   })
 
@@ -65,15 +67,17 @@ const SingleCube = ({
     >
       <RoundedBox
         args={[1, 1, 1]}
-        radius={0.08}
+        radius={0.1}
         smoothness={4}
         castShadow
         receiveShadow
       >
         <meshStandardMaterial
           color={color}
-          roughness={0.3}
-          metalness={0.1}
+          roughness={0.4}
+          metalness={0.05}
+          transparent
+          opacity={opacity}
         />
       </RoundedBox>
     </group>
@@ -81,9 +85,9 @@ const SingleCube = ({
 }
 
 /**
- * RubiksCubeGroup - The main Rubik's cube with slice-based animation
+ * RubiksCubeGroup - Main cube with refined motion
  */
-const RubiksCubeGroup = () => {
+const RubiksCubeGroup = ({ globalOpacity }) => {
   const topSliceRef = useRef()
   const midSliceRef = useRef()
   const botSliceRef = useRef()
@@ -98,7 +102,7 @@ const RubiksCubeGroup = () => {
   // Generate slice data
   const slices = useMemo(() => {
     const top = [], mid = [], bot = []
-    const gap = 1.05
+    const gap = 1.08
 
     for (let x = -1; x <= 1; x++) {
       for (let y = -1; y <= 1; y++) {
@@ -119,7 +123,7 @@ const RubiksCubeGroup = () => {
     return { top, mid, bot }
   }, [])
 
-  // Initialize physics velocities
+  // Initialize physics
   useEffect(() => {
     const totalCubes = 27
     for (let i = 0; i < totalCubes; i++) {
@@ -128,28 +132,22 @@ const RubiksCubeGroup = () => {
     }
   }, [])
 
-  // Setup idle animation pause/play on scroll
+  // Idle animation control
   useEffect(() => {
     idleTimeline.current?.play()
 
     const st = ScrollTrigger.create({
       trigger: '#details-section',
       start: 'center center',
-      onEnter: () => {
-        idleTimeline.current?.pause()
-      },
-      onLeaveBack: () => {
-        idleTimeline.current?.play()
-      }
+      onEnter: () => idleTimeline.current?.pause(),
+      onLeaveBack: () => idleTimeline.current?.play()
     })
     return () => st.kill()
   }, [])
 
-  // Global pointer up listener for drag
+  // Pointer up listener
   useEffect(() => {
-    const handlePointerUp = () => {
-      dragRef.current = null
-    }
+    const handlePointerUp = () => { dragRef.current = null }
     window.addEventListener('pointerup', handlePointerUp)
     return () => window.removeEventListener('pointerup', handlePointerUp)
   }, [])
@@ -161,7 +159,7 @@ const RubiksCubeGroup = () => {
     dragRef.current = index
   }
 
-  // Physics frame update
+  // Physics frame - refined for smoother motion
   useFrame((state, delta) => {
     if (!physics.current.active) return
 
@@ -171,9 +169,10 @@ const RubiksCubeGroup = () => {
     const distanceToFloor = (PHYSICS_FLOOR_Y - camera.position.y) / dir.y
     const mouseWorldPos = camera.position.clone().add(dir.multiplyScalar(distanceToFloor))
 
-    const repulsionRadius = 4.0
-    const repulsionForce = 45.0
-    const drag = 0.96
+    // Refined physics parameters - slower, more natural
+    const repulsionRadius = 3.5
+    const repulsionForce = 30.0
+    const drag = 0.94
     const worldWidth = viewport.width / 2
 
     cubesRefs.current.forEach((mesh, i) => {
@@ -189,12 +188,10 @@ const RubiksCubeGroup = () => {
       if (dragRef.current === i) {
         const targetPos = mouseFloorPos.clone()
         targetPos.y = PHYSICS_FLOOR_Y + 0.5
-
         const moveDiff = targetPos.clone().sub(mesh.position)
-        velocity.copy(moveDiff.multiplyScalar(10))
-        mesh.position.lerp(targetPos, 0.2)
+        velocity.copy(moveDiff.multiplyScalar(8))
+        mesh.position.lerp(targetPos, 0.15)
 
-        // Collision with others while dragging
         cubesRefs.current.forEach((otherMesh, j) => {
           if (i === j || !otherMesh) return
           const otherPos = new THREE.Vector3()
@@ -203,7 +200,7 @@ const RubiksCubeGroup = () => {
           const minDist = 1.3
           if (dist < minDist) {
             const pushDir = otherPos.clone().sub(mesh.position).normalize()
-            const force = (minDist - dist) * 30.0
+            const force = (minDist - dist) * 20.0
             physics.current.velocities[j].add(pushDir.multiplyScalar(force * delta))
           }
         })
@@ -220,19 +217,18 @@ const RubiksCubeGroup = () => {
         }
       }
 
-      // Cube-to-cube collision
+      // Cube collision
       cubesRefs.current.forEach((otherMesh, j) => {
         if (i === j || !otherMesh) return
         const otherPos = new THREE.Vector3()
         otherMesh.getWorldPosition(otherPos)
-
         const dist = currentWorldPos.distanceTo(otherPos)
-        const minDist = 1.1
+        const minDist = 1.2
         if (dist < minDist) {
           const pushDir = currentWorldPos.clone().sub(otherPos).normalize()
           pushDir.x += (Math.random() - 0.5) * 0.1
           pushDir.z += (Math.random() - 0.5) * 0.1
-          const force = (minDist - dist) * 15.0
+          const force = (minDist - dist) * 12.0
           velocity.add(pushDir.multiplyScalar(force * delta))
         }
       })
@@ -240,26 +236,24 @@ const RubiksCubeGroup = () => {
       // Wall collision
       const safeBoundary = Math.max(2, worldWidth - 1)
       if (mesh.position.x > safeBoundary) {
-        velocity.x *= -0.8
+        velocity.x *= -0.7
         mesh.position.x = safeBoundary
       } else if (mesh.position.x < -safeBoundary) {
-        velocity.x *= -0.8
+        velocity.x *= -0.7
         mesh.position.x = -safeBoundary
       }
 
-      // Apply velocity
       mesh.position.x += velocity.x * delta
       mesh.position.z += velocity.z * delta
 
-      // Idle bobbing
-      mesh.position.y += Math.sin(state.clock.elapsedTime * 3 + i) * 0.003
+      // Gentle bobbing
+      mesh.position.y += Math.sin(state.clock.elapsedTime * 2 + i) * 0.002
 
-      // Friction
       velocity.multiplyScalar(drag)
     })
   })
 
-  // Main scroll animation setup
+  // Main animation setup
   useLayoutEffect(() => {
     if (!mainGroupRef.current || !topSliceRef.current || !midSliceRef.current || !botSliceRef.current) return
 
@@ -272,34 +266,35 @@ const RubiksCubeGroup = () => {
       const { isMobile } = context.conditions
       const screenWidth = viewport.width
 
-      // Initial position - cube on right side of hero
-      const startPos = isMobile ? [0, 0, 0] : [4, 0.5, 0]
-      const startScale = isMobile ? 0.7 : 1.1
+      // Initial position
+      const startPos = isMobile ? [0, 0, 0] : [3.5, 0, 0]
+      const startScale = isMobile ? 0.75 : 1.0
 
       mainGroupRef.current.position.set(...startPos)
       mainGroupRef.current.scale.set(startScale, startScale, startScale)
-      mainGroupRef.current.rotation.set(0.3, -0.5, 0)
+      mainGroupRef.current.rotation.set(0.25, -0.4, 0)
 
-      // Idle animation timeline (slice rotations)
+      // Idle animation - SLOWER rotation for premium feel
       if (idleTimeline.current) idleTimeline.current.kill()
 
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.2, defaults: { ease: 'power3.inOut' } })
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5, defaults: { ease: 'power2.inOut' } })
       idleTimeline.current = tl
 
-      const t = 0.8
+      // Slower slice rotations
+      const t = 1.2
       tl.to(topSliceRef.current.rotation, { y: Math.PI / 2, duration: t })
-        .to(botSliceRef.current.rotation, { y: -Math.PI / 2, duration: t }, '<0.1')
-        .to(mainGroupRef.current.rotation, { z: Math.PI / 2, duration: t * 1.2 }, '+=0.1')
+        .to(botSliceRef.current.rotation, { y: -Math.PI / 2, duration: t }, '<0.2')
+        .to(mainGroupRef.current.rotation, { z: Math.PI / 2, duration: t * 1.3 }, '+=0.3')
         .to(midSliceRef.current.rotation, { y: Math.PI / 2, duration: t })
-        .to(topSliceRef.current.rotation, { y: Math.PI, duration: t }, '<0.1')
-        .to(mainGroupRef.current.rotation, { x: 0.2, y: -0.5, z: 0, duration: t * 1.5 }, '+=0.1')
-        .to(midSliceRef.current.rotation, { y: 0, duration: t }, '+=0.2')
+        .to(topSliceRef.current.rotation, { y: Math.PI, duration: t }, '<0.2')
+        .to(mainGroupRef.current.rotation, { x: 0.25, y: -0.4, z: 0, duration: t * 1.5 }, '+=0.3')
+        .to(midSliceRef.current.rotation, { y: 0, duration: t }, '+=0.4')
         .to(topSliceRef.current.rotation, { y: 0, duration: t }, '<')
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
-      // Timeline 1: Hero → Details - cube moves to center below text
-      const centerPosDetails = isMobile ? [0, -1, 0] : [0, -1.5, 0]
-      const detailScale = isMobile ? 0.8 : 1.0
+      // Timeline 1: Hero → Details
+      const centerPosDetails = isMobile ? [0, -0.5, 0] : [0, -1, 0]
+      const detailScale = isMobile ? 0.8 : 0.95
 
       const tl1 = gsap.timeline({
         scrollTrigger: {
@@ -307,13 +302,13 @@ const RubiksCubeGroup = () => {
           start: 'top top',
           endTrigger: '#details-section',
           end: 'center center',
-          scrub: 1.2,
+          scrub: 1.5,
           immediateRender: false,
         }
       })
 
       tl1.to(mainGroupRef.current.rotation, {
-        x: 0.2, y: Math.PI * 0.25, z: 0, duration: 1, ease: 'power2.inOut'
+        x: 0.2, y: Math.PI * 0.2, z: 0, duration: 1, ease: 'power2.inOut'
       }, 0)
       .to(mainGroupRef.current.position, {
         x: centerPosDetails[0], y: centerPosDetails[1], z: centerPosDetails[2], ease: 'power1.inOut'
@@ -322,9 +317,8 @@ const RubiksCubeGroup = () => {
         x: detailScale, y: detailScale, z: detailScale, ease: 'power1.inOut'
       }, 0)
 
-      // Timeline 2: Details → Breakdown (Explosion) - cube at center, explodes
-      const centerPosBreakdown = [0, 0, 0]
-      const breakdownScale = isMobile ? 0.7 : 0.9
+      // Timeline 2: Details → Breakdown (Explosion)
+      const breakdownScale = isMobile ? 0.7 : 0.85
 
       const tl2 = gsap.timeline({
         scrollTrigger: {
@@ -332,42 +326,39 @@ const RubiksCubeGroup = () => {
           start: 'bottom bottom',
           endTrigger: '#breakdown-section',
           end: 'center center',
-          scrub: 1,
+          scrub: 1.2,
         }
       })
 
-      // Reset slices before exploding
+      // Reset slices
       tl2.to([topSliceRef.current.rotation, midSliceRef.current.rotation, botSliceRef.current.rotation], {
         x: 0, y: 0, z: 0, duration: 0.3, ease: 'power2.inOut'
       }, 0)
 
       tl2.to(mainGroupRef.current.position, {
-        x: centerPosBreakdown[0], y: centerPosBreakdown[1], z: centerPosBreakdown[2],
-        ease: 'power2.inOut'
+        x: 0, y: 0, z: 0, ease: 'power2.inOut'
       }, 0)
       .to(mainGroupRef.current.scale, {
-        x: breakdownScale, y: breakdownScale, z: breakdownScale,
-        ease: 'power2.inOut'
+        x: breakdownScale, y: breakdownScale, z: breakdownScale, ease: 'power2.inOut'
       }, 0)
       .to(mainGroupRef.current.rotation, {
-        x: 0.5, y: Math.PI * 2.25, z: 0.2,
-        ease: 'power2.inOut'
+        x: 0.4, y: Math.PI * 2, z: 0.15, ease: 'power2.inOut'
       }, 0)
 
-      // Explode cubes outward
+      // Explode - controlled spread
       cubesRefs.current.forEach((mesh) => {
         if (!mesh) return
         const parentY =
-          slices.top.find(c => c.id === mesh.userData.id) ? 1.05 :
-          slices.bot.find(c => c.id === mesh.userData.id) ? -1.05 : 0
+          slices.top.find(c => c.id === mesh.userData.id) ? 1.08 :
+          slices.bot.find(c => c.id === mesh.userData.id) ? -1.08 : 0
 
         const direction = new THREE.Vector3(mesh.position.x, parentY, mesh.position.z).normalize()
         if (direction.length() === 0) direction.set(0, 1, 0)
 
-        const safeSpread = Math.min(3.0, screenWidth * 0.25)
-        const explodeDist = safeSpread + Math.random() * 2
+        const safeSpread = Math.min(2.5, screenWidth * 0.2)
+        const explodeDist = safeSpread + Math.random() * 1.5
 
-        const targetX = mesh.position.x + direction.x * (explodeDist * 0.7)
+        const targetX = mesh.position.x + direction.x * (explodeDist * 0.6)
         const targetY = mesh.position.y + (direction.y * explodeDist) - parentY
         const targetZ = mesh.position.z + direction.z * explodeDist
 
@@ -375,22 +366,23 @@ const RubiksCubeGroup = () => {
           x: targetX, y: targetY, z: targetZ, ease: 'power2.out'
         }, 0)
 
+        // Slower rotation during explosion
         tl2.to(mesh.rotation, {
-          x: Math.random() * Math.PI * 2,
-          y: Math.random() * Math.PI * 2,
-          z: Math.random() * Math.PI * 2,
+          x: Math.random() * Math.PI * 1.5,
+          y: Math.random() * Math.PI * 1.5,
+          z: Math.random() * Math.PI * 1.5,
           duration: 1
         }, 0)
       })
 
-      // Timeline 3: Breakdown → Footer (Physics Drop)
+      // Timeline 3: Drop with gravity-like motion
       const tl3 = gsap.timeline({
         scrollTrigger: {
           trigger: '#breakdown-section',
           start: 'center center',
           endTrigger: '#footer-section',
           end: 'bottom bottom',
-          scrub: 1.5,
+          scrub: 2, // Slower scrub for gravity feel
           onLeave: () => { physics.current.active = true },
           onEnterBack: () => {
             physics.current.active = false
@@ -402,24 +394,32 @@ const RubiksCubeGroup = () => {
       cubesRefs.current.forEach((mesh, i) => {
         if (!mesh) return
 
-        const dropRange = Math.max(2, screenWidth * 0.8)
+        const dropRange = Math.max(2, screenWidth * 0.6)
         const dropTargetX = (Math.random() - 0.5) * dropRange
-        const dropTargetZ = (Math.random() - 0.5) * 10
-        const dropTargetY = PHYSICS_FLOOR_Y + Math.random() * 1.5
+        const dropTargetZ = (Math.random() - 0.5) * 8
+        const dropTargetY = PHYSICS_FLOOR_Y + Math.random() * 1.2
 
         const parentYOffset =
-          slices.top.find(c => c.id === mesh.userData.id) ? 1.05 :
-          slices.bot.find(c => c.id === mesh.userData.id) ? -1.05 : 0
+          slices.top.find(c => c.id === mesh.userData.id) ? 1.08 :
+          slices.bot.find(c => c.id === mesh.userData.id) ? -1.08 : 0
 
         const finalLocalY = dropTargetY - parentYOffset
-        const randRot = Math.random() * Math.PI * 6
 
+        // Staggered drop with bounce
         tl3.to(mesh.position, {
-          x: dropTargetX, y: finalLocalY, z: dropTargetZ,
-          ease: 'bounce.out', duration: 2,
-        }, i * 0.01)
+          x: dropTargetX,
+          y: finalLocalY,
+          z: dropTargetZ,
+          ease: 'bounce.out',
+          duration: 2.5,
+        }, i * 0.02)
+
+        // Slower rotation during drop
         tl3.to(mesh.rotation, {
-          x: randRot, y: randRot, z: randRot, ease: 'power1.out'
+          x: Math.random() * Math.PI * 3,
+          y: Math.random() * Math.PI * 3,
+          z: Math.random() * Math.PI * 3,
+          ease: 'power1.out'
         }, '<')
       })
     })
@@ -441,28 +441,27 @@ const RubiksCubeGroup = () => {
         global={false}
         cursor={true}
         snap={true}
-        speed={2}
+        speed={1.5}
         zoom={1}
         rotation={[0, 0, 0]}
         polar={[-Infinity, Infinity]}
         azimuth={[-Infinity, Infinity]}
       >
         <group>
-          {/* Top Slice */}
-          <group ref={topSliceRef} position={[0, 1.05, 0]}>
+          <group ref={topSliceRef} position={[0, 1.08, 0]}>
             {slices.top.map((c, i) => (
               <SingleCube
                 key={c.id}
                 innerRef={addToRefs}
                 position={c.localPosition}
                 color={c.color}
+                opacity={globalOpacity}
                 onPointerDown={(e) => handleCubePointerDown(i, e)}
                 userData={{ id: c.id }}
               />
             ))}
           </group>
 
-          {/* Middle Slice */}
           <group ref={midSliceRef} position={[0, 0, 0]}>
             {slices.mid.map((c, i) => (
               <SingleCube
@@ -470,20 +469,21 @@ const RubiksCubeGroup = () => {
                 innerRef={addToRefs}
                 position={c.localPosition}
                 color={c.color}
+                opacity={globalOpacity}
                 onPointerDown={(e) => handleCubePointerDown(topCount + i, e)}
                 userData={{ id: c.id }}
               />
             ))}
           </group>
 
-          {/* Bottom Slice */}
-          <group ref={botSliceRef} position={[0, -1.05, 0]}>
+          <group ref={botSliceRef} position={[0, -1.08, 0]}>
             {slices.bot.map((c, i) => (
               <SingleCube
                 key={c.id}
                 innerRef={addToRefs}
                 position={c.localPosition}
                 color={c.color}
+                opacity={globalOpacity}
                 onPointerDown={(e) => handleCubePointerDown(topCount + midCount + i, e)}
                 userData={{ id: c.id }}
               />
@@ -496,17 +496,39 @@ const RubiksCubeGroup = () => {
 }
 
 /**
- * Scene - Three.js scene with lighting
+ * Scene - Refined lighting for depth
  */
-const Scene = () => {
+const Scene = ({ globalOpacity }) => {
   return (
     <>
-      <ambientLight intensity={0.7} />
-      <directionalLight position={[5, 10, 7]} intensity={1.5} castShadow />
-      <directionalLight position={[-5, 5, -2]} intensity={1} color="#bfdbfe" />
-      <spotLight position={[0, 5, -10]} intensity={0.5} color="#ffffff" />
+      {/* Ambient - soft fill */}
+      <ambientLight intensity={0.6} />
 
-      <RubiksCubeGroup />
+      {/* Key light - top right, warm */}
+      <directionalLight
+        position={[8, 12, 5]}
+        intensity={1.2}
+        castShadow
+        shadow-mapSize={[1024, 1024]}
+        color="#ffffff"
+      />
+
+      {/* Fill light - left, cooler */}
+      <directionalLight
+        position={[-6, 4, -3]}
+        intensity={0.5}
+        color="#e0e7ff"
+      />
+
+      {/* Rim light - subtle backlight */}
+      <spotLight
+        position={[0, 8, -12]}
+        intensity={0.3}
+        color="#f0f0f0"
+        angle={0.5}
+      />
+
+      <RubiksCubeGroup globalOpacity={globalOpacity} />
 
       <Environment preset="city" />
     </>
@@ -514,10 +536,34 @@ const Scene = () => {
 }
 
 /**
- * RubiksCube - Main component
+ * RubiksCube - Main component with global presence
  */
 const RubiksCube = ({ isVisible = true }) => {
   const containerRef = useRef()
+  const [opacity, setOpacity] = useState(1)
+
+  // Gradual opacity fade based on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY
+      const windowHeight = window.innerHeight
+      const docHeight = document.documentElement.scrollHeight
+
+      // Calculate scroll progress (0 to 1)
+      const scrollProgress = scrollY / (docHeight - windowHeight)
+
+      // Fade starts at 70% scroll, fully faded at 95%
+      if (scrollProgress > 0.7) {
+        const fadeProgress = (scrollProgress - 0.7) / 0.25
+        setOpacity(Math.max(0.3, 1 - fadeProgress * 0.7))
+      } else {
+        setOpacity(1)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   if (!isVisible) return null
 
@@ -525,16 +571,20 @@ const RubiksCube = ({ isVisible = true }) => {
     <div
       ref={containerRef}
       className="fixed inset-0 pointer-events-auto hidden md:block"
-      style={{ zIndex: 0 }}
+      style={{
+        zIndex: 0,
+        opacity: opacity,
+        transition: 'opacity 0.3s ease-out'
+      }}
     >
       <Canvas
         shadows
-        dpr={[1, 2]}
-        camera={{ position: [0, 0, 12], fov: 35 }}
+        dpr={[1, 1.5]}
+        camera={{ position: [0, 0, 11], fov: 40 }}
         gl={{ antialias: true, alpha: true }}
       >
         <color attach="background" args={['#FAFAFA']} />
-        <Scene />
+        <Scene globalOpacity={opacity} />
       </Canvas>
     </div>
   )
