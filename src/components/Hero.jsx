@@ -80,11 +80,12 @@ const Hero = () => {
             {/* Primary CTA - Shadow bloom, gentle scale */}
             <a
               href="#projects"
-              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full pl-12 pr-5 py-4
+              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full py-4
                          shadow-[0_2px_20px_-4px_rgba(0,0,0,0.2)]
                          hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
                          hover:scale-[1.02]
                          transition-all duration-300 ease-out"
+              style={{ paddingLeft: '48px', paddingRight: '20px' }}
             >
               <span className="text-[15px] font-medium tracking-wide">View Projects</span>
               <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center
@@ -243,11 +244,12 @@ const Hero = () => {
           <div className="reveal delay-3">
             <a
               href="#contact"
-              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full pl-12 pr-5 py-4
+              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full py-4
                          shadow-[0_2px_20px_-4px_rgba(0,0,0,0.2)]
                          hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
                          hover:scale-[1.02]
                          transition-all duration-300 ease-out"
+              style={{ paddingLeft: '48px', paddingRight: '20px' }}
             >
               <span className="text-[15px] font-medium tracking-wide">Start a Conversation</span>
               <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center
