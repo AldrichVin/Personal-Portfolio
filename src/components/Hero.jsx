@@ -80,7 +80,7 @@ const Hero = () => {
             {/* Primary CTA - Shadow bloom, gentle scale */}
             <a
               href="#projects"
-              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full pl-10 pr-5 py-4
+              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full pl-12 pr-5 py-4
                          shadow-[0_2px_20px_-4px_rgba(0,0,0,0.2)]
                          hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
                          hover:scale-[1.02]
@@ -243,7 +243,7 @@ const Hero = () => {
           <div className="reveal delay-3">
             <a
               href="#contact"
-              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full pl-10 pr-5 py-4
+              className="group relative inline-flex items-center justify-center gap-4 bg-neutral-900 text-white rounded-full pl-12 pr-5 py-4
                          shadow-[0_2px_20px_-4px_rgba(0,0,0,0.2)]
                          hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
                          hover:scale-[1.02]
