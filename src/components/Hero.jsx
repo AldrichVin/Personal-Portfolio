@@ -85,7 +85,7 @@ const Hero = () => {
                          hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
                          hover:scale-[1.02]
                          transition-all duration-300 ease-out"
-              style={{ paddingLeft: '16px', paddingRight: '10px' }}
+              style={{ paddingLeft: '16px', paddingRight: '6px' }}
             >
               <span className="text-[15px] font-medium tracking-wide">View Projects</span>
               <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center
@@ -249,7 +249,7 @@ const Hero = () => {
                          hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.3)]
                          hover:scale-[1.02]
                          transition-all duration-300 ease-out"
-              style={{ paddingLeft: '16px', paddingRight: '10px' }}
+              style={{ paddingLeft: '16px', paddingRight: '6px' }}
             >
               <span className="text-[15px] font-medium tracking-wide">Start a Conversation</span>
               <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center
