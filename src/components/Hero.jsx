@@ -1,30 +1,25 @@
 import { ArrowDown, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 
 /**
- * Hero Section - Datakeeper-inspired layout
+ * Hero Section - Premium Editorial Design
  *
- * Content revolves around the 3D Rubik's cube:
- * 1. Hero intro - content on left, cube on right
- * 2. Details section - centered text, cube below
- * 3. Breakdown section - specs on sides, cube explodes in center
- * 4. Footer section - centered CTA, cubes drop to floor
+ * Visual hierarchy:
+ * - Clear primary/secondary CTA distinction
+ * - Stats with consistent alignment and weight
+ * - Reduced visual competition with 3D elements
  */
 
 /**
- * SpecLabel - HUD-style stat display for breakdown section
+ * StatCard - Unified stat display with consistent hierarchy
  */
-const SpecLabel = ({ label, value, description, align = 'left' }) => (
-  <div className={`flex flex-col ${align === 'right' ? 'items-end text-right' : 'items-start text-left'} group relative z-10`}>
-    {/* Glassmorphism backing */}
-    <div className="absolute -inset-4 bg-white/40 backdrop-blur-md rounded-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-white/40 shadow-sm" />
-    <div className="absolute -inset-4 bg-white/30 backdrop-blur-[2px] rounded-2xl -z-20 border border-white/20" />
-
-    <div className={`flex items-center gap-2 mb-2 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}>
-      <div className="h-[1px] w-8 bg-indigo-500/30 group-hover:w-16 transition-all duration-500" />
-      <span className="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">{label}</span>
-    </div>
-    <h4 className="text-2xl sm:text-3xl md:text-4xl font-serif italic text-neutral-900 mb-1">{value}</h4>
-    <p className="text-[10px] sm:text-xs font-medium text-neutral-500 max-w-[150px]">{description}</p>
+const StatCard = ({ value, label, align = 'left' }) => (
+  <div className={`flex flex-col ${align === 'right' ? 'items-end text-right' : 'items-start'}`}>
+    <span className="text-4xl md:text-5xl font-semibold text-neutral-900 tracking-tight leading-none mb-2">
+      {value}
+    </span>
+    <span className="text-sm font-medium text-neutral-500 tracking-wide uppercase">
+      {label}
+    </span>
   </div>
 )
 
@@ -33,162 +28,148 @@ const Hero = () => {
     <div className="relative w-full">
       {/* ============================================
           SECTION 1: Hero Intro
-          Cube: Right side, rotating
           ============================================ */}
       <section
         id="hero-section"
         className="relative min-h-[100dvh] flex flex-col w-full px-6 sm:px-12 md:px-16 lg:px-24"
       >
-        {/* Main content */}
-        <main className="flex-1 flex flex-col justify-center max-w-4xl pt-24">
-          <div className="reveal delay-1">
-            <div className="mb-6 md:mb-8 flex items-center gap-3 text-neutral-900 font-medium text-xs md:text-base">
-              <span className="font-bold">→</span>
-              <span>full-stack developer</span>
+        <main className="flex-1 flex flex-col justify-center max-w-3xl pt-28 pb-16">
+          {/* Overline */}
+          <div className="reveal delay-1 mb-8">
+            <div className="inline-flex items-center gap-3 text-neutral-600 font-medium text-sm tracking-wide">
+              <span className="w-8 h-px bg-neutral-400" />
+              <span>Full-Stack Developer</span>
             </div>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] md:leading-[0.95] font-medium text-neutral-900 tracking-[-0.03em] mb-8 md:mb-12">
-              Building{' '}
-              <span className="font-serif italic">digital</span>
-              <br />
-              <span className="text-neutral-400">products with</span>
-              <br />
-              clarity<span className="text-indigo-500">.</span>
-            </h1>
           </div>
 
-          <div className="reveal delay-2">
-            <p className="text-neutral-500 text-sm md:text-lg leading-relaxed mb-10 md:mb-12 max-w-md">
-              Turning complex problems into elegant, user-centric solutions
-              with React, Next.js, and TypeScript.
-            </p>
-          </div>
+          {/* Headline - Increased contrast for secondary text */}
+          <h1 className="reveal delay-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] font-semibold text-neutral-900 tracking-[-0.02em] mb-8">
+            Building{' '}
+            <span className="font-serif italic font-medium">digital</span>
+            <br />
+            <span className="text-neutral-500">products with</span>
+            <br />
+            clarity<span className="text-indigo-500">.</span>
+          </h1>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 reveal delay-3">
+          {/* Lead text - Better contrast */}
+          <p className="reveal delay-2 text-neutral-600 text-lg md:text-xl leading-relaxed mb-10 max-w-lg">
+            Turning complex problems into elegant, user-centric solutions
+            with modern web technologies.
+          </p>
+
+          {/* CTA Buttons - Fixed alignment, clear hierarchy */}
+          <div className="reveal delay-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            {/* Primary CTA */}
             <a
               href="#projects"
-              className="group relative flex items-center justify-between bg-neutral-900 text-white rounded-full pl-6 md:pl-8 pr-2 py-2 h-14 md:h-16 min-w-[200px] hover:bg-neutral-800 transition-all duration-300 shadow-xl"
+              className="group inline-flex items-center justify-center gap-3 bg-neutral-900 text-white rounded-full px-7 h-14 hover:bg-neutral-800 transition-all duration-200 shadow-lg shadow-neutral-900/10"
             >
-              <span className="text-sm md:text-base font-medium">View Projects</span>
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
-                <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 text-neutral-900" />
+              <span className="text-[15px] font-medium leading-none">View Projects</span>
+              <div className="w-8 h-8 bg-white/15 rounded-full flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                <ArrowUpRight className="w-4 h-4" />
               </div>
             </a>
+
+            {/* Secondary CTA */}
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-neutral-200 text-neutral-700 text-sm font-medium rounded-lg hover:border-neutral-400 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-7 h-14 border border-neutral-300 text-neutral-700 text-[15px] font-medium rounded-full hover:border-neutral-400 hover:bg-neutral-50 transition-all duration-200"
             >
               Get in Touch
             </a>
           </div>
 
-          <div className="flex items-center gap-6 mt-8 reveal delay-4">
-            <a href="https://github.com" className="text-neutral-400 hover:text-neutral-900 transition-colors">
-              <Github size={20} />
+          {/* Social links */}
+          <div className="reveal delay-4 flex items-center gap-5 mt-10">
+            <a href="https://github.com" className="text-neutral-400 hover:text-neutral-700 transition-colors p-1">
+              <Github size={20} strokeWidth={1.5} />
             </a>
-            <a href="https://linkedin.com" className="text-neutral-400 hover:text-neutral-900 transition-colors">
-              <Linkedin size={20} />
+            <a href="https://linkedin.com" className="text-neutral-400 hover:text-neutral-700 transition-colors p-1">
+              <Linkedin size={20} strokeWidth={1.5} />
             </a>
-            <a href="mailto:hello@example.com" className="text-neutral-400 hover:text-neutral-900 transition-colors">
-              <Mail size={20} />
+            <a href="mailto:hello@example.com" className="text-neutral-400 hover:text-neutral-700 transition-colors p-1">
+              <Mail size={20} strokeWidth={1.5} />
             </a>
           </div>
         </main>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 reveal delay-5">
-          <div className="animate-subtle-bounce">
-            <ArrowDown size={20} className="text-neutral-400" strokeWidth={1.5} />
+          <div className="animate-subtle-bounce opacity-50">
+            <ArrowDown size={18} className="text-neutral-400" strokeWidth={1.5} />
           </div>
         </div>
       </section>
 
       {/* ============================================
-          SECTION 2: Details / About Preview
-          Cube: Moving to center, still rotating
+          SECTION 2: Details
           ============================================ */}
       <section
         id="details-section"
-        className="relative w-full min-h-[100dvh] flex flex-col items-center justify-start pt-20 md:pt-32 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[90dvh] flex flex-col items-center justify-center py-24 px-6 sm:px-12 md:px-16"
       >
-        <div className="flex flex-col items-center text-center space-y-8 backdrop-blur-sm bg-white/60 md:bg-transparent p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20 shadow-sm md:shadow-none border border-white/50 md:border-none">
-          <div className="inline-flex items-center gap-2 text-indigo-500 font-medium uppercase tracking-widest text-xs reveal">
-            <div className="w-2 h-2 rounded-full bg-indigo-500" />
+        <div className="flex flex-col items-center text-center max-w-2xl mx-auto">
+          {/* Label */}
+          <div className="reveal inline-flex items-center gap-2 text-indigo-500 font-medium uppercase tracking-widest text-xs mb-6">
+            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
             <span>Crafting Experiences</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-serif italic text-neutral-900 leading-tight reveal delay-1">
-            <span className="font-sans font-semibold not-italic">Precision</span> meets{' '}
-            <span className="block mt-2">creativity.</span>
+
+          {/* Headline */}
+          <h2 className="reveal delay-1 text-3xl sm:text-4xl md:text-5xl font-semibold text-neutral-900 leading-tight tracking-tight mb-6">
+            <span className="font-serif italic font-medium">Precision</span> meets{' '}
+            <span className="font-serif italic font-medium">creativity</span>
           </h2>
-          <p className="text-neutral-500 text-sm sm:text-base md:text-lg leading-relaxed max-w-md mx-auto reveal delay-2">
-            From data platforms to interactive web applications, I bring
+
+          {/* Description - Better contrast */}
+          <p className="reveal delay-2 text-neutral-600 text-base sm:text-lg leading-relaxed max-w-md">
+            From data platforms to interactive applications, I bring
             analytical depth and creative problem-solving to every project.
           </p>
         </div>
-        {/* Spacer for cube visibility */}
-        <div className="flex-1 w-full min-h-[50vh]" />
+
+        {/* Spacer for cube */}
+        <div className="flex-1 w-full min-h-[30vh]" />
       </section>
 
       {/* ============================================
-          SECTION 3: Breakdown / Stats
-          Cube: Center, exploding outward
-          Content: Stats on left and right sides
+          SECTION 3: Stats / Breakdown
           ============================================ */}
       <section
         id="breakdown-section"
-        className="relative w-full min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden py-10 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[90dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
       >
         {/* Section header */}
-        <div className="absolute top-10 md:top-24 left-0 w-full text-center z-10">
-          <div className="inline-block relative">
-            <div className="absolute inset-0 bg-white/40 blur-xl rounded-full" />
-            <h3 className="relative text-2xl md:text-5xl font-serif italic text-neutral-900 mb-2 md:mb-4 reveal">
-              Technical Expertise
-            </h3>
-          </div>
-          <div className="inline-block px-3 py-1 rounded-full border border-neutral-200 bg-white/40 backdrop-blur-md reveal delay-1">
-            <span className="text-[10px] md:text-xs font-mono tracking-[0.2em] uppercase text-neutral-500">
-              Building blocks of innovation
-            </span>
+        <div className="text-center mb-16">
+          <h3 className="reveal text-2xl md:text-4xl font-semibold text-neutral-900 tracking-tight mb-3">
+            Technical <span className="font-serif italic font-medium">Expertise</span>
+          </h3>
+          <p className="reveal delay-1 text-sm font-medium text-neutral-500 uppercase tracking-widest">
+            Building blocks of innovation
+          </p>
+        </div>
+
+        {/* Stats grid - Unified system */}
+        <div className="reveal delay-2 w-full max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <StatCard value="6+" label="Projects" />
+            <StatCard value="3yr" label="Experience" />
+            <StatCard value="12+" label="Technologies" />
+            <StatCard value="BSc" label="Education" />
           </div>
         </div>
 
-        {/* Stats positioned around the cube */}
-        <div className="max-w-[1400px] w-full h-full relative flex flex-col md:flex-row items-center justify-between z-10 mt-20 md:mt-0 mx-auto">
-          {/* Mobile: Top Grid */}
-          <div className="md:hidden grid grid-cols-2 gap-x-8 gap-y-8 w-full mb-8">
-            <SpecLabel label="Projects" value="6+" description="End-to-end builds" align="left" />
-            <SpecLabel label="Experience" value="3yr" description="Development journey" align="right" />
-          </div>
+        {/* Center space for cube */}
+        <div className="w-full h-[25vh] md:h-[30vh]" />
 
-          {/* Desktop: Left Column */}
-          <div className="hidden md:flex flex-col gap-24 reveal delay-2">
-            <SpecLabel label="Projects" value="6+" description="End-to-end builds" align="left" />
-            <SpecLabel label="Experience" value="3yr" description="Development journey" align="left" />
-          </div>
-
-          {/* Center area for cube explosion */}
-          <div className="w-full h-[40vh] md:h-auto md:flex-1" />
-
-          {/* Mobile: Bottom Grid */}
-          <div className="md:hidden grid grid-cols-2 gap-x-8 gap-y-8 w-full mt-8">
-            <SpecLabel label="Technologies" value="12+" description="Tools mastered" align="left" />
-            <SpecLabel label="Education" value="BSc" description="Monash University" align="right" />
-          </div>
-
-          {/* Desktop: Right Column */}
-          <div className="hidden md:flex flex-col gap-24 text-right reveal delay-3">
-            <SpecLabel label="Technologies" value="12+" description="Tools mastered" align="right" />
-            <SpecLabel label="Education" value="BSc" description="Monash University" align="right" />
-          </div>
-        </div>
-
-        {/* Tech stack pills */}
-        <div className="absolute bottom-10 md:bottom-16 left-0 w-full text-center">
-          <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto px-6 reveal delay-4">
+        {/* Tech stack */}
+        <div className="reveal delay-3 w-full max-w-3xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-2.5">
             {['React', 'TypeScript', 'Next.js', 'Python', 'Node.js', 'PostgreSQL', 'Tailwind', 'Three.js'].map((tech) => (
               <span
                 key={tech}
-                className="px-4 py-2 bg-white/80 backdrop-blur-sm border border-neutral-200 rounded-full text-sm text-neutral-600 hover:border-indigo-300 hover:text-indigo-600 transition-colors"
+                className="px-4 py-2 bg-white border border-neutral-200 rounded-full text-sm font-medium text-neutral-600 hover:border-neutral-300 hover:text-neutral-800 transition-colors shadow-sm"
               >
                 {tech}
               </span>
@@ -198,55 +179,40 @@ const Hero = () => {
       </section>
 
       {/* ============================================
-          SECTION 4: Footer / CTA
-          Cube: Dropped to floor, interactive
+          SECTION 4: Footer CTA
           ============================================ */}
       <section
         id="footer-section"
-        className="relative w-full min-h-[90dvh] flex flex-col items-center justify-center py-20 overflow-hidden px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[70dvh] flex flex-col items-center justify-center py-16 px-6 sm:px-12 md:px-16"
       >
-        <div className="relative z-20 flex flex-col items-center justify-center w-full text-center">
-          <span className="text-xs md:text-sm font-mono uppercase tracking-[0.3em] text-neutral-400 mb-8 reveal">
-            Final Output
+        <div className="relative z-20 flex flex-col items-center text-center max-w-xl">
+          {/* Label */}
+          <span className="reveal text-xs font-medium text-neutral-400 uppercase tracking-[0.2em] mb-6">
+            Ready to collaborate
           </span>
 
-          <div className="flex flex-col items-center mb-24 md:mb-32 reveal delay-1">
-            <h2 className="text-4xl sm:text-6xl md:text-8xl font-serif italic text-neutral-900 leading-none tracking-tight">
-              Order from
-            </h2>
-            <span className="text-4xl sm:text-6xl md:text-8xl font-sans font-bold text-neutral-900 leading-none tracking-tight -mt-2 md:-mt-4">
-              Chaos.
-            </span>
-          </div>
+          {/* Headline */}
+          <h2 className="reveal delay-1 text-4xl sm:text-5xl md:text-6xl font-semibold text-neutral-900 leading-[1.1] tracking-tight mb-4">
+            <span className="font-serif italic font-medium">Order</span> from{' '}
+            <span className="font-serif italic font-medium">Chaos</span>
+          </h2>
 
-          {/* CTA Button */}
-          <div className="relative group cursor-pointer w-full max-w-xs sm:max-w-sm mx-auto z-20 reveal delay-2">
-            <div className="relative overflow-hidden rounded-2xl bg-white/20 backdrop-blur-xl border border-white/50 shadow-2xl transition-all duration-300 group-hover:bg-white/30 group-hover:scale-105">
-              <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500/50 group-hover:bg-indigo-500 transition-colors" />
-              <a
-                href="#contact"
-                className="w-full px-6 sm:px-8 py-4 sm:py-6 flex items-center justify-between text-neutral-900"
-              >
-                <div className="flex flex-col items-start text-left">
-                  <span className="text-[10px] sm:text-xs font-mono uppercase tracking-widest text-neutral-500 mb-1">
-                    Start a project
-                  </span>
-                  <span className="text-xl sm:text-2xl font-semibold tracking-tight">Get in Touch</span>
-                </div>
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-neutral-900 text-white flex items-center justify-center group-hover:rotate-45 transition-transform duration-500 shadow-lg">
-                  <ArrowUpRight size={20} strokeWidth={1.5} />
-                </div>
-              </a>
+          {/* Subtext */}
+          <p className="reveal delay-2 text-neutral-600 text-lg mb-10 max-w-sm">
+            Let's build something extraordinary together.
+          </p>
 
-              {/* Animated lines */}
-              <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neutral-300 to-transparent group-hover:via-neutral-500 transition-all" />
-            </div>
-
-            {/* Sub-label */}
-            <div className="absolute -bottom-8 left-0 w-full flex justify-between text-[10px] font-mono text-neutral-400 uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-              <span>Available for work</span>
-              <span>Let's build together</span>
-            </div>
+          {/* CTA Button - Fixed alignment */}
+          <div className="reveal delay-3">
+            <a
+              href="#contact"
+              className="group inline-flex items-center justify-center gap-3 bg-neutral-900 text-white rounded-full px-8 h-14 hover:bg-neutral-800 transition-all duration-200 shadow-lg shadow-neutral-900/10"
+            >
+              <span className="text-[15px] font-medium leading-none">Start a Conversation</span>
+              <div className="w-8 h-8 bg-white/15 rounded-full flex items-center justify-center group-hover:bg-white/20 group-hover:rotate-45 transition-all duration-300">
+                <ArrowUpRight className="w-4 h-4" />
+              </div>
+            </a>
           </div>
         </div>
       </section>
