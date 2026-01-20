@@ -33,7 +33,7 @@ const Hero = () => {
         id="hero-section"
         className="relative min-h-[100dvh] flex flex-col w-full px-6 sm:px-12 md:px-16 lg:px-24"
       >
-        <main className="flex-1 flex flex-col justify-center max-w-3xl pt-28 pb-16">
+        <main className="flex-1 flex flex-col justify-center max-w-3xl pt-28 pb-16 ml-4 sm:ml-8 md:ml-16 lg:ml-24">
           {/* Overline */}
           <div className="reveal delay-1 mb-8">
             <div className="inline-flex items-center gap-3 text-neutral-600 font-medium text-sm tracking-wide">
