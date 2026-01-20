@@ -8,12 +8,6 @@
  */
 
 const About = () => {
-  const techStack = [
-    'Python', 'SQL', 'R', 'Pandas',
-    'NumPy', 'Power BI', 'Tableau',
-    'PostgreSQL', 'MongoDB', 'Git'
-  ]
-
   return (
     <section
       id="about"
@@ -50,24 +44,6 @@ const About = () => {
               </p>
             </div>
 
-            {/* Tech Stack */}
-            <div className="reveal delay-4">
-              {/* Label style */}
-              <span className="text-xs font-semibold uppercase tracking-widest text-neutral-400 block mb-5">
-                Core Tools
-              </span>
-              <div className="flex flex-wrap gap-3">
-                {techStack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-4 py-2 text-sm font-medium text-neutral-600 bg-neutral-50 border border-neutral-200 rounded-md
-                               hover:border-neutral-300 hover:bg-neutral-100 transition-colors duration-200"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
