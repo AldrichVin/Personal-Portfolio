@@ -30,19 +30,19 @@ const Skills = () => {
   return (
     <section id="skills" className="section section-border bg-white">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           {/* Section Label */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <span className="text-label reveal">Expertise</span>
           </div>
 
           {/* Skills Grid */}
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 sm:gap-10">
               {skillGroups.map((group, groupIndex) => (
                 <div key={group.name} className={`reveal delay-${groupIndex + 1}`}>
                   {/* H3 style */}
-                  <h3 className="text-lg font-semibold text-neutral-900 mb-6">
+                  <h3 className="text-h3 mb-6">
                     {group.name}
                   </h3>
                   <ul className="space-y-3.5">

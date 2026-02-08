@@ -13,17 +13,17 @@ const Contact = () => {
   return (
     <section id="contact" className="section">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           {/* Section Label */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <span className="text-label reveal">Contact</span>
           </div>
 
           {/* Content */}
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-10">
             {/* Heading with availability - H2 style */}
             <div className="flex flex-wrap items-center gap-4 mb-6 reveal delay-1">
-              <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900">
+              <h2 className="text-h1">
                 Let's work together.
               </h2>
               <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full uppercase tracking-wide">
@@ -43,7 +43,7 @@ const Contact = () => {
               href="mailto:aldrichvin040205@gmail.com"
               className="group inline-flex items-center gap-2 text-base font-medium text-neutral-900 hover:text-neutral-600 transition-colors reveal delay-3"
             >
-              <span className="border-b border-neutral-300 group-hover:border-neutral-500 transition-colors pb-0.5">
+              <span className="link-underline pb-0.5">
                 aldrichvin040205@gmail.com
               </span>
               <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

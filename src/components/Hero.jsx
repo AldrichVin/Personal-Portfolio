@@ -13,10 +13,10 @@ import { ArrowDown, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 
 const StatCard = ({ value, label }) => (
   <div className="flex flex-col items-start">
-    <span className="text-4xl md:text-5xl font-semibold text-neutral-900 tracking-tight leading-none mb-3">
+    <span className="font-mono text-4xl md:text-5xl font-medium text-neutral-900 tracking-tight leading-none mb-3">
       {value}
     </span>
-    <span className="text-xs font-semibold text-neutral-400 tracking-widest uppercase">
+    <span className="text-label">
       {label}
     </span>
   </div>
@@ -31,7 +31,6 @@ const Hero = () => {
       <section
         id="hero-section"
         className="relative min-h-[100dvh] flex flex-col w-full overflow-hidden"
-        style={{ paddingLeft: '200px', paddingRight: '24px' }}
       >
         {/* Subtle radial gradient for depth */}
         <div
@@ -41,19 +40,20 @@ const Hero = () => {
           }}
         />
 
-        <main className="relative z-10 flex-1 flex flex-col justify-center max-w-2xl pt-32 pb-20">
+        <main className="relative z-10 flex-1 flex flex-col justify-center container max-w-none pt-32 pb-20">
+          <div className="max-w-2xl">
           {/* Overline - Label style */}
           <div className="reveal delay-1 mb-14">
-            <div className="inline-flex items-center gap-4 text-neutral-400 text-xs font-semibold tracking-widest uppercase">
+            <div className="inline-flex items-center gap-4 text-label">
               <span className="w-10 h-px bg-neutral-300" />
               <span>Data Analyst / Data Science Graduate</span>
             </div>
           </div>
 
           {/* Headline - H1 */}
-          <h1 className="reveal delay-1 text-[2.5rem] sm:text-[3rem] md:text-[4rem] lg:text-[4.5rem] leading-[1.15] font-semibold text-neutral-900 tracking-[-0.03em] mb-16">
+          <h1 className="reveal delay-1 text-display mb-16">
             <span className="block mb-4">
-              Turning <span className="font-serif italic font-normal text-neutral-700">data</span>
+              Turning <span className="text-serif-accent text-neutral-700">data</span>
             </span>
             <span className="block text-neutral-400 mb-4">into actionable</span>
             <span className="block">
@@ -133,6 +133,7 @@ const Hero = () => {
               <Mail size={20} strokeWidth={1.5} className="relative z-10" />
             </a>
           </div>
+          </div>
         </main>
 
         {/* Scroll indicator */}
@@ -148,19 +149,19 @@ const Hero = () => {
           ============================================ */}
       <section
         id="details-section"
-        className="relative w-full min-h-[85dvh] flex flex-col items-center justify-center py-28 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[75dvh] flex flex-col items-center justify-center py-24 px-6 sm:px-12 md:px-16"
       >
         <div className="flex flex-col items-center text-center max-w-xl mx-auto">
           {/* Label */}
-          <div className="reveal inline-flex items-center gap-2 text-indigo-500 text-xs font-semibold uppercase tracking-widest mb-8">
+          <div className="reveal inline-flex items-center gap-2 text-indigo-500 mb-8">
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-            <span>What I Do</span>
+            <span className="text-label !text-indigo-500">What I Do</span>
           </div>
 
           {/* Headline - H2 */}
-          <h2 className="reveal delay-1 text-2xl sm:text-3xl md:text-4xl font-semibold text-neutral-900 leading-tight tracking-tight mb-8">
-            <span className="font-serif italic font-normal">Analysis</span> meets{' '}
-            <span className="font-serif italic font-normal">insight</span>
+          <h2 className="reveal delay-1 text-h1 mb-8">
+            <span className="text-serif-accent">Analysis</span> meets{' '}
+            <span className="text-serif-accent">insight</span>
           </h2>
 
           {/* Description - Body */}
@@ -170,7 +171,7 @@ const Hero = () => {
           </p>
         </div>
 
-        <div className="flex-1 w-full min-h-[25vh]" />
+        <div className="flex-1 w-full min-h-[15vh]" />
       </section>
 
       {/* ============================================
@@ -178,16 +179,16 @@ const Hero = () => {
           ============================================ */}
       <section
         id="breakdown-section"
-        className="relative w-full min-h-[75dvh] flex flex-col items-center justify-center py-24 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[70dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
       >
         {/* Section header */}
         <div className="text-center mb-16">
           {/* H2 */}
-          <h2 className="reveal text-2xl md:text-3xl font-semibold text-neutral-900 tracking-tight mb-4">
-            Technical <span className="font-serif italic font-normal">Background</span>
+          <h2 className="reveal text-h1 mb-4">
+            Technical <span className="text-serif-accent">Background</span>
           </h2>
           {/* Label */}
-          <p className="reveal delay-1 text-xs font-semibold text-neutral-400 uppercase tracking-widest">
+          <p className="reveal delay-1 text-label">
             Education & Experience
           </p>
         </div>
@@ -202,7 +203,7 @@ const Hero = () => {
           </div>
         </div>
 
-        <div className="w-full h-[20vh] md:h-[25vh]" />
+        <div className="w-full h-[10vh] md:h-[15vh]" />
       </section>
 
       {/* ============================================
@@ -210,18 +211,18 @@ const Hero = () => {
           ============================================ */}
       <section
         id="footer-section"
-        className="relative w-full min-h-[65dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[60dvh] flex flex-col items-center justify-center py-16 px-6 sm:px-12 md:px-16"
       >
         <div className="relative z-20 flex flex-col items-center text-center max-w-lg">
           {/* Label */}
-          <span className="reveal text-xs font-semibold text-neutral-400 uppercase tracking-widest mb-8">
+          <span className="reveal text-label mb-8">
             Open to opportunities
           </span>
 
           {/* Headline - H2 */}
-          <h2 className="reveal delay-1 text-2xl sm:text-3xl md:text-4xl font-semibold text-neutral-900 leading-[1.2] tracking-tight mb-8">
+          <h2 className="reveal delay-1 text-h1 leading-[1.2] mb-8">
             Let's turn your{' '}
-            <span className="font-serif italic font-normal">data</span>
+            <span className="text-serif-accent">data</span>
             <br />into decisions
           </h2>
 

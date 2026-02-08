@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ============================================
    EDITORIAL PORTFOLIO - REFINED DESIGN SYSTEM
@@ -23,7 +23,7 @@
   --space-3xl: 6rem;     /* 96px */
 
   /* Colors */
-  --color-bg: #FAFAFA;
+  --color-bg: #FAFAF8;
   --color-bg-alt: #FFFFFF;
   --color-text: #171717;
   --color-text-secondary: #525252;
@@ -64,6 +64,19 @@ body {
   overflow-x: hidden;
 }
 
+/* Cursor glow effect */
+.cursor-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 30;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: normal;
+}
+
 /* Subtle scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -100,7 +113,7 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 50;
-  opacity: 0.025;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
@@ -110,9 +123,9 @@ body {
 
 .reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(16px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.active {
@@ -122,9 +135,9 @@ body {
 
 .reveal-image {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 1s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-image.active {
@@ -145,16 +158,18 @@ body {
 
 /* Display - Hero only */
 .text-display {
-  font-size: clamp(2.5rem, 6vw, 4rem);
-  font-weight: 500;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 600;
   line-height: 1.05;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   color: var(--color-text);
 }
 
 /* Heading 1 - Section titles */
 .text-h1 {
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -163,7 +178,8 @@ body {
 
 /* Heading 2 - Subsection titles */
 .text-h2 {
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 500;
   line-height: 1.3;
   letter-spacing: -0.01em;
@@ -172,8 +188,9 @@ body {
 
 /* Heading 3 - Card titles */
 .text-h3 {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
   line-height: 1.4;
   color: var(--color-text);
 }
@@ -188,7 +205,7 @@ body {
 
 /* Body - Standard paragraphs */
 .text-body {
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 400;
   line-height: 1.7;
   color: var(--color-text-muted);
@@ -202,13 +219,21 @@ body {
   color: var(--color-text-subtle);
 }
 
-/* Label - Section markers, overlines */
+/* Label - Section markers, overlines — monospace signature device */
 .text-label {
-  font-size: 0.8125rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--color-text-subtle);
+}
+
+/* Serif accent — for italic "data" words */
+.text-serif-accent {
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-weight: 400;
 }
 
 /* ============================================
@@ -239,14 +264,14 @@ body {
 
 /* Consistent section spacing */
 .section {
-  padding-top: var(--space-2xl);
-  padding-bottom: var(--space-2xl);
+  padding-top: var(--space-3xl);
+  padding-bottom: var(--space-3xl);
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-top: var(--space-3xl);
-    padding-bottom: var(--space-3xl);
+    padding-top: 8rem;
+    padding-bottom: 8rem;
   }
 }
 
@@ -299,6 +324,21 @@ body {
 
 .link-arrow:hover svg {
   transform: translate(2px, -2px);
+}
+
+/* Animated underline link */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+  background-image: linear-gradient(#6366f1, #6366f1);
+  background-size: 0% 1px;
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
 }
 
 /* Divider */
@@ -394,7 +434,7 @@ body {
 }
 
 .project-item:hover .project-title {
-  color: var(--color-text-secondary);
+  color: #6366f1;
 }
 
 /* ============================================
@@ -576,6 +616,7 @@ body {
 
 /* Modal Title */
 .modal-title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   font-size: clamp(1.75rem, 4vw, 2.25rem);
   font-weight: 600;
   line-height: 1.15;
@@ -629,8 +670,9 @@ body {
 
 /* Section Titles */
 .modal-section-title {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-text-subtle);

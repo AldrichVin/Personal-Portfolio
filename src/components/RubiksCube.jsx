@@ -18,6 +18,8 @@ const COLORS = {
   offWhite: '#F8FAFC',
   accent1: '#CBD5E1',
   accent2: '#94A3B8',
+  indigo: '#6366f1',
+  indigoMuted: '#a5b4fc',
 }
 
 const cubeColors = [
@@ -27,6 +29,8 @@ const cubeColors = [
   COLORS.offWhite,
   COLORS.accent1,
   COLORS.accent2,
+  COLORS.indigo,
+  COLORS.indigoMuted,
 ]
 
 /**
@@ -553,9 +557,9 @@ const RubiksCube = ({ isVisible = true }) => {
       const scrollProgress = scrollY / (docHeight - windowHeight)
 
       // Fade starts at 70% scroll, fully faded at 95%
-      if (scrollProgress > 0.7) {
-        const fadeProgress = (scrollProgress - 0.7) / 0.25
-        setOpacity(Math.max(0.3, 1 - fadeProgress * 0.7))
+      if (scrollProgress > 0.6) {
+        const fadeProgress = (scrollProgress - 0.6) / 0.3
+        setOpacity(Math.max(0.15, 1 - fadeProgress * 0.85))
       } else {
         setOpacity(1)
       }

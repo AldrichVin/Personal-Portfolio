@@ -175,16 +175,16 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
         >
           {/* Meta */}
           <div className="flex items-center gap-3 mb-3">
-            <span className="text-sm font-medium text-neutral-400">
+            <span className="font-mono text-sm font-medium text-neutral-400">
               {projectNumber}
             </span>
-            <span className="px-2.5 py-1 text-xs font-medium text-neutral-500 bg-neutral-100 rounded-md">
+            <span className="font-mono px-2.5 py-1 text-xs font-medium text-neutral-500 bg-neutral-100 rounded-md uppercase tracking-wide">
               {project.category}
             </span>
           </div>
 
           {/* Title */}
-          <h3 className="project-title text-xl md:text-2xl font-semibold text-neutral-900 mb-2">
+          <h3 className="project-title text-h2 mb-2">
             {project.name}
           </h3>
 
@@ -203,7 +203,7 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
             {project.techStack.slice(0, 4).map((tech) => (
               <span
                 key={tech}
-                className="px-2.5 py-1 text-xs font-medium text-neutral-500 bg-neutral-50 border border-neutral-200 rounded-md"
+                className="font-mono px-2.5 py-1 text-xs font-medium text-neutral-500 bg-neutral-50 border border-neutral-200 rounded-md"
               >
                 {tech}
               </span>
@@ -228,10 +228,10 @@ const Projects = () => {
       <div className="container">
         {/* Section Header - Strong presence */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <span className="text-label reveal">Selected Works</span>
           </div>
-          <div className="lg:col-span-9">
+          <div className="lg:col-span-10">
             <h2 className="text-h1 reveal delay-1">
               Projects that showcase my expertise in building
               modern web applications.

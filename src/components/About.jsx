@@ -14,16 +14,16 @@ const About = () => {
       className="section section-border bg-white"
     >
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           {/* Section Label */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <span className="text-label reveal">About</span>
           </div>
 
           {/* Content */}
-          <div className="lg:col-span-9">
-            {/* Lead statement - H2 style */}
-            <p className="text-2xl md:text-3xl font-semibold text-neutral-800 leading-snug mb-14 reveal delay-1 max-w-2xl">
+          <div className="lg:col-span-10">
+            {/* Lead statement - H1 style */}
+            <p className="text-h1 leading-snug mb-14 reveal delay-1 max-w-2xl">
               Computer Science graduate from Monash University with a passion
               for turning raw data into meaningful business insights.
             </p>
