@@ -8,13 +8,28 @@ const ProjectModal = ({ project, onClose }) => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') onClose()
     }
+
+    const modalBody = document.querySelector('.modal-body')
+
+    // Prevent event propagation from modal body to Lenis
+    const stopPropagation = (e) => {
+      e.stopPropagation()
+    }
+
     document.addEventListener('keydown', handleEscape)
     document.body.style.overflow = 'hidden'
+    document.body.setAttribute('data-lenis-prevent', '')
 
     // Disable Lenis smooth scroll when modal is open
     const lenis = window.lenis
     if (lenis) {
       lenis.stop()
+    }
+
+    // Stop wheel/touch events from reaching Lenis
+    if (modalBody) {
+      modalBody.addEventListener('wheel', stopPropagation, { passive: false })
+      modalBody.addEventListener('touchmove', stopPropagation, { passive: false })
     }
 
     setTimeout(() => {
@@ -25,10 +40,17 @@ const ProjectModal = ({ project, onClose }) => {
     return () => {
       document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = ''
+      document.body.removeAttribute('data-lenis-prevent')
 
       // Re-enable Lenis smooth scroll when modal closes
       if (lenis) {
         lenis.start()
+      }
+
+      // Remove event listeners
+      if (modalBody) {
+        modalBody.removeEventListener('wheel', stopPropagation)
+        modalBody.removeEventListener('touchmove', stopPropagation)
       }
     }
   }, [onClose])
@@ -44,7 +66,7 @@ const ProjectModal = ({ project, onClose }) => {
   return createPortal(
     <>
       <div className="modal-backdrop" onClick={handleClose} />
-      <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title" data-lenis-prevent>
         {/* Sticky Header */}
         <div className="modal-header">
           <div className="flex items-center justify-between">
