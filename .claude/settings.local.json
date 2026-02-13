@@ -10,7 +10,12 @@
       "WebFetch(domain:x.com)",
       "WebSearch",
       "Bash(npm install:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(npx skills add:*)",
+      "Bash(cmd /c \"npx skills add https://github.com/remotion-dev/skills --skill remotion-best-practices\")",
+      "Bash(npx:*)",
+      "Bash(echo:*)",
+      "Bash(git clone:*)"
     ]
   }
 }
