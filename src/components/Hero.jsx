@@ -145,51 +145,24 @@ const Hero = () => {
       </section>
 
       {/* ============================================
-          SECTION 2: Details
-          ============================================ */}
-      <section
-        id="details-section"
-        className="relative w-full min-h-[75dvh] flex flex-col items-center justify-center py-24 px-6 sm:px-12 md:px-16"
-      >
-        <div className="flex flex-col items-center text-center max-w-xl mx-auto">
-          {/* Label */}
-          <div className="reveal inline-flex items-center gap-2 text-indigo-500 mb-8">
-            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-            <span className="text-label !text-indigo-500">What I Do</span>
-          </div>
-
-          {/* Headline - H2 */}
-          <h2 className="reveal delay-1 text-h1 mb-8">
-            <span className="text-serif-accent">Analysis</span> meets{' '}
-            <span className="text-serif-accent">insight</span>
-          </h2>
-
-          {/* Description - Body */}
-          <p className="reveal delay-2 text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md">
-            From exploratory data analysis to interactive dashboards,
-            I transform raw data into clear, actionable business intelligence.
-          </p>
-        </div>
-
-        <div className="flex-1 w-full min-h-[15vh]" />
-      </section>
-
-      {/* ============================================
-          SECTION 3: Stats
+          SECTION 2: Stats
           ============================================ */}
       <section
         id="breakdown-section"
         className="relative w-full min-h-[70dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
       >
-        {/* Section header */}
+        {/* Section header with merged tagline */}
         <div className="text-center mb-16">
-          {/* H2 */}
-          <h2 className="reveal text-h1 mb-4">
+          <div className="reveal inline-flex items-center gap-2 text-indigo-500 mb-6">
+            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+            <span className="text-label !text-indigo-500">What I Do</span>
+          </div>
+          <h2 className="reveal delay-1 text-h1 mb-4">
             Technical <span className="text-serif-accent">Background</span>
           </h2>
-          {/* Label */}
-          <p className="reveal delay-1 text-label">
-            Education & Experience
+          <p className="reveal delay-1 text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md mx-auto">
+            From exploratory data analysis to interactive dashboards,
+            I transform raw data into clear, actionable business intelligence.
           </p>
         </div>
 
@@ -204,52 +177,6 @@ const Hero = () => {
         </div>
 
         <div className="w-full h-[10vh] md:h-[15vh]" />
-      </section>
-
-      {/* ============================================
-          SECTION 4: Footer CTA
-          ============================================ */}
-      <section
-        id="footer-section"
-        className="relative w-full min-h-[60dvh] flex flex-col items-center justify-center py-16 px-6 sm:px-12 md:px-16"
-      >
-        <div className="relative z-20 flex flex-col items-center text-center max-w-lg">
-          {/* Label */}
-          <span className="reveal text-label mb-8">
-            Open to opportunities
-          </span>
-
-          {/* Headline - H2 */}
-          <h2 className="reveal delay-1 text-h1 leading-[1.2] mb-8">
-            Let's turn your{' '}
-            <span className="text-serif-accent">data</span>
-            <br />into decisions
-          </h2>
-
-          {/* Subtext - Body */}
-          <p className="reveal delay-2 text-neutral-500 text-base leading-relaxed mb-12 max-w-sm">
-            Looking for data analyst roles where I can drive impact through insights.
-          </p>
-
-          {/* CTA Button */}
-          <div className="reveal delay-3">
-            <a
-              href="#contact"
-              className="group inline-flex items-center bg-neutral-900 text-white rounded-full
-                         shadow-[0_2px_12px_-2px_rgba(0,0,0,0.12)]
-                         hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.18)]
-                         hover:translate-y-[-2px]
-                         transition-all duration-300 ease-out"
-              style={{ paddingLeft: '24px', paddingRight: '6px', paddingTop: '6px', paddingBottom: '6px' }}
-            >
-              <span className="text-[15px] font-medium mr-4">Start a Conversation</span>
-              <div className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center
-                              group-hover:bg-white/20 transition-all duration-300">
-                <ArrowUpRight size={18} strokeWidth={2} />
-              </div>
-            </a>
-          </div>
-        </div>
       </section>
     </div>
   )

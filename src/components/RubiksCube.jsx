@@ -141,8 +141,8 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
     idleTimeline.current?.play()
 
     const st = ScrollTrigger.create({
-      trigger: '#details-section',
-      start: 'center center',
+      trigger: '#breakdown-section',
+      start: 'top center',
       onEnter: () => idleTimeline.current?.pause(),
       onLeaveBack: () => idleTimeline.current?.play()
     })
@@ -296,7 +296,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         .to(topSliceRef.current.rotation, { y: 0, duration: t }, '<')
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
-      // Timeline 1: Hero → Details
+      // Timeline 1: Hero → Breakdown (move to center)
       const centerPosDetails = isMobile ? [0, -0.5, 0] : [0, -1, 0]
       const detailScale = isMobile ? 0.8 : 0.95
 
@@ -304,8 +304,8 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         scrollTrigger: {
           trigger: '#hero-section',
           start: 'top top',
-          endTrigger: '#details-section',
-          end: 'center center',
+          endTrigger: '#breakdown-section',
+          end: 'top center',
           scrub: 1.5,
           immediateRender: false,
         }
@@ -321,14 +321,13 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         x: detailScale, y: detailScale, z: detailScale, ease: 'power1.inOut'
       }, 0)
 
-      // Timeline 2: Details → Breakdown (Explosion)
+      // Timeline 2: Breakdown (Explosion)
       const breakdownScale = isMobile ? 0.7 : 0.85
 
       const tl2 = gsap.timeline({
         scrollTrigger: {
-          trigger: '#details-section',
-          start: 'bottom bottom',
-          endTrigger: '#breakdown-section',
+          trigger: '#breakdown-section',
+          start: 'top center',
           end: 'center center',
           scrub: 1.2,
         }
@@ -384,9 +383,9 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         scrollTrigger: {
           trigger: '#breakdown-section',
           start: 'center center',
-          endTrigger: '#footer-section',
-          end: 'bottom bottom',
-          scrub: 2, // Slower scrub for gravity feel
+          endTrigger: '#about',
+          end: 'top top',
+          scrub: 2,
           onLeave: () => { physics.current.active = true },
           onEnterBack: () => {
             physics.current.active = false

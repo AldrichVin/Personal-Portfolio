@@ -1,12 +1,3 @@
-/**
- * Skills Section - Data Analytics Focus
- *
- * Typography System (consistent with Hero/About):
- * - H3: text-lg, font-semibold, text-neutral-900
- * - Body: text-sm, text-neutral-600
- * - Label: text-xs, font-semibold, uppercase, tracking-widest
- */
-
 const skillGroups = [
   {
     name: 'Data Analysis & Modeling',
@@ -28,7 +19,7 @@ const skillGroups = [
 
 const Skills = () => {
   return (
-    <section id="skills" className="section section-border bg-white">
+    <section id="skills" className="section section-border">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           {/* Section Label */}
@@ -41,21 +32,22 @@ const Skills = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 sm:gap-10">
               {skillGroups.map((group, groupIndex) => (
                 <div key={group.name} className={`reveal delay-${groupIndex + 1}`}>
-                  {/* H3 style */}
-                  <h3 className="text-h3 mb-6">
+                  <h3 className="text-h3 mb-5">
                     {group.name}
                   </h3>
-                  <ul className="space-y-3.5">
+                  <div className="flex flex-wrap gap-2">
                     {group.skills.map((skill) => (
-                      <li
+                      <span
                         key={skill}
-                        className="text-sm text-neutral-600 flex items-center gap-3"
+                        className="px-3 py-1.5 text-sm font-medium bg-neutral-50 border border-neutral-200
+                                   rounded-full text-neutral-600
+                                   hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700
+                                   transition-all duration-200 cursor-default"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-neutral-300 flex-shrink-0" />
                         {skill}
-                      </li>
+                      </span>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               ))}
             </div>
