@@ -1,23 +1,7 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { X, Github, ExternalLink, CheckCircle } from 'lucide-react'
-import { projects } from '../data/projects'
-
-/**
- * Projects Section - Refined Chapter Layout
- *
- * Design: Strong section heading, balanced image/text ratio
- * Reduced spacing, clearer information hierarchy
- */
-
-// Placeholder images for projects
-const projectImages = {
-  'datapraktis': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop&sat=-100',
-  'receipts': 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2532&auto=format&fit=crop&sat=-100',
-  'hov-corporation': 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop&sat=-100',
-  'nba-ranking': 'https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2490&auto=format&fit=crop&sat=-100',
-  'australia-climate': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2544&auto=format&fit=crop&sat=-100',
-  'monash-mates': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2540&auto=format&fit=crop&sat=-100',
-}
+import { projects, projectImages } from '../data/projects'
 
 const ProjectModal = ({ project, onClose }) => {
   useEffect(() => {
@@ -46,7 +30,7 @@ const ProjectModal = ({ project, onClose }) => {
 
   if (!project) return null
 
-  return (
+  return createPortal(
     <>
       <div className="modal-backdrop" onClick={handleClose} />
       <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -141,7 +125,8 @@ const ProjectModal = ({ project, onClose }) => {
           )}
         </div>
       </div>
-    </>
+    </>,
+    document.body
   )
 }
 
@@ -155,17 +140,27 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
       onClick={() => onClick(project)}
     >
       <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center`}>
-        {/* Image - with subtle shadow for depth */}
+        {/* Image - with gradient overlay and hover label */}
         <div
           className={`lg:col-span-5 ${isReversed ? 'lg:order-2' : 'lg:order-1'} reveal-image`}
         >
-          <div className="project-image aspect-[4/3] rounded-xl overflow-hidden shadow-lg shadow-neutral-900/[0.08] ring-1 ring-neutral-900/[0.05]">
+          <div className="project-image group/img relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/[0.08] ring-1 ring-neutral-900/[0.05]">
             <img
               src={imageUrl}
               alt={project.name}
               className="w-full h-full object-cover"
               loading="lazy"
             />
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 to-transparent pointer-events-none" />
+            {/* Project number */}
+            <span className="absolute bottom-3 left-4 text-white/70 text-xs font-mono font-medium">
+              {projectNumber}
+            </span>
+            {/* Hover label */}
+            <div className="absolute inset-0 flex items-center justify-center bg-neutral-900/30 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300">
+              <span className="text-white text-sm font-medium tracking-wide">View Details</span>
+            </div>
           </div>
         </div>
 
