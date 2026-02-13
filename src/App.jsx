@@ -1,46 +1,32 @@
-import { useEffect, useRef } from 'react'
-import Lenis from 'lenis'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import Projects from './components/Projects'
-import Skills from './components/Skills'
-import Contact from './components/Contact'
 import RubiksCube from './components/RubiksCube'
 import CursorGlow from './components/CursorGlow'
+import HomePage from './pages/HomePage'
+import ProjectsPage from './pages/ProjectsPage'
+import ProjectDetailPage from './pages/ProjectDetailPage'
+import useLenis from './hooks/useLenis'
 import './index.css'
 
 function App() {
-  const lenisRef = useRef(null)
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
 
-  // Initialize Lenis smooth scroll
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    })
-    lenisRef.current = lenis
+  // Lenis smooth scroll — re-inits on route change
+  useLenis()
 
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
-
-    return () => lenis.destroy()
-  }, [])
-
-  // Initialize intersection observer for reveal animations
+  // Re-init intersection observer on route change
   useEffect(() => {
     const options = {
       root: null,
       rootMargin: '0px 0px -50px 0px',
-      threshold: 0.1
+      threshold: 0.1,
     }
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active')
           observer.unobserve(entry.target)
@@ -48,17 +34,22 @@ function App() {
       })
     }, options)
 
-    // Observe all reveal elements
-    const revealElements = document.querySelectorAll('.reveal, .reveal-image')
-    revealElements.forEach(el => observer.observe(el))
+    // Small delay to let the DOM render after route transition
+    const timer = setTimeout(() => {
+      const revealElements = document.querySelectorAll('.reveal, .reveal-image')
+      revealElements.forEach((el) => observer.observe(el))
+    }, 100)
 
-    return () => observer.disconnect()
-  }, [])
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
+  }, [location.pathname])
 
   return (
     <div className="min-h-screen bg-[#FAFAF8]">
-      {/* 3D Rubik's Cube - Fixed position, spans entire viewport */}
-      <RubiksCube />
+      {/* 3D Rubik's Cube - Homepage only */}
+      {isHomePage && <RubiksCube />}
 
       {/* Cursor glow effect - desktop only */}
       <CursorGlow />
@@ -68,13 +59,13 @@ function App() {
 
       <Navbar />
 
-      <main className="relative">
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Contact />
-      </main>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/projects/:id" element={<ProjectDetailPage />} />
+        </Routes>
+      </AnimatePresence>
     </div>
   )
 }
