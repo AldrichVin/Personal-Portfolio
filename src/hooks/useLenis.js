@@ -27,6 +27,8 @@ const useLenis = () => {
       smoothWheel: true,
     })
     lenisRef.current = lenis
+    // Expose globally for modal access
+    window.lenis = lenis
 
     function raf(time) {
       lenis.raf(time)

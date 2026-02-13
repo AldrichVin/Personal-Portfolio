@@ -11,6 +11,12 @@ const ProjectModal = ({ project, onClose }) => {
     document.addEventListener('keydown', handleEscape)
     document.body.style.overflow = 'hidden'
 
+    // Disable Lenis smooth scroll when modal is open
+    const lenis = window.lenis
+    if (lenis) {
+      lenis.stop()
+    }
+
     setTimeout(() => {
       document.querySelector('.modal-backdrop')?.classList.add('active')
       document.querySelector('.modal-content')?.classList.add('active')
@@ -19,6 +25,11 @@ const ProjectModal = ({ project, onClose }) => {
     return () => {
       document.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = ''
+
+      // Re-enable Lenis smooth scroll when modal closes
+      if (lenis) {
+        lenis.start()
+      }
     }
   }, [onClose])
 
