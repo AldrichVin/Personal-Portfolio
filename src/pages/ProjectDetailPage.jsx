@@ -17,7 +17,7 @@ const ProjectDetailPage = () => {
     return (
       <PageTransition>
         <main className="relative z-[2] bg-[#FAFAF8] min-h-screen">
-          <div className="container pt-40 md:pt-48 pb-24 text-center">
+          <div className="container page-offset pb-24 text-center">
             <h1 className="text-h1 mb-4">Project Not Found</h1>
             <p className="text-body mb-8">The project you're looking for doesn't exist.</p>
             <Link
@@ -40,7 +40,7 @@ const ProjectDetailPage = () => {
   return (
     <PageTransition>
       <main className="relative z-[2] bg-[#FAFAF8] min-h-screen">
-        <div className="container pt-40 md:pt-48 pb-24">
+        <div className="container page-offset pb-24">
           {/* Breadcrumb */}
           <nav className="breadcrumb flex items-center gap-2 mb-10">
             <Link to="/" className="breadcrumb-link">Home</Link>

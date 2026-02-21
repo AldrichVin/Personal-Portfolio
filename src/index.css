@@ -267,6 +267,17 @@ body {
   }
 }
 
+/* Page header offset — clears fixed navbar */
+.page-offset {
+  padding-top: 5rem;
+}
+
+@media (min-width: 768px) {
+  .page-offset {
+    padding-top: 6.5rem;
+  }
+}
+
 /* Consistent section spacing */
 .section {
   padding-top: var(--space-3xl);

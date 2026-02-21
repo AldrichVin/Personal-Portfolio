@@ -24,7 +24,7 @@ const ProjectsPage = () => {
   return (
     <PageTransition>
       <main className="relative z-[2] bg-[#FAFAF8] min-h-screen">
-        <div className="container pt-40 md:pt-48 pb-24">
+        <div className="container page-offset pb-24">
           {/* Page Header */}
           <div className="mb-12">
             <span className="text-label mb-4 block">Archive</span>
