@@ -22,7 +22,7 @@ const CursorGlow = () => {
       window.removeEventListener('mousemove', handleMouseMove)
       document.body.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [isVisible])
+  }, [])
 
   return (
     <motion.div
