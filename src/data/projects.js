@@ -199,6 +199,28 @@ export const projects = [
     featured: false
   },
   {
+    id: 'veve-clothing',
+    name: 'VEVE Clothing',
+    tagline: 'Premium Fashion E-Commerce Platform',
+    description: 'A luxury fashion e-commerce website for VEVE with full-bleed hero video, admin product management, Supabase backend, and a polished shopping experience with cart functionality.',
+    longDescription: 'Designed and developed a modern e-commerce platform for VEVE, a fashion brand focused on elegance and premium apparel. Features a cinematic full-bleed hero video with autoplay watchdog, premium transparent navbar with scroll-to-solid transition, shop-by-category browsing, and a complete shopping cart system. Includes an admin dashboard for product CRUD operations, Supabase integration for real-time data, and authentication. Built with React 19, TypeScript, and Tailwind CSS v4 for a polished, responsive experience.',
+    techStack: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS 4', 'Framer Motion', 'Supabase', 'React Router 7'],
+    category: 'E-Commerce',
+    highlights: [
+      'Cinematic full-bleed hero video with autoplay watchdog',
+      'Premium transparent navbar with scroll-to-solid transition',
+      'Shopping cart with add-to-bag hover interactions',
+      'Admin dashboard for product management (CRUD)',
+      'Supabase backend with authentication'
+    ],
+    github: 'https://github.com/AldrichVin/VeveClothing',
+    live: 'https://veve-clothing.vercel.app',
+    color: '#f43f5e',
+    year: '2025',
+    status: 'In Development',
+    featured: false
+  },
+  {
     id: 'imposter-game',
     name: 'Imposter Game',
     tagline: 'Retro Pixel-Art Arcade Experience',
@@ -232,7 +254,8 @@ export const categories = [
   'Data Analytics',
   'Data Visualization',
   'Mobile App',
-  'Game Development'
+  'Game Development',
+  'E-Commerce'
 ]
 
 // Placeholder images for projects (desaturated Unsplash)
@@ -247,4 +270,5 @@ export const projectImages = {
   'hov-corporation': 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop&sat=-100',
   'monash-mates': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2540&auto=format&fit=crop&sat=-100',
   'imposter-game': 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2540&auto=format&fit=crop&sat=-100',
+  'veve-clothing': 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?q=80&w=2532&auto=format&fit=crop&sat=-100',
 }
