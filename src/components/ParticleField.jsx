@@ -1,5 +1,13 @@
 import { useEffect, useRef } from 'react'
 
+const MAX_PARTICLES = 300
+const PARTICLE_DIVISOR = 15000
+const CONNECTION_DISTANCE = 100
+const MAX_VELOCITY = 0.3
+const MAX_RADIUS = 1.5
+const MIN_RADIUS = 0.5
+const PARTICLE_COLOR = '99, 102, 241'
+
 const ParticleField = () => {
   const canvasRef = useRef(null)
 
@@ -16,15 +24,18 @@ const ParticleField = () => {
 
     const createParticles = () => {
       particles = []
-      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 15000)
+      const count = Math.min(
+        Math.floor((canvas.width * canvas.height) / PARTICLE_DIVISOR),
+        MAX_PARTICLES
+      )
 
-      for (let i = 0; i < numberOfParticles; i++) {
+      for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 1.5 + 0.5,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
+          radius: Math.random() * MAX_RADIUS + MIN_RADIUS,
+          vx: (Math.random() - 0.5) * MAX_VELOCITY,
+          vy: (Math.random() - 0.5) * MAX_VELOCITY,
           opacity: Math.random() * 0.5 + 0.1,
         })
       }
@@ -34,33 +45,29 @@ const ParticleField = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       particles.forEach((particle, i) => {
-        // Update position
         particle.x += particle.vx
         particle.y += particle.vy
 
-        // Wrap around edges
         if (particle.x < 0) particle.x = canvas.width
         if (particle.x > canvas.width) particle.x = 0
         if (particle.y < 0) particle.y = canvas.height
         if (particle.y > canvas.height) particle.y = 0
 
-        // Draw particle
         ctx.beginPath()
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(99, 102, 241, ${particle.opacity})`
+        ctx.fillStyle = `rgba(${PARTICLE_COLOR}, ${particle.opacity})`
         ctx.fill()
 
-        // Draw connections
         particles.slice(i + 1).forEach((otherParticle) => {
           const dx = particle.x - otherParticle.x
           const dy = particle.y - otherParticle.y
           const distance = Math.sqrt(dx * dx + dy * dy)
 
-          if (distance < 100) {
+          if (distance < CONNECTION_DISTANCE) {
             ctx.beginPath()
             ctx.moveTo(particle.x, particle.y)
             ctx.lineTo(otherParticle.x, otherParticle.y)
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - distance / 100)})`
+            ctx.strokeStyle = `rgba(${PARTICLE_COLOR}, ${0.1 * (1 - distance / CONNECTION_DISTANCE)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
@@ -70,18 +77,20 @@ const ParticleField = () => {
       animationId = requestAnimationFrame(drawParticles)
     }
 
+    const handleResize = () => {
+      resize()
+      createParticles()
+    }
+
     resize()
     createParticles()
     drawParticles()
 
-    window.addEventListener('resize', () => {
-      resize()
-      createParticles()
-    })
+    window.addEventListener('resize', handleResize)
 
     return () => {
       cancelAnimationFrame(animationId)
-      window.removeEventListener('resize', resize)
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
