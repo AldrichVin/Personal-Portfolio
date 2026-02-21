@@ -1,27 +1,54 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { X, Github, ExternalLink, CheckCircle } from 'lucide-react'
 import { projects, projectImages } from '../data/projects'
+import { useLenisContext } from '../context/LenisContext'
 
-const ProjectModal = ({ project, onClose }) => {
+const ProjectModal = ({ project, onClose, lenisRef }) => {
+  const modalRef = useRef(null)
+  const closeButtonRef = useRef(null)
+
   useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape') onClose()
-    }
-
     const modalBody = document.querySelector('.modal-body')
 
-    // Prevent event propagation from modal body to Lenis
     const stopPropagation = (e) => {
       e.stopPropagation()
     }
 
-    document.addEventListener('keydown', handleEscape)
+    // Focus trap logic
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+        const firstFocusable = focusableElements[0]
+        const lastFocusable = focusableElements[focusableElements.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstFocusable) {
+            e.preventDefault()
+            lastFocusable.focus()
+          }
+        } else {
+          if (document.activeElement === lastFocusable) {
+            e.preventDefault()
+            firstFocusable.focus()
+          }
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
     document.body.style.overflow = 'hidden'
     document.body.setAttribute('data-lenis-prevent', '')
 
     // Disable Lenis smooth scroll when modal is open
-    const lenis = window.lenis
+    const lenis = lenisRef?.current
     if (lenis) {
       lenis.stop()
     }
@@ -35,25 +62,25 @@ const ProjectModal = ({ project, onClose }) => {
     setTimeout(() => {
       document.querySelector('.modal-backdrop')?.classList.add('active')
       document.querySelector('.modal-content')?.classList.add('active')
+      // Focus the close button on open
+      closeButtonRef.current?.focus()
     }, 10)
 
     return () => {
-      document.removeEventListener('keydown', handleEscape)
+      document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
       document.body.removeAttribute('data-lenis-prevent')
 
-      // Re-enable Lenis smooth scroll when modal closes
       if (lenis) {
         lenis.start()
       }
 
-      // Remove event listeners
       if (modalBody) {
         modalBody.removeEventListener('wheel', stopPropagation)
         modalBody.removeEventListener('touchmove', stopPropagation)
       }
     }
-  }, [onClose])
+  }, [onClose, lenisRef])
 
   const handleClose = () => {
     document.querySelector('.modal-backdrop')?.classList.remove('active')
@@ -66,7 +93,7 @@ const ProjectModal = ({ project, onClose }) => {
   return createPortal(
     <>
       <div className="modal-backdrop" onClick={handleClose} />
-      <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title" data-lenis-prevent>
+      <div ref={modalRef} className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title" data-lenis-prevent>
         {/* Sticky Header */}
         <div className="modal-header">
           <div className="flex items-center justify-between">
@@ -77,6 +104,7 @@ const ProjectModal = ({ project, onClose }) => {
             </div>
             <button
               onClick={handleClose}
+              ref={closeButtonRef}
               className="modal-close-btn"
               aria-label="Close modal"
             >
@@ -107,8 +135,8 @@ const ProjectModal = ({ project, onClose }) => {
           <div className="modal-section">
             <h3 className="modal-section-title">Key Features</h3>
             <ul className="modal-features-list">
-              {project.highlights.map((highlight, index) => (
-                <li key={index} className="modal-feature-item">
+              {project.highlights.map((highlight) => (
+                <li key={highlight} className="modal-feature-item">
                   <span className="modal-feature-marker">
                     <CheckCircle size={14} strokeWidth={2} />
                   </span>
@@ -169,8 +197,12 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
 
   return (
     <article
-      className="project-item py-12 border-b border-neutral-100 last:border-b-0"
+      className="project-item py-12 border-b border-neutral-100 last:border-b-0 cursor-pointer"
       onClick={() => onClick(project)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(project) } }}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${project.name}`}
     >
       <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center`}>
         {/* Image - with gradient overlay and hover label */}
@@ -250,6 +282,7 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null)
+  const lenisRef = useLenisContext()
 
   return (
     <section id="projects" className="section">
@@ -286,6 +319,7 @@ const Projects = () => {
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
+          lenisRef={lenisRef}
         />
       )}
     </section>
