@@ -270,5 +270,5 @@ export const projectImages = {
   'hov-corporation': 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop&sat=-100',
   'monash-mates': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2540&auto=format&fit=crop&sat=-100',
   'imposter-game': 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2540&auto=format&fit=crop&sat=-100',
-  'veve-clothing': 'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?q=80&w=2532&auto=format&fit=crop&sat=-100',
+  'veve-clothing': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=2532&auto=format&fit=crop&sat=-100',
 }
