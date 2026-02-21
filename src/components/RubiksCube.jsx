@@ -61,13 +61,13 @@ const SingleCube = ({
       ref={ref}
       position={position}
       userData={userData}
-      onPointerOver={(e) => { e.stopPropagation(); setHovered(true); document.body.style.cursor = 'grab' }}
-      onPointerOut={() => { setHovered(false); document.body.style.cursor = 'auto' }}
+      onPointerOver={(e) => { e.stopPropagation(); setHovered(true) }}
+      onPointerOut={() => { setHovered(false) }}
       onPointerDown={(e) => {
         if (onPointerDown) onPointerDown(e)
-        document.body.style.cursor = 'grabbing'
       }}
-      onPointerUp={() => { document.body.style.cursor = 'grab' }}
+      onPointerUp={() => {}}
+      style={{ cursor: hovered ? 'grab' : 'auto' }}
     >
       <RoundedBox
         args={[1, 1, 1]}
