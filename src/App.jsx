@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage'
 import ProjectsPage from './pages/ProjectsPage'
 import ProjectDetailPage from './pages/ProjectDetailPage'
 import useLenis from './hooks/useLenis'
+import { LenisContext } from './context/LenisContext'
 import './index.css'
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
   const isHomePage = location.pathname === '/'
 
   // Lenis smooth scroll — re-inits on route change
-  useLenis()
+  const lenisRef = useLenis()
 
   // Re-init intersection observer on route change
   useEffect(() => {
@@ -47,26 +48,28 @@ function App() {
   }, [location.pathname])
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8]">
-      {/* 3D Rubik's Cube - Homepage only */}
-      {isHomePage && <RubiksCube />}
+    <LenisContext.Provider value={lenisRef}>
+      <div className="min-h-screen bg-[#FAFAF8]">
+        {/* 3D Rubik's Cube - Homepage only */}
+        {isHomePage && <RubiksCube />}
 
-      {/* Cursor glow effect - desktop only */}
-      <CursorGlow />
+        {/* Cursor glow effect - desktop only */}
+        <CursorGlow />
 
-      {/* Noise Texture Overlay */}
-      <div className="noise-overlay" />
+        {/* Noise Texture Overlay */}
+        <div className="noise-overlay" />
 
-      <Navbar />
+        <Navbar />
 
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/projects/:id" element={<ProjectDetailPage />} />
-        </Routes>
-      </AnimatePresence>
-    </div>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:id" element={<ProjectDetailPage />} />
+          </Routes>
+        </AnimatePresence>
+      </div>
+    </LenisContext.Provider>
   )
 }
 
