@@ -49,10 +49,13 @@ const SingleCube = ({
   const ref = innerRef || localRef
   const [hovered, setHovered] = useState(false)
 
+  const _targetVec = useMemo(() => new THREE.Vector3(), [])
+
   useFrame((state, delta) => {
     if (ref.current) {
       const targetScale = hovered ? scale * 1.03 : scale
-      ref.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), delta * 8)
+      _targetVec.set(targetScale, targetScale, targetScale)
+      ref.current.scale.lerp(_targetVec, delta * 8)
     }
   })
 
@@ -163,17 +166,29 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
     dragRef.current = index
   }
 
+  // Pre-allocated vectors to avoid GC pressure in useFrame
+  const _vec = useMemo(() => new THREE.Vector3(), [])
+  const _dir = useMemo(() => new THREE.Vector3(), [])
+  const _mouseWorldPos = useMemo(() => new THREE.Vector3(), [])
+  const _currentWorldPos = useMemo(() => new THREE.Vector3(), [])
+  const _meshFloorPos = useMemo(() => new THREE.Vector3(), [])
+  const _mouseFloorPos = useMemo(() => new THREE.Vector3(), [])
+  const _targetPos = useMemo(() => new THREE.Vector3(), [])
+  const _moveDiff = useMemo(() => new THREE.Vector3(), [])
+  const _otherPos = useMemo(() => new THREE.Vector3(), [])
+  const _pushDir = useMemo(() => new THREE.Vector3(), [])
+  const _forceDir = useMemo(() => new THREE.Vector3(), [])
+
   // Physics frame - refined for smoother motion
   useFrame((state, delta) => {
     if (!physics.current.active) return
 
-    const vec = new THREE.Vector3(mouse.x, mouse.y, 0.5)
-    vec.unproject(camera)
-    const dir = vec.sub(camera.position).normalize()
-    const distanceToFloor = (PHYSICS_FLOOR_Y - camera.position.y) / dir.y
-    const mouseWorldPos = camera.position.clone().add(dir.multiplyScalar(distanceToFloor))
+    _vec.set(mouse.x, mouse.y, 0.5)
+    _vec.unproject(camera)
+    _dir.copy(_vec).sub(camera.position).normalize()
+    const distanceToFloor = (PHYSICS_FLOOR_Y - camera.position.y) / _dir.y
+    _mouseWorldPos.copy(camera.position).add(_dir.multiplyScalar(distanceToFloor))
 
-    // Refined physics parameters - slower, more natural
     const repulsionRadius = 3.5
     const repulsionForce = 30.0
     const drag = 0.94
@@ -183,29 +198,27 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
       if (!mesh) return
       const velocity = physics.current.velocities[i]
 
-      const currentWorldPos = new THREE.Vector3()
-      mesh.getWorldPosition(currentWorldPos)
-      const meshFloorPos = new THREE.Vector3(currentWorldPos.x, PHYSICS_FLOOR_Y, currentWorldPos.z)
-      const mouseFloorPos = new THREE.Vector3(mouseWorldPos.x, PHYSICS_FLOOR_Y, mouseWorldPos.z)
+      mesh.getWorldPosition(_currentWorldPos)
+      _meshFloorPos.set(_currentWorldPos.x, PHYSICS_FLOOR_Y, _currentWorldPos.z)
+      _mouseFloorPos.set(_mouseWorldPos.x, PHYSICS_FLOOR_Y, _mouseWorldPos.z)
 
       // Drag logic
       if (dragRef.current === i) {
-        const targetPos = mouseFloorPos.clone()
-        targetPos.y = PHYSICS_FLOOR_Y + 0.5
-        const moveDiff = targetPos.clone().sub(mesh.position)
-        velocity.copy(moveDiff.multiplyScalar(8))
-        mesh.position.lerp(targetPos, 0.15)
+        _targetPos.copy(_mouseFloorPos)
+        _targetPos.y = PHYSICS_FLOOR_Y + 0.5
+        _moveDiff.copy(_targetPos).sub(mesh.position)
+        velocity.copy(_moveDiff.multiplyScalar(8))
+        mesh.position.lerp(_targetPos, 0.15)
 
         cubesRefs.current.forEach((otherMesh, j) => {
           if (i === j || !otherMesh) return
-          const otherPos = new THREE.Vector3()
-          otherMesh.getWorldPosition(otherPos)
-          const dist = mesh.position.distanceTo(otherPos)
+          otherMesh.getWorldPosition(_otherPos)
+          const dist = mesh.position.distanceTo(_otherPos)
           const minDist = 1.3
           if (dist < minDist) {
-            const pushDir = otherPos.clone().sub(mesh.position).normalize()
+            _pushDir.copy(_otherPos).sub(mesh.position).normalize()
             const force = (minDist - dist) * 20.0
-            physics.current.velocities[j].add(pushDir.multiplyScalar(force * delta))
+            physics.current.velocities[j].add(_pushDir.multiplyScalar(force * delta))
           }
         })
         return
@@ -213,27 +226,26 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
 
       // Mouse repulsion
       if (dragRef.current === null) {
-        const distToMouse = meshFloorPos.distanceTo(mouseFloorPos)
+        const distToMouse = _meshFloorPos.distanceTo(_mouseFloorPos)
         if (distToMouse < repulsionRadius) {
-          const forceDir = meshFloorPos.clone().sub(mouseFloorPos).normalize()
+          _forceDir.copy(_meshFloorPos).sub(_mouseFloorPos).normalize()
           const force = (1 - distToMouse / repulsionRadius) * repulsionForce
-          velocity.add(forceDir.multiplyScalar(force * delta))
+          velocity.add(_forceDir.multiplyScalar(force * delta))
         }
       }
 
       // Cube collision
       cubesRefs.current.forEach((otherMesh, j) => {
         if (i === j || !otherMesh) return
-        const otherPos = new THREE.Vector3()
-        otherMesh.getWorldPosition(otherPos)
-        const dist = currentWorldPos.distanceTo(otherPos)
+        otherMesh.getWorldPosition(_otherPos)
+        const dist = _currentWorldPos.distanceTo(_otherPos)
         const minDist = 1.2
         if (dist < minDist) {
-          const pushDir = currentWorldPos.clone().sub(otherPos).normalize()
-          pushDir.x += (Math.random() - 0.5) * 0.1
-          pushDir.z += (Math.random() - 0.5) * 0.1
+          _pushDir.copy(_currentWorldPos).sub(_otherPos).normalize()
+          _pushDir.x += (Math.random() - 0.5) * 0.1
+          _pushDir.z += (Math.random() - 0.5) * 0.1
           const force = (minDist - dist) * 12.0
-          velocity.add(pushDir.multiplyScalar(force * delta))
+          velocity.add(_pushDir.multiplyScalar(force * delta))
         }
       })
 
@@ -348,7 +360,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         x: 0.4, y: Math.PI * 2, z: 0.15, ease: 'power2.inOut'
       }, 0)
 
-      // Explode - controlled spread
+      // Explode - centered spread (symmetric around origin)
       cubesRefs.current.forEach((mesh) => {
         if (!mesh) return
         const parentY =
@@ -358,12 +370,13 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         const direction = new THREE.Vector3(mesh.position.x, parentY, mesh.position.z).normalize()
         if (direction.length() === 0) direction.set(0, 1, 0)
 
-        const safeSpread = Math.min(2.5, screenWidth * 0.2)
+        const safeSpread = Math.min(3.5, screenWidth * 0.25)
         const explodeDist = safeSpread + Math.random() * 1.5
 
-        const targetX = mesh.position.x + direction.x * (explodeDist * 0.6)
-        const targetY = mesh.position.y + (direction.y * explodeDist) - parentY
-        const targetZ = mesh.position.z + direction.z * explodeDist
+        // Use direction only (not additive to current position) so explosion is centered at origin
+        const targetX = direction.x * explodeDist
+        const targetY = direction.y * explodeDist - parentY
+        const targetZ = direction.z * explodeDist
 
         tl2.to(mesh.position, {
           x: targetX, y: targetY, z: targetZ, ease: 'power2.out'
@@ -512,7 +525,7 @@ const Scene = ({ globalOpacity }) => {
         position={[8, 12, 5]}
         intensity={1.2}
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[512, 512]}
         color="#ffffff"
       />
 

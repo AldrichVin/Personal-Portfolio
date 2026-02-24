@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react'
 
-const MAX_PARTICLES = 300
-const PARTICLE_DIVISOR = 15000
-const CONNECTION_DISTANCE = 100
+const MAX_PARTICLES = 80
+const PARTICLE_DIVISOR = 25000
+const CONNECTION_DISTANCE = 120
+const CONNECTION_DISTANCE_SQ = CONNECTION_DISTANCE * CONNECTION_DISTANCE
 const MAX_VELOCITY = 0.3
 const MAX_RADIUS = 1.5
 const MIN_RADIUS = 0.5
 const PARTICLE_COLOR = '99, 102, 241'
+const TARGET_FPS = 30
+const FRAME_INTERVAL = 1000 / TARGET_FPS
 
 const ParticleField = () => {
   const canvasRef = useRef(null)
@@ -16,6 +19,7 @@ const ParticleField = () => {
     const ctx = canvas.getContext('2d')
     let animationId
     let particles = []
+    let lastFrameTime = 0
 
     const resize = () => {
       canvas.width = window.innerWidth
@@ -41,10 +45,18 @@ const ParticleField = () => {
       }
     }
 
-    const drawParticles = () => {
+    const drawParticles = (timestamp) => {
+      animationId = requestAnimationFrame(drawParticles)
+
+      // Cap to 30fps
+      if (timestamp - lastFrameTime < FRAME_INTERVAL) return
+      lastFrameTime = timestamp
+
+      const len = particles.length
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      particles.forEach((particle, i) => {
+      for (let i = 0; i < len; i++) {
+        const particle = particles[i]
         particle.x += particle.vx
         particle.y += particle.vy
 
@@ -58,23 +70,24 @@ const ParticleField = () => {
         ctx.fillStyle = `rgba(${PARTICLE_COLOR}, ${particle.opacity})`
         ctx.fill()
 
-        particles.slice(i + 1).forEach((otherParticle) => {
-          const dx = particle.x - otherParticle.x
-          const dy = particle.y - otherParticle.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
+        // Indexed for-loop instead of .slice().forEach()
+        for (let j = i + 1; j < len; j++) {
+          const other = particles[j]
+          const dx = particle.x - other.x
+          const dy = particle.y - other.y
+          const distSq = dx * dx + dy * dy
 
-          if (distance < CONNECTION_DISTANCE) {
+          if (distSq < CONNECTION_DISTANCE_SQ) {
+            const distance = Math.sqrt(distSq)
             ctx.beginPath()
             ctx.moveTo(particle.x, particle.y)
-            ctx.lineTo(otherParticle.x, otherParticle.y)
+            ctx.lineTo(other.x, other.y)
             ctx.strokeStyle = `rgba(${PARTICLE_COLOR}, ${0.1 * (1 - distance / CONNECTION_DISTANCE)})`
             ctx.lineWidth = 0.5
             ctx.stroke()
           }
-        })
-      })
-
-      animationId = requestAnimationFrame(drawParticles)
+        }
+      }
     }
 
     const handleResize = () => {
@@ -84,7 +97,7 @@ const ParticleField = () => {
 
     resize()
     createParticles()
-    drawParticles()
+    animationId = requestAnimationFrame(drawParticles)
 
     window.addEventListener('resize', handleResize)
 

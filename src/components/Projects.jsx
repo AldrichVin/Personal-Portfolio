@@ -2,19 +2,11 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { X, Github, ExternalLink, CheckCircle } from 'lucide-react'
 import { projects, projectImages } from '../data/projects'
-import { useLenisContext } from '../context/LenisContext'
-
-const ProjectModal = ({ project, onClose, lenisRef }) => {
+const ProjectModal = ({ project, onClose }) => {
   const modalRef = useRef(null)
   const closeButtonRef = useRef(null)
 
   useEffect(() => {
-    const modalBody = document.querySelector('.modal-body')
-
-    const stopPropagation = (e) => {
-      e.stopPropagation()
-    }
-
     // Focus trap logic
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -45,42 +37,18 @@ const ProjectModal = ({ project, onClose, lenisRef }) => {
 
     document.addEventListener('keydown', handleKeyDown)
     document.body.style.overflow = 'hidden'
-    document.body.setAttribute('data-lenis-prevent', '')
-
-    // Disable Lenis smooth scroll when modal is open
-    const lenis = lenisRef?.current
-    if (lenis) {
-      lenis.stop()
-    }
-
-    // Stop wheel/touch events from reaching Lenis
-    if (modalBody) {
-      modalBody.addEventListener('wheel', stopPropagation, { passive: false })
-      modalBody.addEventListener('touchmove', stopPropagation, { passive: false })
-    }
 
     setTimeout(() => {
       document.querySelector('.modal-backdrop')?.classList.add('active')
       document.querySelector('.modal-content')?.classList.add('active')
-      // Focus the close button on open
       closeButtonRef.current?.focus()
     }, 10)
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
-      document.body.removeAttribute('data-lenis-prevent')
-
-      if (lenis) {
-        lenis.start()
-      }
-
-      if (modalBody) {
-        modalBody.removeEventListener('wheel', stopPropagation)
-        modalBody.removeEventListener('touchmove', stopPropagation)
-      }
     }
-  }, [onClose, lenisRef])
+  }, [onClose])
 
   const handleClose = () => {
     document.querySelector('.modal-backdrop')?.classList.remove('active')
@@ -282,7 +250,6 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null)
-  const lenisRef = useLenisContext()
 
   return (
     <section id="projects" className="section">
@@ -319,7 +286,6 @@ const Projects = () => {
         <ProjectModal
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
-          lenisRef={lenisRef}
         />
       )}
     </section>
