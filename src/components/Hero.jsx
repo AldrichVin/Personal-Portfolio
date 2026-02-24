@@ -36,7 +36,7 @@ const Hero = () => {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse 70% 50% at 50% -10%, rgba(99, 102, 241, 0.04), transparent)',
+            background: 'radial-gradient(ellipse 70% 50% at 50% -10%, rgba(148, 163, 184, 0.04), transparent)',
           }}
         />
 
@@ -53,11 +53,11 @@ const Hero = () => {
           {/* Headline - H1 */}
           <h1 className="reveal delay-1 text-display mb-16">
             <span className="block mb-4">
-              Turning <span className="text-serif-accent text-neutral-700">data</span>
+              Turning <span className="text-serif-accent text-[#111111]">data</span>
             </span>
-            <span className="block text-neutral-400 mb-4">into actionable</span>
+            <span className="block text-[#9CA3AF] mb-4">into actionable</span>
             <span className="block">
-              insights<span className="text-indigo-500">.</span>
+              <span className="text-serif-accent text-[#111111]">insights</span><span className="text-[#94A3B8]">.</span>
             </span>
           </h1>
 
@@ -69,10 +69,10 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="reveal delay-3 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            {/* Primary CTA */}
+            {/* Primary CTA — DataKeeper rounded pill */}
             <a
               href="#projects"
-              className="group inline-flex items-center bg-neutral-900 text-white rounded-full
+              className="group inline-flex items-center bg-black text-white rounded-full
                          shadow-[0_2px_12px_-2px_rgba(0,0,0,0.12)]
                          hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.18)]
                          hover:translate-y-[-2px]
@@ -81,7 +81,7 @@ const Hero = () => {
             >
               <span className="text-[15px] font-medium mr-4">View Analytics Projects</span>
               <div className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center
-                              group-hover:bg-white/20 transition-all duration-300">
+                              group-hover:bg-white/25 transition-all duration-300">
                 <ArrowUpRight size={18} strokeWidth={2} />
               </div>
             </a>
@@ -153,9 +153,9 @@ const Hero = () => {
       >
         {/* Section header with merged tagline */}
         <div className="text-center mb-16">
-          <div className="reveal inline-flex items-center gap-2 text-indigo-500 mb-6">
-            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-            <span className="text-label !text-indigo-500">What I Do</span>
+          <div className="reveal inline-flex items-center gap-2 text-[#94A3B8] mb-6">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#94A3B8]" />
+            <span className="text-label">What I Do</span>
           </div>
           <h2 className="reveal delay-1 text-h1 mb-4">
             Technical <span className="text-serif-accent">Background</span>
