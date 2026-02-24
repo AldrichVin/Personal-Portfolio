@@ -35,7 +35,7 @@ const Navbar = () => {
     <nav
       className={`nav-entrance fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'py-5 bg-[#FAFAF8]/95 backdrop-blur-md shadow-sm shadow-neutral-900/[0.03]'
+          ? 'py-5 bg-white/90 backdrop-blur-md shadow-sm shadow-neutral-900/[0.03]'
           : 'py-7 md:py-10'
       }`}
     >
@@ -56,8 +56,8 @@ const Navbar = () => {
               to={to}
               className={`text-[15px] font-medium transition-colors duration-200 ${
                 location.pathname === to || (to === '/projects' && location.pathname.startsWith('/projects'))
-                  ? 'text-neutral-900'
-                  : 'text-neutral-500 hover:text-neutral-900'
+                  ? 'text-[#111111]'
+                  : 'text-[#6B7280] hover:text-[#111111]'
               }`}
             >
               {label}
@@ -95,7 +95,7 @@ const Navbar = () => {
           mobileOpen ? 'max-h-80 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="container flex flex-col gap-1 pt-4 pb-6 bg-[#FAFAF8]/95 backdrop-blur-md">
+        <div className="container flex flex-col gap-1 pt-4 pb-6 bg-white/90 backdrop-blur-md">
           {NAV_LINKS.map(({ to, label }) => (
             <Link
               key={to}
