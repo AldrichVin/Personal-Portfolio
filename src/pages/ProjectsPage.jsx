@@ -22,7 +22,7 @@ const ProjectsPage = () => {
 
   return (
     <PageTransition>
-      <main className="relative z-[2] bg-[#FAFAF8] min-h-screen">
+      <main className="relative z-[2] bg-white min-h-screen">
         <div className="container page-offset pb-24">
           {/* Page Header */}
           <div className="mb-12">
