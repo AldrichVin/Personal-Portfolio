@@ -42,7 +42,7 @@ function App() {
   }, [location.pathname])
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8]">
+    <div className="min-h-screen bg-white">
       {/* 3D Rubik's Cube - Homepage only */}
       {isHomePage && <RubiksCube />}
 

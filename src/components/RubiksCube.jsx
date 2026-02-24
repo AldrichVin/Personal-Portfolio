@@ -18,8 +18,8 @@ const COLORS = {
   offWhite: '#F8FAFC',
   accent1: '#CBD5E1',
   accent2: '#94A3B8',
-  indigo: '#6366f1',
-  indigoMuted: '#a5b4fc',
+  accent3: '#B0BEC5',
+  accentMuted: '#D1D5DB',
 }
 
 const cubeColors = [
@@ -29,8 +29,8 @@ const cubeColors = [
   COLORS.offWhite,
   COLORS.accent1,
   COLORS.accent2,
-  COLORS.indigo,
-  COLORS.indigoMuted,
+  COLORS.accent3,
+  COLORS.accentMuted,
 ]
 
 /**
@@ -600,7 +600,7 @@ const RubiksCube = ({ isVisible = true }) => {
         camera={{ position: [0, 0, 11], fov: 40 }}
         gl={{ antialias: true, alpha: true }}
       >
-        <color attach="background" args={['#FAFAFA']} />
+        <color attach="background" args={['#FFFFFF']} />
         <Scene globalOpacity={1} />
       </Canvas>
     </div>
