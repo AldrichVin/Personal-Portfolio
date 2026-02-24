@@ -16,13 +16,13 @@ const ProjectDetailPage = () => {
   if (!project) {
     return (
       <PageTransition>
-        <main className="relative z-[2] bg-[#FAFAF8] min-h-screen">
+        <main className="relative z-[2] bg-white min-h-screen">
           <div className="container page-offset pb-24 text-center">
             <h1 className="text-h1 mb-4">Project Not Found</h1>
             <p className="text-body mb-8">The project you're looking for doesn't exist.</p>
             <Link
               to="/projects"
-              className="inline-flex items-center gap-2 text-[15px] font-medium text-[#6366f1] hover:text-[#4f46e5] transition-colors"
+              className="inline-flex items-center gap-2 text-[15px] font-medium text-[#111111] hover:text-[#6B7280] transition-colors"
             >
               <ArrowLeft size={16} strokeWidth={1.5} />
               Back to Projects
@@ -39,7 +39,7 @@ const ProjectDetailPage = () => {
 
   return (
     <PageTransition>
-      <main className="relative z-[2] bg-[#FAFAF8] min-h-screen">
+      <main className="relative z-[2] bg-white min-h-screen">
         <div className="container page-offset pb-24">
           {/* Breadcrumb */}
           <nav className="breadcrumb flex items-center gap-2 mb-10">
