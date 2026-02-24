@@ -10,7 +10,7 @@ const HomePage = () => {
     <PageTransition>
       <main className="relative">
         <Hero />
-        <div className="relative z-[2] bg-[#FAFAF8]">
+        <div className="relative z-[2] bg-[#FAFAF8]/75">
           <About />
           <Projects />
           <Skills />
