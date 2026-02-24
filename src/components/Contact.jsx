@@ -43,8 +43,8 @@ const Contact = () => {
                 {INTEREST_TAGS.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1.5 text-sm font-medium bg-indigo-50 border border-indigo-200
-                               rounded-full text-indigo-700"
+                    className="px-3 py-1.5 text-sm font-medium bg-slate-50 border border-[#94A3B8]/30
+                               rounded-full text-[#6B7280]"
                   >
                     {tag}
                   </span>
