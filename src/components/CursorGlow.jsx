@@ -1,51 +1,45 @@
 import { useEffect, useRef } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
 
 const CursorGlow = () => {
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const opacity = useMotionValue(0)
-
-  const springX = useSpring(x, { damping: 30, stiffness: 200, mass: 0.5 })
-  const springY = useSpring(y, { damping: 30, stiffness: 200, mass: 0.5 })
-
-  const rafPending = useRef(false)
+  const glowRef = useRef(null)
+  const pos = useRef({ x: 0, y: 0 })
+  const smoothPos = useRef({ x: 0, y: 0 })
+  const visible = useRef(false)
+  const rafId = useRef(null)
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      if (rafPending.current) return
-      rafPending.current = true
-      requestAnimationFrame(() => {
-        x.set(e.clientX)
-        y.set(e.clientY)
-        opacity.set(1)
-        rafPending.current = false
-      })
+      pos.current.x = e.clientX
+      pos.current.y = e.clientY
+      visible.current = true
     }
+    const handleMouseLeave = () => { visible.current = false }
 
-    const handleMouseLeave = () => {
-      opacity.set(0)
+    const animate = () => {
+      const lerp = 0.12
+      smoothPos.current.x += (pos.current.x - smoothPos.current.x) * lerp
+      smoothPos.current.y += (pos.current.y - smoothPos.current.y) * lerp
+
+      if (glowRef.current) {
+        glowRef.current.style.transform =
+          `translate(${smoothPos.current.x - 150}px, ${smoothPos.current.y - 150}px)`
+        glowRef.current.style.opacity = visible.current ? '1' : '0'
+      }
+      rafId.current = requestAnimationFrame(animate)
     }
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     document.body.addEventListener('mouseleave', handleMouseLeave)
+    rafId.current = requestAnimationFrame(animate)
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove)
       document.body.removeEventListener('mouseleave', handleMouseLeave)
+      cancelAnimationFrame(rafId.current)
     }
-  }, [x, y, opacity])
+  }, [])
 
-  return (
-    <motion.div
-      className="cursor-glow hidden md:block"
-      style={{
-        x: springX,
-        y: springY,
-        opacity,
-      }}
-    />
-  )
+  return <div ref={glowRef} className="cursor-glow hidden md:block" />
 }
 
 export default CursorGlow

@@ -556,25 +556,30 @@ const Scene = ({ globalOpacity }) => {
  */
 const RubiksCube = ({ isVisible = true }) => {
   const containerRef = useRef()
-  const [opacity, setOpacity] = useState(1)
+  const opacityRef = useRef(1)
 
-  // Gradual opacity fade based on scroll
+  // Gradual opacity fade based on scroll — direct DOM, no re-render
   useEffect(() => {
+    let ticking = false
     const handleScroll = () => {
-      const scrollY = window.scrollY
-      const windowHeight = window.innerHeight
-      const docHeight = document.documentElement.scrollHeight
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY
+        const windowHeight = window.innerHeight
+        const docHeight = document.documentElement.scrollHeight
+        const scrollProgress = scrollY / (docHeight - windowHeight)
 
-      // Calculate scroll progress (0 to 1)
-      const scrollProgress = scrollY / (docHeight - windowHeight)
+        const newOpacity = scrollProgress > 0.6
+          ? Math.max(0.15, 1 - ((scrollProgress - 0.6) / 0.3) * 0.85)
+          : 1
 
-      // Fade starts at 70% scroll, fully faded at 95%
-      if (scrollProgress > 0.6) {
-        const fadeProgress = (scrollProgress - 0.6) / 0.3
-        setOpacity(Math.max(0.15, 1 - fadeProgress * 0.85))
-      } else {
-        setOpacity(1)
-      }
+        if (containerRef.current) {
+          containerRef.current.style.opacity = newOpacity
+        }
+        opacityRef.current = newOpacity
+        ticking = false
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -587,11 +592,7 @@ const RubiksCube = ({ isVisible = true }) => {
     <div
       ref={containerRef}
       className="fixed inset-0 pointer-events-auto hidden md:block"
-      style={{
-        zIndex: 0,
-        opacity: opacity,
-        transition: 'opacity 0.3s ease-out'
-      }}
+      style={{ zIndex: 0 }}
     >
       <Canvas
         shadows
@@ -600,7 +601,7 @@ const RubiksCube = ({ isVisible = true }) => {
         gl={{ antialias: true, alpha: true }}
       >
         <color attach="background" args={['#FAFAFA']} />
-        <Scene globalOpacity={opacity} />
+        <Scene globalOpacity={1} />
       </Canvas>
     </div>
   )

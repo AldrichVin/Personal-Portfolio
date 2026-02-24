@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import RubiksCube from './components/RubiksCube'
 import CursorGlow from './components/CursorGlow'
@@ -55,13 +54,11 @@ function App() {
 
       <Navbar />
 
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/projects/:id" element={<ProjectDetailPage />} />
-        </Routes>
-      </AnimatePresence>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/projects/:id" element={<ProjectDetailPage />} />
+      </Routes>
     </div>
   )
 }

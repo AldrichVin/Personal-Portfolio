@@ -1,38 +1,18 @@
-import { motion } from 'framer-motion'
-
-const pageVariants = {
-  initial: {
-    opacity: 0,
-    y: 20,
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -10,
-    transition: {
-      duration: 0.3,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  },
-}
+import { useEffect, useRef } from 'react'
 
 const PageTransition = ({ children }) => {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      if (ref.current) ref.current.classList.add('page-entered')
+    })
+  }, [])
+
   return (
-    <motion.div
-      variants={pageVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-    >
+    <div ref={ref} className="page-transition">
       {children}
-    </motion.div>
+    </div>
   )
 }
 

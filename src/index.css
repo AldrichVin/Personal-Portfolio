@@ -69,17 +69,51 @@ body {
   overflow-x: hidden;
 }
 
-/* Cursor glow effect */
+/* Cursor glow effect — positioned via JS transform */
 .cursor-glow {
   position: fixed;
+  top: 0;
+  left: 0;
   width: 300px;
   height: 300px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 70%);
   pointer-events: none;
   z-index: 30;
-  transform: translate(-50%, -50%);
+  will-change: transform, opacity;
   mix-blend-mode: normal;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Page transition — CSS-only fade+slide */
+.page-transition {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.page-transition.page-entered {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Project card staggered entrance */
+@keyframes projectCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-card-enter {
+  opacity: 0;
+  animation: projectCardEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Subtle scrollbar */

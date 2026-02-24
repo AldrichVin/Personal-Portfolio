@@ -10,7 +10,7 @@ const HomePage = () => {
     <PageTransition>
       <main className="relative">
         <Hero />
-        <div className="relative z-[2] bg-[#FAFAF8]/75 backdrop-blur-[2px]">
+        <div className="relative z-[2] bg-[#FAFAF8]">
           <About />
           <Projects />
           <Skills />

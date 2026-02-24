@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import { projects, categories } from '../data/projects'
 import ProjectCard from '../components/ProjectCard'
 import PageTransition from '../components/PageTransition'
@@ -51,27 +50,17 @@ const ProjectsPage = () => {
           </div>
 
           {/* Project Grid */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            layout
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project, index) => (
-              <motion.div
+              <div
                 key={project.id}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{
-                  duration: 0.4,
-                  delay: index * 0.05,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                className="project-card-enter"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <ProjectCard project={project} variant="archive" />
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Empty State */}
           {filteredProjects.length === 0 && (

@@ -61,7 +61,7 @@ const ProjectModal = ({ project, onClose }) => {
   return createPortal(
     <>
       <div className="modal-backdrop" onClick={handleClose} />
-      <div ref={modalRef} className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title" data-lenis-prevent>
+      <div ref={modalRef} className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         {/* Sticky Header */}
         <div className="modal-header">
           <div className="flex items-center justify-between">
