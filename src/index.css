@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ============================================
    EDITORIAL PORTFOLIO - REFINED DESIGN SYSTEM
@@ -204,7 +204,7 @@ body {
 
 /* Display - Hero only */
 .text-display {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 600;
   line-height: 1.05;
@@ -214,7 +214,7 @@ body {
 
 /* Heading 1 - Section titles */
 .text-h1 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 500;
   line-height: 1.2;
@@ -224,7 +224,7 @@ body {
 
 /* Heading 2 - Subsection titles */
 .text-h2 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 500;
   line-height: 1.3;
@@ -234,7 +234,7 @@ body {
 
 /* Heading 3 - Card titles */
 .text-h3 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.4;
@@ -275,11 +275,11 @@ body {
   color: var(--color-accent);
 }
 
-/* Serif accent — for italic "data" words */
+/* Serif accent — for italic dramatic words */
 .text-serif-accent {
-  font-family: 'Instrument Serif', serif;
+  font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 /* ============================================
@@ -672,7 +672,7 @@ body {
 
 /* Modal Title */
 .modal-title {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(1.75rem, 4vw, 2.25rem);
   font-weight: 600;
   line-height: 1.15;
