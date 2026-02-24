@@ -41,7 +41,7 @@ const Skills = () => {
                         key={skill}
                         className="px-3 py-1.5 text-sm font-medium bg-neutral-50 border border-neutral-200
                                    rounded-full text-neutral-600
-                                   hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700
+                                   hover:border-[#94A3B8]/40 hover:bg-slate-50 hover:text-[#111111]
                                    transition-all duration-200 cursor-default"
                       >
                         {skill}
