@@ -23,7 +23,7 @@ const About = () => {
           {/* Content */}
           <div className="lg:col-span-10">
             {/* Lead statement - H1 style */}
-            <p className="text-h1 leading-snug mb-8 reveal delay-1 max-w-2xl border-l-3 border-indigo-200 pl-6">
+            <p className="text-h1 leading-snug mb-8 reveal delay-1 max-w-2xl border-l-3 border-[#94A3B8]/30 pl-6">
               Computer Science graduate from Monash University with a passion
               for turning raw data into meaningful business insights.
             </p>
