@@ -15,7 +15,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-neutral-900/20 to-transparent" />
-          <div className="absolute inset-0 bg-indigo-600/0 group-hover:bg-indigo-600/10 transition-colors duration-300" />
+          <div className="absolute inset-0 bg-[#94A3B8]/0 group-hover:bg-[#94A3B8]/10 transition-colors duration-300" />
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
             <span className="inline-block font-mono px-2.5 py-1 text-xs font-medium text-white/80 bg-white/10 backdrop-blur-sm rounded-md uppercase tracking-wide mb-3">
               {project.category}
@@ -48,7 +48,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/50 via-neutral-900/10 to-transparent" />
-          <div className="absolute inset-0 bg-indigo-600/0 group-hover:bg-indigo-600/10 transition-colors duration-300" />
+          <div className="absolute inset-0 bg-[#94A3B8]/0 group-hover:bg-[#94A3B8]/10 transition-colors duration-300" />
           <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
             <span className="inline-block font-mono px-2 py-0.5 text-[10px] font-medium text-white/70 bg-white/10 backdrop-blur-sm rounded uppercase tracking-wide mb-2">
               {project.category}
@@ -81,7 +81,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-indigo-600/0 group-hover:bg-indigo-600/10 transition-colors duration-300" />
+        <div className="absolute inset-0 bg-[#94A3B8]/0 group-hover:bg-[#94A3B8]/10 transition-colors duration-300" />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <span className="text-white text-sm font-medium tracking-wide bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-lg">
             View Project
@@ -95,7 +95,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
           </span>
           <span className="text-xs text-neutral-400">{project.year}</span>
         </div>
-        <h3 className="text-h3 mb-1 group-hover:text-[#6366f1] transition-colors duration-200">
+        <h3 className="text-h3 mb-1 group-hover:text-[#111111] transition-colors duration-200">
           {project.name}
         </h3>
         <p className="text-sm text-neutral-500 leading-relaxed line-clamp-2 mb-3">
