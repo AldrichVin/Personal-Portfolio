@@ -22,26 +22,26 @@
   --space-2xl: 4rem;     /* 64px */
   --space-3xl: 6rem;     /* 96px */
 
-  /* Colors */
-  --color-bg: #FAFAF8;
+  /* Colors — DataKeeper-inspired minimalist palette */
+  --color-bg: #FFFFFF;
   --color-bg-alt: #FFFFFF;
-  --color-text: #171717;
-  --color-text-secondary: #525252;
-  --color-text-muted: #737373;
-  --color-text-subtle: #a3a3a3;
-  --color-border: #e5e5e5;
-  --color-border-light: #f0f0f0;
+  --color-text: #111111;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+  --color-text-subtle: #D1D5DB;
+  --color-border: #E5E7EB;
+  --color-border-light: #F3F4F6;
 
-  /* Accent */
-  --color-accent: #6366f1;
-  --color-accent-light: #eef2ff;
-  --color-accent-muted: rgba(99, 102, 241, 0.08);
+  /* Accent — muted blue-gray */
+  --color-accent: #94A3B8;
+  --color-accent-light: #F1F5F9;
+  --color-accent-muted: rgba(148, 163, 184, 0.08);
 
-  /* Shadows - consistent lighting from top-right */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.02);
-  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.03), 0 8px 32px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.04), 0 16px 48px rgba(0, 0, 0, 0.06);
+  /* Shadows — softer, DataKeeper style */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
 }
 
 /* ============================================
@@ -77,7 +77,7 @@ body {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.04) 0%, transparent 70%);
   pointer-events: none;
   z-index: 30;
   will-change: transform, opacity;
@@ -131,12 +131,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6366f1;
+  background: #94A3B8;
 }
 
 /* Selection styling */
 ::selection {
-  background-color: #6366f1;
+  background-color: #111111;
   color: #ffffff;
 }
 
@@ -157,7 +157,7 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 50;
-  opacity: 0.035;
+  opacity: 0.015;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23808080'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23999' opacity='0.4'/%3E%3Crect x='3' y='1' width='1' height='1' fill='%23666' opacity='0.3'/%3E%3Crect x='7' y='2' width='1' height='1' fill='%23aaa' opacity='0.5'/%3E%3Crect x='1' y='4' width='1' height='1' fill='%23777' opacity='0.3'/%3E%3Crect x='5' y='3' width='1' height='1' fill='%23555' opacity='0.4'/%3E%3Crect x='9' y='5' width='1' height='1' fill='%23bbb' opacity='0.3'/%3E%3Crect x='2' y='7' width='1' height='1' fill='%23888' opacity='0.5'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%23999' opacity='0.3'/%3E%3Crect x='4' y='8' width='1' height='1' fill='%23666' opacity='0.4'/%3E%3Crect x='8' y='9' width='1' height='1' fill='%23aaa' opacity='0.3'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 100px 100px;
@@ -388,7 +388,7 @@ body {
 .link-underline {
   position: relative;
   text-decoration: none;
-  background-image: linear-gradient(#6366f1, #6366f1);
+  background-image: linear-gradient(#111111, #111111);
   background-size: 0% 1px;
   background-position: left bottom;
   background-repeat: no-repeat;
@@ -492,7 +492,7 @@ body {
 }
 
 .project-item:hover .project-title {
-  color: #6366f1;
+  color: #111111;
 }
 
 /* ============================================
@@ -1004,10 +1004,10 @@ body {
 
 /* Glass effect for overlays — reduced blur for perf */
 .glass {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* Consistent button base */
