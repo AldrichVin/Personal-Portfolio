@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react'
 import { ArrowDown, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 
 const DecorativeBackground = () => (
@@ -10,15 +11,84 @@ const DecorativeBackground = () => (
   </svg>
 )
 
-const StatCard = ({ value, label }) => (
-  <div className="flex flex-col items-start">
-    <span className="font-mono text-4xl md:text-5xl font-medium text-neutral-900 tracking-tight leading-none mb-3">
-      {value}
-    </span>
-    <span className="text-label">
-      {label}
-    </span>
-  </div>
+/**
+ * useCountUp — animates a number from 0 to target on scroll into view
+ */
+const useCountUp = (target, duration = 1500) => {
+  const [count, setCount] = useState(0)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        const start = performance.now()
+        const animate = (now) => {
+          const progress = Math.min((now - start) / duration, 1)
+          const eased = 1 - Math.pow(1 - progress, 3)
+          setCount(Math.round(eased * target))
+          if (progress < 1) requestAnimationFrame(animate)
+        }
+        requestAnimationFrame(animate)
+        observer.disconnect()
+      }
+    }, { threshold: 0.5 })
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [target, duration])
+
+  return { count, ref }
+}
+
+/**
+ * SpecLabel — DataKeeper-style HUD stat label with glass backing
+ */
+const SpecLabel = ({ label, numericValue, suffix = '', staticValue, sub, align = 'left' }) => {
+  const { count, ref } = useCountUp(numericValue || 0, 1500)
+  const displayValue = staticValue || `${count}${suffix}`
+
+  return (
+    <div
+      ref={ref}
+      className={`flex flex-col ${align === 'right' ? 'items-end text-right' : 'items-start text-left'} group relative z-10`}
+    >
+      {/* Soft glass backing (always visible) */}
+      <div className="absolute -inset-4 bg-white/30 backdrop-blur-[2px] rounded-2xl -z-20 border border-white/20" />
+      {/* Hover glass */}
+      <div className="absolute -inset-4 bg-white/40 backdrop-blur-md rounded-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-white/40 shadow-sm" />
+
+      <div className={`flex items-center gap-2 mb-2 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}>
+        <div className="h-[1px] w-8 bg-neutral-900/30 group-hover:w-16 transition-all duration-500" />
+        <span className="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">{label}</span>
+      </div>
+      <h4 className="text-2xl sm:text-3xl md:text-4xl font-serif italic text-neutral-900 mb-1">
+        {displayValue}
+      </h4>
+      <p className="text-[10px] sm:text-xs font-medium text-neutral-900/60 max-w-[150px]">{sub}</p>
+    </div>
+  )
+}
+
+/**
+ * SVG connector lines — thin dashed lines from stats toward center (desktop only)
+ */
+const ConnectorLines = () => (
+  <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden md:block opacity-[0.06]"
+       viewBox="0 0 1400 500" preserveAspectRatio="xMidYMid meet">
+    {/* Left connectors */}
+    <line x1="180" y1="120" x2="550" y2="200" stroke="#111" strokeWidth="1" strokeDasharray="6 4" />
+    <line x1="180" y1="380" x2="550" y2="300" stroke="#111" strokeWidth="1" strokeDasharray="6 4" />
+    {/* Right connectors */}
+    <line x1="1220" y1="120" x2="850" y2="200" stroke="#111" strokeWidth="1" strokeDasharray="6 4" />
+    <line x1="1220" y1="380" x2="850" y2="300" stroke="#111" strokeWidth="1" strokeDasharray="6 4" />
+    {/* Center crosshair */}
+    <circle cx="700" cy="250" r="40" fill="none" stroke="#111" strokeWidth="0.5" />
+    <line x1="660" y1="250" x2="740" y2="250" stroke="#111" strokeWidth="0.5" />
+    <line x1="700" y1="210" x2="700" y2="290" stroke="#111" strokeWidth="0.5" />
+  </svg>
 )
 
 const Hero = () => {
@@ -146,38 +216,60 @@ const Hero = () => {
       </section>
 
       {/* ============================================
-          SECTION 2: Stats
+          SECTION 2: Breakdown — Stats flanking cube explosion
           ============================================ */}
       <section
         id="breakdown-section"
-        className="relative w-full min-h-[70dvh] flex flex-col items-center justify-center py-20 px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[100dvh] flex flex-col items-center justify-start pt-20 md:pt-32 pointer-events-none px-6 sm:px-12 md:px-16"
       >
-        {/* Section header with merged tagline */}
-        <div className="text-center mb-16">
-          <div className="reveal inline-flex items-center gap-2 text-[#94A3B8] mb-6">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#94A3B8]" />
-            <span className="text-label">What I Do</span>
+        {/* Header block with glass backing */}
+        <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto backdrop-blur-sm bg-white/60 md:bg-transparent p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20 shadow-sm md:shadow-none border border-white/50 md:border-none">
+          <div className="inline-flex items-center gap-2 text-[#94A3B8] font-medium uppercase tracking-widest text-xs">
+            <div className="w-2 h-2 rounded-full bg-[#94A3B8]" />
+            <span>What I Do</span>
           </div>
-          <h2 className="reveal delay-1 text-h1 mb-4">
+          <h2 className="text-h1">
             Technical <span className="text-serif-accent">Background</span>
           </h2>
-          <p className="reveal delay-1 text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md mx-auto">
+          <p className="text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md mx-auto">
             From exploratory data analysis to interactive dashboards,
             I transform raw data into clear, actionable business intelligence.
           </p>
         </div>
 
-        {/* Stats grid */}
-        <div className="reveal delay-2 w-full max-w-4xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
-            <StatCard value="6+" label="Projects" />
-            <StatCard value="3yr" label="Experience" />
-            <StatCard value="10+" label="Tools" />
-            <StatCard value="BSc" label="Comp Sci" />
+        {/* Spacer — cube animates through this gap */}
+        <div className="flex-1 w-full min-h-[30vh]" />
+
+        {/* Stats flanking layout with connector lines */}
+        <div className="max-w-[1400px] w-full relative flex flex-col md:flex-row items-center justify-between z-10 pointer-events-auto">
+          <ConnectorLines />
+
+          {/* Mobile: 2x2 grid */}
+          <div className="md:hidden grid grid-cols-2 gap-x-8 gap-y-8 w-full mb-8">
+            <SpecLabel label="Projects" numericValue={6} suffix="+" sub="End-to-end analytics." align="left" />
+            <SpecLabel label="Experience" numericValue={3} suffix="yr" sub="Industry experience." align="right" />
+            <SpecLabel label="Tools" numericValue={10} suffix="+" sub="Languages & platforms." align="left" />
+            <SpecLabel label="Education" staticValue="BSc" sub="Computer Science." align="right" />
+          </div>
+
+          {/* Desktop: Left column */}
+          <div className="hidden md:flex flex-col gap-20">
+            <SpecLabel label="Projects" numericValue={6} suffix="+" sub="End-to-end data analytics." align="left" />
+            <SpecLabel label="Experience" numericValue={3} suffix="yr" sub="Industry & internship." align="left" />
+          </div>
+
+          {/* Center reserved for 3D explosion */}
+          <div className="w-full h-[40vh] md:h-auto md:flex-1" />
+
+          {/* Desktop: Right column */}
+          <div className="hidden md:flex flex-col gap-20 text-right">
+            <SpecLabel label="Tools" numericValue={10} suffix="+" sub="Languages & platforms." align="right" />
+            <SpecLabel label="Education" staticValue="BSc" sub="Computer Science, Monash." align="right" />
           </div>
         </div>
 
-        <div className="w-full h-[10vh] md:h-[15vh]" />
+        {/* Bottom spacer */}
+        <div className="w-full h-[10vh]" />
       </section>
     </div>
   )
