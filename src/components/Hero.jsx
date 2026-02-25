@@ -1,15 +1,14 @@
 import { ArrowDown, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
 
-/**
- * Hero Section - Data Analytics Portfolio
- *
- * Typography System:
- * - H1: text-[2.5rem] to text-[4.5rem], font-semibold
- * - H2: text-2xl to text-4xl, font-semibold
- * - H3: text-xl, font-semibold
- * - Body: text-base/text-lg, text-neutral-600
- * - Label: text-xs, uppercase, tracking-widest
- */
+const DecorativeBackground = () => (
+  <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-[0.03]"
+       viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <line x1="70%" y1="0" x2="70%" y2="100%" stroke="#111" strokeWidth="1" />
+    <circle cx="72%" cy="40%" r="250" fill="none" stroke="#111" strokeWidth="0.5" />
+    <circle cx="30%" cy="80%" r="120" fill="none" stroke="#111" strokeWidth="0.5" />
+    <path d="M 900 -50 A 450 450 0 0 1 1350 400" fill="none" stroke="#111" strokeWidth="1" strokeOpacity="0.5" />
+  </svg>
+)
 
 const StatCard = ({ value, label }) => (
   <div className="flex flex-col items-start">
@@ -32,6 +31,8 @@ const Hero = () => {
         id="hero-section"
         className="relative min-h-[100dvh] flex flex-col w-full overflow-hidden"
       >
+        <DecorativeBackground />
+
         {/* Subtle radial gradient for depth */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -41,7 +42,7 @@ const Hero = () => {
         />
 
         <main className="relative z-10 flex-1 flex flex-col justify-center container max-w-none pt-32 pb-20">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
           {/* Overline - Label style */}
           <div className="reveal delay-1 mb-14">
             <div className="inline-flex items-center gap-4 text-label">
@@ -167,7 +168,7 @@ const Hero = () => {
         </div>
 
         {/* Stats grid */}
-        <div className="reveal delay-2 w-full max-w-3xl mx-auto">
+        <div className="reveal delay-2 w-full max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             <StatCard value="6+" label="Projects" />
             <StatCard value="3yr" label="Experience" />
