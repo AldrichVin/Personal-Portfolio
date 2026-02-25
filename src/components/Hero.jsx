@@ -237,10 +237,15 @@ const Hero = () => {
             I transform raw data into clear, actionable business intelligence.
           </p>
         </div>
+      </section>
 
-        {/* Spacer — cube animates through this gap */}
-        <div className="flex-1 w-full min-h-[30vh]" />
-
+      {/* ============================================
+          SECTION 3: Breakdown — Stats flanking cube explosion
+          ============================================ */}
+      <section
+        id="breakdown-section"
+        className="relative w-full min-h-[100dvh] flex flex-col items-center justify-center pointer-events-none px-6 sm:px-12 md:px-16 pb-20"
+      >
         {/* Stats flanking layout with connector lines */}
         <div className="max-w-[1400px] w-full relative flex flex-col md:flex-row items-center justify-between z-10 pointer-events-auto">
           <ConnectorLines />
