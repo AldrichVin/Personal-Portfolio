@@ -288,23 +288,30 @@ body {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding-left: var(--space-md);
   padding-right: var(--space-md);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .container {
     padding-left: var(--space-xl);
     padding-right: var(--space-xl);
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .container {
     padding-left: var(--space-2xl);
     padding-right: var(--space-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 }
 
