@@ -1,6 +1,6 @@
 import { useRef, useEffect, useMemo, useLayoutEffect, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { RoundedBox, PresentationControls, Environment } from '@react-three/drei'
+import { RoundedBox, PresentationControls, Environment, Float } from '@react-three/drei'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import * as THREE from 'three'
@@ -508,6 +508,57 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
 }
 
 /**
+ * WireframeShape - Subtle rotating wireframe decorative element
+ */
+const WireframeShape = ({ position, rotation = [0, 0, 0], scale = 1, type = 'box' }) => {
+  const ref = useRef()
+
+  const geometry = useMemo(() => {
+    switch (type) {
+      case 'sphere': return new THREE.SphereGeometry(1, 16, 16)
+      case 'icosahedron': return new THREE.IcosahedronGeometry(1, 0)
+      case 'torus': return new THREE.TorusGeometry(1, 0.3, 8, 24)
+      case 'octahedron': return new THREE.OctahedronGeometry(1, 0)
+      default: return new THREE.BoxGeometry(1, 1, 1)
+    }
+  }, [type])
+
+  useFrame((state, delta) => {
+    if (ref.current) {
+      ref.current.rotation.x += delta * 0.15
+      ref.current.rotation.y += delta * 0.2
+    }
+  })
+
+  return (
+    <group position={position} rotation={rotation} scale={scale}>
+      <mesh ref={ref} geometry={geometry}>
+        <meshBasicMaterial color="#111" wireframe transparent opacity={0.08} />
+      </mesh>
+    </group>
+  )
+}
+
+/**
+ * FloatingCubes - Small solid cubes floating around the scene edges
+ */
+const FloatingCubes = () => {
+  return (
+    <group>
+      <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
+        <SingleCube position={[-2.5, 1.5, 2]} color="#94A3B8" scale={0.5} />
+      </Float>
+      <Float speed={1.2} rotationIntensity={0.4} floatIntensity={0.4}>
+        <SingleCube position={[-5.5, -2.5, 1.5]} color="#1A1A1A" scale={0.4} />
+      </Float>
+      <Float speed={1.3} rotationIntensity={0.6} floatIntensity={0.4}>
+        <SingleCube position={[-3.5, -2.8, 2.5]} color="#F8FAFC" scale={0.35} />
+      </Float>
+    </group>
+  )
+}
+
+/**
  * Scene - Refined lighting for depth
  */
 const Scene = ({ globalOpacity }) => {
@@ -541,6 +592,27 @@ const Scene = ({ globalOpacity }) => {
       />
 
       <RubiksCubeGroup globalOpacity={globalOpacity} />
+
+      {/* Floating wireframe shapes — background decorations */}
+      <Float speed={1} rotationIntensity={0.2} floatIntensity={0.2}>
+        <WireframeShape position={[0, 4, -5]} type="box" scale={1.5} />
+      </Float>
+      <Float speed={0.8} rotationIntensity={0.2} floatIntensity={0.3}>
+        <WireframeShape position={[6, -4, -2]} type="sphere" scale={1.2} />
+      </Float>
+      <Float speed={1.2} rotationIntensity={0.3} floatIntensity={0.4}>
+        <WireframeShape position={[-5, 5, -8]} type="icosahedron" scale={2} />
+      </Float>
+      {/* Creative: torus ring and octahedron */}
+      <Float speed={0.6} rotationIntensity={0.15} floatIntensity={0.15}>
+        <WireframeShape position={[-6, -3, -6]} type="torus" scale={1.8} />
+      </Float>
+      <Float speed={0.9} rotationIntensity={0.25} floatIntensity={0.2}>
+        <WireframeShape position={[4, 3, -10]} type="octahedron" scale={1.3} />
+      </Float>
+
+      {/* Small floating solid cubes */}
+      <FloatingCubes />
 
       <Environment preset="city" />
     </>
