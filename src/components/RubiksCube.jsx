@@ -10,27 +10,23 @@ gsap.registerPlugin(ScrollTrigger)
 // Physics constants
 const PHYSICS_FLOOR_Y = -4.5
 
-// Refined color palette - softer, less competing
+// DataKeeper-inspired color palette — includes dark cubes for contrast
 const COLORS = {
   white: '#FFFFFF',
-  slate: '#E2E8F0',
-  lightSlate: '#F1F5F9',
+  accent: '#94A3B8',
+  dark: '#1A1A1A',
+  lightSlate: '#CBD5E1',
   offWhite: '#F8FAFC',
-  accent1: '#CBD5E1',
-  accent2: '#94A3B8',
-  accent3: '#B0BEC5',
-  accentMuted: '#D1D5DB',
+  darkSlate: '#475569',
 }
 
 const cubeColors = [
   COLORS.white,
-  COLORS.slate,
+  COLORS.accent,
+  COLORS.dark,
   COLORS.lightSlate,
   COLORS.offWhite,
-  COLORS.accent1,
-  COLORS.accent2,
-  COLORS.accent3,
-  COLORS.accentMuted,
+  COLORS.darkSlate,
 ]
 
 /**
