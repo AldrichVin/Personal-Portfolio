@@ -223,7 +223,7 @@ const Hero = () => {
         className="relative w-full min-h-[100dvh] flex flex-col items-center justify-start pt-20 md:pt-32 pointer-events-none px-6 sm:px-12 md:px-16"
       >
         {/* Header block with glass backing */}
-        <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto backdrop-blur-sm bg-white/60 md:bg-transparent p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20 shadow-sm md:shadow-none border border-white/50 md:border-none">
+        <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto backdrop-blur-sm bg-[#F3F6FB]/60 md:bg-transparent p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20 shadow-sm md:shadow-none border border-[#CBD5E1]/40 md:border-none">
           <div className="inline-flex items-center gap-2 text-[#94A3B8] font-medium uppercase tracking-widest text-xs">
             <div className="w-2 h-2 rounded-full bg-[#94A3B8]" />
             <span>What I Do</span>
