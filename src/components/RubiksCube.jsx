@@ -366,11 +366,11 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         const direction = new THREE.Vector3(mesh.position.x, parentY, mesh.position.z).normalize()
         if (direction.length() === 0) direction.set(0, 1, 0)
 
-        const safeSpread = Math.min(3.5, screenWidth * 0.25)
+        const safeSpread = Math.min(2.5, screenWidth * 0.15)
         const explodeDist = safeSpread + Math.random() * 1.5
 
-        // Use direction only (not additive to current position) so explosion is centered at origin
-        const targetX = direction.x * explodeDist
+        // Bias towards Y and Z axes so cubes don't overlap flanking stat labels
+        const targetX = direction.x * explodeDist * 0.6
         const targetY = direction.y * explodeDist - parentY
         const targetZ = direction.z * explodeDist
 
