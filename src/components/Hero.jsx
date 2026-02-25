@@ -275,7 +275,7 @@ const Hero = () => {
         </div>
 
         {/* Bottom spacer */}
-        <div className="w-full h-[10vh]" />
+        <div className="w-full h-[25vh]" />
       </section>
     </div>
   )
