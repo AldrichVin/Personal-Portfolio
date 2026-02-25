@@ -56,7 +56,7 @@ const SpecLabel = ({ label, numericValue, suffix = '', staticValue, sub, align =
       className={`flex flex-col ${align === 'right' ? 'items-end text-right' : 'items-start text-left'} group relative z-10`}
     >
       {/* Soft glass backing (always visible) */}
-      <div className="absolute -inset-4 bg-white/30 backdrop-blur-[2px] rounded-2xl -z-20 border border-white/20" />
+      <div className="absolute -inset-4 bg-[#E8EDF4]/40 backdrop-blur-sm rounded-2xl -z-20 border border-[#CBD5E1]/30" />
       {/* Hover glass */}
       <div className="absolute -inset-4 bg-white/40 backdrop-blur-md rounded-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-white/40 shadow-sm" />
 
