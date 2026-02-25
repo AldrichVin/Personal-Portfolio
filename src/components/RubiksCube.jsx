@@ -140,8 +140,8 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
     idleTimeline.current?.play()
 
     const st = ScrollTrigger.create({
-      trigger: '#breakdown-section',
-      start: 'top center',
+      trigger: '#details-section',
+      start: 'center center',
       onEnter: () => idleTimeline.current?.pause(),
       onLeaveBack: () => idleTimeline.current?.play()
     })
