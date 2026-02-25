@@ -312,8 +312,8 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         scrollTrigger: {
           trigger: '#hero-section',
           start: 'top top',
-          endTrigger: '#breakdown-section',
-          end: 'top center',
+          endTrigger: '#details-section',
+          end: 'center center',
           scrub: 1.5,
           immediateRender: false,
         }
