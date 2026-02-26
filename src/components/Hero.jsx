@@ -64,18 +64,18 @@ const SpecLabel = ({ label, numericValue, suffix = '', staticValue, sub, align =
       className={`flex flex-col ${align === 'right' ? 'items-end text-right' : 'items-start text-left'} group relative z-10`}
     >
       {/* Soft glass backing (always visible) */}
-      <div className="absolute -inset-4 bg-[#E8EDF4]/40 backdrop-blur-sm rounded-2xl -z-20 border border-[#CBD5E1]/30" />
+      <div className="absolute -inset-6 bg-[#E8EDF4]/40 backdrop-blur-sm rounded-2xl -z-20 border border-[#CBD5E1]/30" />
       {/* Hover glass */}
-      <div className="absolute -inset-4 bg-[#E8EDF4]/60 backdrop-blur-md rounded-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-[#CBD5E1]/40 shadow-sm" />
+      <div className="absolute -inset-6 bg-[#E8EDF4]/60 backdrop-blur-md rounded-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-[#CBD5E1]/40 shadow-sm" />
 
-      <div className={`flex items-center gap-2 mb-2 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}>
-        <div className="h-[1px] w-8 bg-neutral-900/30 group-hover:w-16 transition-all duration-500" />
-        <span className="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">{label}</span>
+      <div className={`flex items-center gap-2 mb-3 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}>
+        <div className="h-[2px] w-10 bg-neutral-900/50 group-hover:w-16 transition-all duration-500" />
+        <span className="text-xs sm:text-sm font-mono tracking-widest text-neutral-500 uppercase">{label}</span>
       </div>
-      <h4 className="text-2xl sm:text-3xl md:text-4xl font-serif italic text-neutral-900 mb-1">
+      <h4 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif italic text-neutral-900 mb-2">
         {displayValue}
       </h4>
-      <p className="text-[10px] sm:text-xs font-medium text-neutral-900/60 max-w-[150px]">{sub}</p>
+      <p className="text-xs sm:text-sm font-medium text-neutral-700 max-w-[200px]">{sub}</p>
     </div>
   )
 }
