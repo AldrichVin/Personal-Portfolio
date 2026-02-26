@@ -239,16 +239,14 @@ const Hero = () => {
         id="details-section"
         className="relative w-full min-h-[60dvh] flex flex-col items-center justify-center pointer-events-none px-6 sm:px-12 md:px-16"
       >
-        <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto backdrop-blur-sm bg-[#F3F6FB]/60 md:bg-transparent p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20 shadow-sm md:shadow-none border border-[#CBD5E1]/40 md:border-none">
+        <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20">
           <div className="inline-flex items-center gap-2 text-[#94A3B8] font-medium uppercase tracking-widest text-xs">
             <div className="w-2 h-2 rounded-full bg-[#94A3B8]" />
             <span>What I Do</span>
           </div>
-          <div className="clip-reveal-parent">
-            <h2 className="text-h1 clip-reveal-child reveal">
-              Technical <span className="text-serif-accent">Background</span>
-            </h2>
-          </div>
+          <h2 className="text-h1 reveal">
+            Technical <span className="text-serif-accent">Expertise</span>
+          </h2>
           {/* Animated horizontal rule accent */}
           <div className="hr-grow reveal" />
           <p className="text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md mx-auto reveal delay-1">
