@@ -172,10 +172,15 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
       role="button"
       aria-label={`View details for ${project.name}`}
     >
-      <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center`}>
-        {/* Image - with gradient overlay and hover label */}
+      <div className={`relative grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center`}>
+        {/* Watermark project number */}
+        <span className="absolute -top-4 left-0 text-6xl font-serif italic opacity-[0.06] pointer-events-none select-none hidden lg:block">
+          {projectNumber}
+        </span>
+
+        {/* Image - clip-path curtain reveal */}
         <div
-          className={`lg:col-span-5 ${isReversed ? 'lg:order-2' : 'lg:order-1'} reveal-image`}
+          className={`lg:col-span-5 ${isReversed ? 'lg:order-2' : 'lg:order-1'} clip-reveal-image reveal-image project-hover-shift ${isReversed ? 'project-hover-shift-right' : 'project-hover-shift-left'}`}
         >
           <div className="project-image group/img relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/[0.08] ring-1 ring-neutral-900/[0.05]">
             <img
@@ -197,9 +202,9 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
           </div>
         </div>
 
-        {/* Content - proper hierarchy */}
+        {/* Content - with hover parallax shift */}
         <div
-          className={`lg:col-span-7 ${isReversed ? 'lg:order-1' : 'lg:order-2'} reveal delay-2`}
+          className={`lg:col-span-7 ${isReversed ? 'lg:order-1' : 'lg:order-2'} reveal delay-2 project-hover-shift ${isReversed ? 'project-hover-shift-left' : 'project-hover-shift-right'}`}
         >
           {/* Meta */}
           <div className="flex items-center gap-3 mb-3">
@@ -253,6 +258,8 @@ const Projects = () => {
 
   return (
     <section id="projects" className="section">
+      {/* Section gradient divider */}
+      <div className="section-divider mb-16" />
       <div className="container">
         {/* Section Header - Strong presence */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-12">
