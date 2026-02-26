@@ -1,15 +1,53 @@
 import { useState, useEffect, useRef } from 'react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 
-const DecorativeBackground = () => (
-  <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-[0.03]"
-       viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-    <line x1="70%" y1="0" x2="70%" y2="100%" stroke="#111" strokeWidth="1" />
-    <circle cx="72%" cy="40%" r="250" fill="none" stroke="#111" strokeWidth="0.5" />
-    <circle cx="30%" cy="80%" r="120" fill="none" stroke="#111" strokeWidth="0.5" />
-    <path d="M 900 -50 A 450 450 0 0 1 1350 400" fill="none" stroke="#111" strokeWidth="1" strokeOpacity="0.5" />
-  </svg>
-)
+const DecorativeBackground = () => {
+  const svgRef = useRef(null)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (svgRef.current) {
+        const scrollY = window.scrollY
+        svgRef.current.style.transform = `translateY(${scrollY * 0.3}px)`
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <svg
+      ref={svgRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-[0.03] parallax-svg"
+      viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"
+    >
+      <line x1="70%" y1="0" x2="70%" y2="100%" stroke="#111" strokeWidth="1" />
+      <circle cx="72%" cy="40%" r="250" fill="none" stroke="#111" strokeWidth="0.5" />
+      <circle cx="30%" cy="80%" r="120" fill="none" stroke="#111" strokeWidth="0.5" />
+      <path d="M 900 -50 A 450 450 0 0 1 1350 400" fill="none" stroke="#111" strokeWidth="1" strokeOpacity="0.5" />
+    </svg>
+  )
+}
+
+/**
+ * WordStagger — renders each word as a span with incremental animation delay
+ */
+const WordStagger = ({ text, baseDelay = 0, className = '' }) => {
+  const words = text.split(' ')
+  return (
+    <>
+      {words.map((word, i) => (
+        <span
+          key={i}
+          className={`word-stagger ${className}`}
+          style={{ animationDelay: `${baseDelay + i * 80}ms` }}
+        >
+          {word}{i < words.length - 1 ? '\u00A0' : ''}
+        </span>
+      ))}
+    </>
+  )
+}
 
 /**
  * useCountUp — animates a number from 0 to target on scroll into view
@@ -129,14 +167,18 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Headline - H1 */}
-          <h1 className="reveal delay-1 text-display mb-16">
+          {/* Headline - H1 with word-level stagger */}
+          <h1 className="text-display mb-16">
             <span className="block mb-4">
-              Turning <span className="text-serif-accent text-[#111111]">data</span>
+              <WordStagger text="Turning" baseDelay={200} />
+              {' '}<span className="word-stagger text-serif-accent text-[#111111]" style={{ animationDelay: '280ms' }}>data</span>
             </span>
-            <span className="block text-[#9CA3AF] mb-4">into actionable</span>
+            <span className="block text-[#9CA3AF] mb-4">
+              <WordStagger text="into actionable" baseDelay={360} />
+            </span>
             <span className="block">
-              <span className="text-serif-accent text-[#111111]">insights</span><span className="text-[#94A3B8]">.</span>
+              <span className="word-stagger text-serif-accent text-[#111111]" style={{ animationDelay: '520ms' }}>insights</span>
+              <span className="word-stagger text-[#94A3B8] text-5xl" style={{ animationDelay: '600ms' }}>.</span>
             </span>
           </h1>
 
@@ -161,7 +203,7 @@ const Hero = () => {
               <span className="text-[15px] font-medium mr-4">View Analytics Projects</span>
               <div className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center
                               group-hover:bg-white/25 transition-all duration-300">
-                <ArrowUpRight size={18} strokeWidth={2} />
+                <ArrowUpRight size={18} strokeWidth={2} className="cta-arrow-pulse" />
               </div>
             </a>
 
@@ -202,10 +244,14 @@ const Hero = () => {
             <div className="w-2 h-2 rounded-full bg-[#94A3B8]" />
             <span>What I Do</span>
           </div>
-          <h2 className="text-h1">
-            Technical <span className="text-serif-accent">Background</span>
-          </h2>
-          <p className="text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md mx-auto">
+          <div className="clip-reveal-parent">
+            <h2 className="text-h1 clip-reveal-child reveal">
+              Technical <span className="text-serif-accent">Background</span>
+            </h2>
+          </div>
+          {/* Animated horizontal rule accent */}
+          <div className="hr-grow reveal" />
+          <p className="text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md mx-auto reveal delay-1">
             From exploratory data analysis to interactive dashboards,
             I transform raw data into clear, actionable business intelligence.
           </p>
