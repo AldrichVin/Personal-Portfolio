@@ -286,14 +286,13 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
       mainGroupRef.current.scale.set(startScale, startScale, startScale)
       mainGroupRef.current.rotation.set(0.3, -0.5, 0)
 
-      // Idle animation - SLOWER rotation for premium feel
+      // Idle animation - snappy rotations matching DataKeeper
       if (idleTimeline.current) idleTimeline.current.kill()
 
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5, defaults: { ease: 'power2.inOut' } })
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.2, defaults: { ease: 'power3.inOut' } })
       idleTimeline.current = tl
 
-      // Slower slice rotations
-      const t = 1.2
+      const t = 0.8
       tl.to(topSliceRef.current.rotation, { y: Math.PI / 2, duration: t })
         .to(botSliceRef.current.rotation, { y: -Math.PI / 2, duration: t }, '<0.2')
         .to(mainGroupRef.current.rotation, { z: Math.PI / 2, duration: t * 1.3 }, '+=0.3')
