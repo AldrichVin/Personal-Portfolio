@@ -293,11 +293,12 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
       idleTimeline.current = tl
 
       const t = 0.8
-      tl.to(topSliceRef.current.rotation, { y: Math.PI / 2, duration: t })
-        .to(botSliceRef.current.rotation, { y: -Math.PI / 2, duration: t }, '<0.1')
+      const sliceAngle = Math.PI / 4 // 45° — keeps blocks close to the cube
+      tl.to(topSliceRef.current.rotation, { y: sliceAngle, duration: t })
+        .to(botSliceRef.current.rotation, { y: -sliceAngle, duration: t }, '<0.1')
         .to(mainGroupRef.current.rotation, { z: Math.PI / 2, duration: t * 1.2 }, '+=0.1')
-        .to(midSliceRef.current.rotation, { y: Math.PI / 2, duration: t })
-        .to(topSliceRef.current.rotation, { y: Math.PI, duration: t }, '<0.1')
+        .to(midSliceRef.current.rotation, { y: sliceAngle, duration: t })
+        .to(topSliceRef.current.rotation, { y: sliceAngle * 2, duration: t }, '<0.1')
         .to(mainGroupRef.current.rotation, { x: 0.2, y: -0.5, z: 0, duration: t * 1.5 }, '+=0.1')
         .to(midSliceRef.current.rotation, { y: 0, duration: t }, '+=0.2')
         .to(topSliceRef.current.rotation, { y: 0, duration: t }, '<')
