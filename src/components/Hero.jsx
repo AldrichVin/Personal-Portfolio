@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ArrowDown, Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react'
+import { ArrowDown, ArrowUpRight } from 'lucide-react'
 
 const DecorativeBackground = () => (
   <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-[0.03]"
@@ -178,40 +178,6 @@ const Hero = () => {
             </a>
           </div>
 
-          {/* Social links */}
-          <div className="reveal delay-4 flex items-center gap-1 mt-16">
-            <a
-              href="https://github.com/AldrichVin"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative p-3 text-neutral-400 hover:text-neutral-900 transition-colors duration-300"
-              aria-label="GitHub"
-            >
-              <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
-                               group-hover:scale-100 transition-transform duration-300 ease-out" />
-              <Github size={20} strokeWidth={1.5} className="relative z-10" />
-            </a>
-            <a
-              href="https://linkedin.com/in/aldrich-vincent-4463b2355"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative p-3 text-neutral-400 hover:text-neutral-900 transition-colors duration-300"
-              aria-label="LinkedIn"
-            >
-              <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
-                               group-hover:scale-100 transition-transform duration-300 ease-out" />
-              <Linkedin size={20} strokeWidth={1.5} className="relative z-10" />
-            </a>
-            <a
-              href="mailto:aldrichvin040205@gmail.com"
-              className="group relative p-3 text-neutral-400 hover:text-neutral-900 transition-colors duration-300"
-              aria-label="Email"
-            >
-              <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
-                               group-hover:scale-100 transition-transform duration-300 ease-out" />
-              <Mail size={20} strokeWidth={1.5} className="relative z-10" />
-            </a>
-          </div>
           </div>
         </main>
 

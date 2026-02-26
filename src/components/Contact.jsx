@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github, Linkedin, Mail, ArrowUp } from 'lucide-react'
+import { ArrowUpRight, Mail, ArrowUp } from 'lucide-react'
 
 const INTEREST_TAGS = ['Data Analyst', 'BI Developer', 'Analytics Engineer']
 
@@ -64,32 +64,6 @@ const Contact = () => {
                   <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
 
-                <span className="hidden sm:block w-px h-5 bg-neutral-200" />
-
-                <div className="flex items-center gap-1">
-                  <a
-                    href="https://github.com/AldrichVin"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative p-2.5 text-neutral-400 hover:text-neutral-900 transition-colors duration-300"
-                    aria-label="GitHub"
-                  >
-                    <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
-                                     group-hover:scale-100 transition-transform duration-300 ease-out" />
-                    <Github size={18} strokeWidth={1.5} className="relative z-10" />
-                  </a>
-                  <a
-                    href="https://linkedin.com/in/aldrich-vincent-4463b2355"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative p-2.5 text-neutral-400 hover:text-neutral-900 transition-colors duration-300"
-                    aria-label="LinkedIn"
-                  >
-                    <span className="absolute inset-0 rounded-full bg-neutral-100 scale-0
-                                     group-hover:scale-100 transition-transform duration-300 ease-out" />
-                    <Linkedin size={18} strokeWidth={1.5} className="relative z-10" />
-                  </a>
-                </div>
               </div>
             </div>
           </div>
