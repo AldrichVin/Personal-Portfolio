@@ -329,7 +329,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
       }, 0)
 
       // Timeline 2: Breakdown (Explosion)
-      const breakdownScale = isMobile ? 0.7 : 0.85
+      const breakdownScale = isMobile ? 0.55 : 0.8
 
       const tl2 = gsap.timeline({
         scrollTrigger: {
