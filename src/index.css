@@ -1174,13 +1174,13 @@ body {
   width: 6rem;
 }
 
-/* Image clip-path reveal (curtain unveil) */
-.clip-reveal-image {
+/* Image clip-path reveal (curtain unveil) — triggered by parent .reveal.active */
+.clip-reveal-inner {
   clip-path: inset(100% 0 0 0);
   transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.clip-reveal-image.active {
+.reveal.active .clip-reveal-inner {
   clip-path: inset(0);
 }
 

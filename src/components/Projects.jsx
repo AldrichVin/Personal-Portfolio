@@ -180,9 +180,9 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
 
         {/* Image - clip-path curtain reveal */}
         <div
-          className={`lg:col-span-5 ${isReversed ? 'lg:order-2' : 'lg:order-1'} clip-reveal-image reveal-image project-hover-shift ${isReversed ? 'project-hover-shift-right' : 'project-hover-shift-left'}`}
+          className={`lg:col-span-5 ${isReversed ? 'lg:order-2' : 'lg:order-1'} reveal project-hover-shift ${isReversed ? 'project-hover-shift-right' : 'project-hover-shift-left'}`}
         >
-          <div className="project-image group/img relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/[0.08] ring-1 ring-neutral-900/[0.05]">
+          <div className="project-image group/img relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg shadow-neutral-900/[0.08] ring-1 ring-neutral-900/[0.05] clip-reveal-inner">
             <img
               src={imageUrl}
               alt={project.name}

@@ -31,7 +31,7 @@ function App() {
 
     // Small delay to let the DOM render after route transition
     const timer = setTimeout(() => {
-      const revealElements = document.querySelectorAll('.reveal, .reveal-image, .clip-reveal-image, .clip-reveal-child, .hr-grow')
+      const revealElements = document.querySelectorAll('.reveal, .reveal-image, .clip-reveal-child, .hr-grow')
       revealElements.forEach((el) => observer.observe(el))
     }, 100)
 
