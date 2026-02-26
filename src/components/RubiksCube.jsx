@@ -303,9 +303,9 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         .to(topSliceRef.current.rotation, { y: 0, duration: t }, '<')
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
-      // Timeline 1: Hero → Breakdown (move to center)
-      const centerPosDetails = isMobile ? [0, -0.5, 0] : [0, -1, 0]
-      const detailScale = isMobile ? 0.8 : 0.95
+      // Timeline 1: Hero → Details (move to center)
+      const centerPosDetails = isMobile ? [0, 0.5, 0] : [0, -2.5, 0]
+      const detailScale = isMobile ? 0.6 : 0.9
 
       const tl1 = gsap.timeline({
         scrollTrigger: {
