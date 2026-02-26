@@ -17,24 +17,32 @@ const DecorativeBackground = () => (
 const useCountUp = (target, duration = 1500) => {
   const [count, setCount] = useState(0)
   const ref = useRef(null)
+  const animating = useRef(false)
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
 
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting && !animating.current) {
+        animating.current = true
         const start = performance.now()
         const animate = (now) => {
           const progress = Math.min((now - start) / duration, 1)
           const eased = 1 - Math.pow(1 - progress, 3)
           setCount(Math.round(eased * target))
-          if (progress < 1) requestAnimationFrame(animate)
+          if (progress < 1) {
+            requestAnimationFrame(animate)
+          } else {
+            animating.current = false
+          }
         }
         requestAnimationFrame(animate)
-        observer.disconnect()
+      } else if (!entry.isIntersecting) {
+        setCount(0)
+        animating.current = false
       }
-    }, { threshold: 0.1 })
+    }, { threshold: 0.4 })
 
     observer.observe(el)
     return () => observer.disconnect()
