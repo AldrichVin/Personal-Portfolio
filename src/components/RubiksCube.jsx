@@ -305,7 +305,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
       // Timeline 1: Hero → Details (move to center)
-      const centerPosDetails = isMobile ? [0, 0.5, 0] : [0, -2.5, 0]
+      const centerPosDetails = isMobile ? [0, 0.5, 0] : [0, -0.5, 0]
       const detailScale = isMobile ? 0.6 : 0.9
 
       const tl1 = gsap.timeline({
