@@ -279,12 +279,12 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
       const screenWidth = viewport.width
 
       // Initial position
-      const startPos = isMobile ? [0, 0, 0] : [3.5, 0, 0]
-      const startScale = isMobile ? 0.75 : 1.0
+      const startPos = isMobile ? [0, -2.8, 0] : [3.5, 0, 0]
+      const startScale = isMobile ? 0.65 : 0.95
 
       mainGroupRef.current.position.set(...startPos)
       mainGroupRef.current.scale.set(startScale, startScale, startScale)
-      mainGroupRef.current.rotation.set(0.25, -0.4, 0)
+      mainGroupRef.current.rotation.set(0.3, -0.5, 0)
 
       // Idle animation - SLOWER rotation for premium feel
       if (idleTimeline.current) idleTimeline.current.kill()
