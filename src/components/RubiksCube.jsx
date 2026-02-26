@@ -313,13 +313,13 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
           start: 'top top',
           endTrigger: '#details-section',
           end: 'center center',
-          scrub: 1.5,
+          scrub: 1.2,
           immediateRender: false,
         }
       })
 
       tl1.to(mainGroupRef.current.rotation, {
-        x: 0.2, y: Math.PI * 0.2, z: 0, duration: 1, ease: 'power2.inOut'
+        x: 0.2, y: Math.PI * 0.25, z: 0, duration: 1, ease: 'power2.inOut'
       }, 0)
       .to(mainGroupRef.current.position, {
         x: centerPosDetails[0], y: centerPosDetails[1], z: centerPosDetails[2], ease: 'power1.inOut'
