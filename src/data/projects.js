@@ -46,6 +46,29 @@ export const projects = [
     featured: true
   },
   {
+    id: 'data-autopilot',
+    name: 'Data Autopilot',
+    tagline: 'CSV to Clean Insights in Seconds',
+    description: 'A full-stack data analysis platform with dual cleaning engines (Python & R), 17+ chart types via Draco-inspired recommendation, anomaly detection, clustering, and McKinsey-style narrative reports.',
+    longDescription: 'Designed and developed a comprehensive data analysis platform that transforms raw CSV data into polished insights within seconds. Features dual cleaning engines (Python/Pandas and R/tidyverse), a Draco-inspired chart recommendation system supporting 17+ chart types, anomaly detection via Isolation Forest, K-means clustering with silhouette scoring, PCA dimensionality reduction, and statistical hypothesis testing. Exports to HTML, PDF, Tableau workbooks, and PNG formats with McKinsey-style narrative report generation and fuzzy string matching for automated data quality improvement.',
+    techStack: ['React 19', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'FastAPI', 'Pandas', 'Scikit-Learn', 'Plotly', 'Altair', 'WeasyPrint'],
+    category: 'Data Analytics',
+    highlights: [
+      'Dual cleaning engines (Python & R) for comprehensive data preparation',
+      'Draco-inspired chart recommendation engine with 17+ chart types',
+      'Anomaly detection (Isolation Forest) and K-means clustering',
+      'PCA dimensionality reduction and statistical hypothesis testing',
+      'Multi-format export (HTML, PDF, Tableau, PNG)',
+      'McKinsey-style narrative report generation'
+    ],
+    github: 'https://github.com/AldrichVin/data-autopilot',
+    live: 'https://frontend-ashen-phi-62.vercel.app',
+    color: '#0ea5e9',
+    year: '2025',
+    status: 'Complete',
+    featured: true
+  },
+  {
     id: 'australia-climate',
     name: 'Australia Climate Viz',
     tagline: 'Interactive Climate Data Storytelling',
@@ -110,6 +133,28 @@ export const projects = [
     year: '2025',
     status: 'In Development',
     featured: true
+  },
+  {
+    id: 'auto-job-applier',
+    name: 'Auto Job Applier LinkedIn',
+    tagline: 'AI-Powered Job Application Automation Bot',
+    description: 'A sophisticated Python automation bot that applies to 100+ jobs per hour across 13+ platforms with AI-powered cover letter generation and intelligent form-filling.',
+    longDescription: 'Built a high-throughput job application automation system that integrates with LinkedIn Easy Apply, Seek, Indeed, Workday, Greenhouse, Lever, and 7+ additional platforms. The bot uses multi-LLM support (OpenAI, DeepSeek, Gemini, Ollama) for intelligent cover letter generation and skill extraction from job descriptions. Features anti-bot detection bypass via undetected-chromedriver, a comprehensive configuration system, and a Flask-based web UI dashboard for monitoring application history in real-time.',
+    techStack: ['Python', 'Selenium', 'OpenAI API', 'DeepSeek API', 'Gemini API', 'Flask', 'undetected-chromedriver'],
+    category: 'AI / Automation',
+    highlights: [
+      '13+ platform handlers (LinkedIn, Seek, Indeed, Workday, Greenhouse, Lever)',
+      'AI-powered cover letter generation with multi-LLM support',
+      'Intelligent skill extraction from job descriptions',
+      'Anti-bot detection bypass with undetected-chromedriver',
+      '100+ applications per hour throughput',
+      'Flask web UI dashboard for real-time monitoring'
+    ],
+    github: 'https://github.com/GodsScion/Auto_job_applier_linkedIn',
+    color: '#f59e0b',
+    year: '2025',
+    status: 'In Development',
+    featured: false
   },
   {
     id: 'datapraktis',
@@ -260,6 +305,8 @@ export const categories = [
 
 // Placeholder images for projects (desaturated Unsplash)
 export const projectImages = {
+  'data-autopilot': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2532&auto=format&fit=crop&sat=-100',
+  'auto-job-applier': 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?q=80&w=2532&auto=format&fit=crop&sat=-100',
   'llm-evaluation-playground': 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2532&auto=format&fit=crop&sat=-100',
   'clawd': 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?q=80&w=2487&auto=format&fit=crop&sat=-100',
   'australia-climate': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2544&auto=format&fit=crop&sat=-100',
