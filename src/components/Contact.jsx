@@ -1,6 +1,28 @@
-import { ArrowUpRight, Mail, ArrowUp, Github, Linkedin } from 'lucide-react'
+import { ArrowUpRight, Mail, ArrowUp, Github, Linkedin, MapPin } from 'lucide-react'
 
-const INTEREST_TAGS = ['Data Analyst', 'BI Developer', 'Analytics Engineer']
+const CONTACT_METHODS = [
+  {
+    icon: Mail,
+    label: 'Email',
+    value: 'aldrichvin040205@gmail.com',
+    href: 'mailto:aldrichvin040205@gmail.com',
+    external: false,
+  },
+  {
+    icon: Github,
+    label: 'GitHub',
+    value: 'github.com/AldrichVin',
+    href: 'https://github.com/AldrichVin',
+    external: true,
+  },
+  {
+    icon: Linkedin,
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/aldrich-vincent',
+    href: 'https://linkedin.com/in/aldrich-vincent-4463b2355',
+    external: true,
+  },
+]
 
 const Contact = () => {
   const handleBackToTop = (e) => {
@@ -19,110 +41,124 @@ const Contact = () => {
             <span className="text-label reveal">Contact</span>
           </div>
 
-          {/* Content */}
+          {/* Content — two-zone layout */}
           <div className="lg:col-span-10">
-            {/* Card wrapper */}
-            <div className="bg-neutral-50/50 rounded-2xl p-8 md:p-10 border border-neutral-100">
-              {/* Heading with availability */}
-              <div className="flex flex-wrap items-center gap-4 mb-6 reveal delay-1">
-                <h2 className="text-h1">
-                  Let's work together.
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+              {/* Left zone — headline + message */}
+              <div className="reveal delay-1">
+                <h2 className="text-h1 mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+                  Let's connect.
                 </h2>
-                <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full uppercase tracking-wide">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 availability-glow" />
-                  Available
-                </span>
+
+                {/* Availability */}
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                  <span className="text-sm font-medium text-emerald-700">
+                    Available for opportunities
+                  </span>
+                </div>
+
+                <p className="text-base text-neutral-500 leading-relaxed max-w-sm">
+                  Open to data analyst roles, analytics projects, and opportunities
+                  to drive business impact through data.
+                </p>
               </div>
 
-              {/* Description */}
-              <p className="text-base text-neutral-600 leading-relaxed max-w-md mb-6 reveal delay-2">
-                Open to data analyst roles, analytics projects, and opportunities
-                to drive business impact through data.
-              </p>
+              {/* Right zone — contact methods */}
+              <div className="reveal delay-2">
+                <div className="space-y-0">
+                  {CONTACT_METHODS.map(({ icon: Icon, label, value, href, external }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target={external ? '_blank' : undefined}
+                      rel={external ? 'noopener noreferrer' : undefined}
+                      className="contact-row group"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-neutral-100 flex items-center justify-center flex-shrink-0 group-hover:bg-neutral-200/60 transition-colors">
+                        <Icon size={18} strokeWidth={1.5} className="text-neutral-500" />
+                      </div>
+                      <div className="ml-4 flex-1 min-w-0">
+                        <span className="block text-sm font-semibold text-neutral-900">
+                          {label}
+                        </span>
+                        <span className="block text-sm text-neutral-500 truncate">
+                          {value}
+                        </span>
+                      </div>
+                      <ArrowUpRight
+                        size={16}
+                        strokeWidth={1.5}
+                        className="text-neutral-400 flex-shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                      />
+                    </a>
+                  ))}
+                </div>
 
-              {/* Interest tags */}
-              <div className="flex flex-wrap gap-2 mb-8 reveal delay-2">
-                {INTEREST_TAGS.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1.5 text-sm font-medium bg-slate-50 border border-[#94A3B8]/30
-                               rounded-full text-[#6B7280]"
-                  >
-                    {tag}
+                {/* Location */}
+                <div className="flex items-center gap-2 mt-6 pt-4">
+                  <MapPin size={14} strokeWidth={1.5} className="text-neutral-400" />
+                  <span className="text-sm text-neutral-400">
+                    Based in Melbourne, Australia
                   </span>
-                ))}
-              </div>
-
-              {/* Email + social links inline */}
-              <div className="flex flex-wrap items-center gap-6 reveal delay-3">
-                <a
-                  href="mailto:aldrichvin040205@gmail.com"
-                  className="group inline-flex items-center gap-2 text-base font-medium text-neutral-900 hover:text-neutral-600 transition-colors"
-                >
-                  <Mail size={18} strokeWidth={1.5} className="text-neutral-400" />
-                  <span className="link-underline pb-0.5">
-                    aldrichvin040205@gmail.com
-                  </span>
-                  <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-
-                <a
-                  href="https://github.com/AldrichVin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
-                >
-                  <Github size={18} strokeWidth={1.5} />
-                  <span>GitHub</span>
-                </a>
-
-                <a
-                  href="https://linkedin.com/in/aldrich-vincent-4463b2355"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
-                >
-                  <Linkedin size={18} strokeWidth={1.5} />
-                  <span>LinkedIn</span>
-                </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <footer className="mt-12 pt-8 border-t border-neutral-200 reveal delay-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div className="flex items-center gap-8">
+        <footer className="mt-20 pt-10 border-t border-neutral-200 reveal delay-3">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+            {/* Left — name */}
+            <span className="font-display text-lg font-semibold text-neutral-900 tracking-tight">
+              Aldrich Liem
+            </span>
+
+            {/* Center — social links */}
+            <div className="flex items-center gap-2 text-sm text-neutral-500">
               <a
                 href="https://github.com/AldrichVin"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
+                className="hover:text-neutral-900 transition-colors"
               >
                 GitHub
               </a>
+              <span className="text-neutral-300">&middot;</span>
               <a
                 href="https://linkedin.com/in/aldrich-vincent-4463b2355"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
+                className="hover:text-neutral-900 transition-colors"
               >
                 LinkedIn
               </a>
+            </div>
+
+            {/* Right — copyright + back to top */}
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-neutral-400">
+                &copy; {new Date().getFullYear()}
+              </span>
               <a
                 href="#"
                 onClick={handleBackToTop}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
+                className="back-to-top"
               >
-                <ArrowUp size={14} strokeWidth={1.5} />
-                Back to top
+                <span>Top</span>
+                <ArrowUp size={13} strokeWidth={2} />
               </a>
             </div>
-            <span className="text-sm text-neutral-400">
-              &copy; {new Date().getFullYear()} Aldrich Vincent Liem
-            </span>
           </div>
+
+          {/* Built with line */}
+          <p className="text-center text-xs text-neutral-300 mt-8">
+            Designed & built with React + Tailwind
+          </p>
         </footer>
       </div>
     </section>
