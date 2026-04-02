@@ -3,19 +3,19 @@ import { useEffect, useRef, useState } from 'react'
 const skillGroups = [
   {
     name: 'Data Analysis & Modeling',
-    skills: ['Python', 'R', 'SQL', 'Pandas', 'NumPy', 'EDA'],
+    skills: ['Python', 'R', 'SQL', 'Pandas', 'NumPy', 'Scikit-Learn', 'SciPy', 'EDA'],
   },
   {
     name: 'Databases & Warehousing',
-    skills: ['PostgreSQL (Supabase)', 'MongoDB', 'Oracle SQL'],
+    skills: ['PostgreSQL', 'MongoDB', 'Oracle SQL', 'Supabase', 'ETL Pipelines'],
   },
   {
     name: 'Visualization & BI',
-    skills: ['Power BI', 'Tableau', 'Vega-Lite'],
+    skills: ['Power BI', 'Tableau', 'Plotly', 'Matplotlib', 'Altair', 'Vega-Lite'],
   },
   {
     name: 'Engineering & Tools',
-    skills: ['Flask (APIs)', 'Git/GitHub', 'Docker'],
+    skills: ['FastAPI', 'Flask', 'Git/GitHub', 'Docker', 'Jupyter', 'Excel'],
   },
 ]
 

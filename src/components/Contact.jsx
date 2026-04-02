@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, ArrowUp } from 'lucide-react'
+import { ArrowUpRight, Mail, ArrowUp, Github, Linkedin } from 'lucide-react'
 
 const INTEREST_TAGS = ['Data Analyst', 'BI Developer', 'Analytics Engineer']
 
@@ -54,7 +54,7 @@ const Contact = () => {
               </div>
 
               {/* Email + social links inline */}
-              <div className="flex flex-wrap items-center gap-5 reveal delay-3">
+              <div className="flex flex-wrap items-center gap-6 reveal delay-3">
                 <a
                   href="mailto:aldrichvin040205@gmail.com"
                   className="group inline-flex items-center gap-2 text-base font-medium text-neutral-900 hover:text-neutral-600 transition-colors"
@@ -66,6 +66,25 @@ const Contact = () => {
                   <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
 
+                <a
+                  href="https://github.com/AldrichVin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
+                >
+                  <Github size={18} strokeWidth={1.5} />
+                  <span>GitHub</span>
+                </a>
+
+                <a
+                  href="https://linkedin.com/in/aldrich-vincent-4463b2355"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors"
+                >
+                  <Linkedin size={18} strokeWidth={1.5} />
+                  <span>LinkedIn</span>
+                </a>
               </div>
             </div>
           </div>

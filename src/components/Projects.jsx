@@ -222,12 +222,12 @@ const ProjectItem = ({ project, index, isReversed, onClick }) => {
           </h3>
 
           {/* Tagline */}
-          <p className="text-sm font-medium text-neutral-500 mb-4">
+          <p className="text-base font-medium text-neutral-800 mb-3">
             {project.tagline}
           </p>
 
-          {/* Description - better contrast */}
-          <p className="text-base text-neutral-600 leading-relaxed mb-5 line-clamp-2">
+          {/* Description */}
+          <p className="text-sm text-neutral-500 leading-relaxed mb-5 line-clamp-2">
             {project.description}
           </p>
 

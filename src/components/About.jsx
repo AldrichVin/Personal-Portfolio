@@ -22,23 +22,21 @@ const About = () => {
 
           {/* Content */}
           <div className="lg:col-span-10">
-            {/* Lead statement with decorative quote mark */}
-            <div className="relative quote-decoration">
-              <p className="text-h1 leading-snug mb-8 reveal delay-1 max-w-2xl border-l-3 border-[#94A3B8]/30 pl-6 relative z-10">
-                Computer Science graduate from Monash University with a passion
-                for turning raw data into meaningful business insights.
-              </p>
-            </div>
+            {/* Lead statement */}
+            <p className="text-h2 font-normal text-neutral-800 leading-relaxed mb-12 reveal delay-1 max-w-2xl">
+              Computer Science graduate from Monash University with a passion
+              for turning raw data into meaningful business insights.
+            </p>
 
             {/* Body paragraphs — staggered entrance */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-2xl mb-8">
-              <p className="text-base text-neutral-600 leading-relaxed reveal delay-2">
+              <p className="text-base text-neutral-500 leading-relaxed reveal delay-2">
                 I specialize in data analysis, building ETL pipelines, and creating
                 interactive dashboards that help stakeholders make informed decisions.
                 My toolkit includes SQL, Python, and visualization platforms like
                 Power BI and Tableau.
               </p>
-              <p className="text-base text-neutral-600 leading-relaxed reveal delay-4">
+              <p className="text-base text-neutral-500 leading-relaxed reveal delay-4">
                 From climate analytics to business intelligence projects, I enjoy
                 uncovering patterns in complex datasets and presenting findings
                 in clear, actionable formats. I'm driven by the challenge of

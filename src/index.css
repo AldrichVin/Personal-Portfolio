@@ -207,9 +207,15 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(3rem, 7vw, 6rem);
   font-weight: 600;
-  line-height: 1.05;
+  line-height: 1.12;
   letter-spacing: -0.03em;
   color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  .text-display {
+    line-height: 1.05;
+  }
 }
 
 /* Heading 1 - Section titles */
@@ -288,7 +294,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
   padding-left: var(--space-md);
   padding-right: var(--space-md);
@@ -328,21 +334,20 @@ body {
 
 /* Consistent section spacing */
 .section {
-  padding-top: var(--space-3xl);
-  padding-bottom: var(--space-3xl);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
   }
 }
 
 /* Section divider */
 .section-border {
   border-top: 1px solid var(--color-border-light);
-  border-left: 3px solid var(--color-accent-light);
 }
 
 /* ============================================

@@ -237,7 +237,7 @@ const Hero = () => {
           ============================================ */}
       <section
         id="details-section"
-        className="relative w-full min-h-[60dvh] flex flex-col items-center justify-center pointer-events-none px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[40dvh] flex flex-col items-center justify-center pointer-events-none px-6 sm:px-12 md:px-16"
       >
         <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20">
           <div className="inline-flex items-center gap-2 text-[#94A3B8] font-medium uppercase tracking-widest text-xs">
@@ -282,7 +282,7 @@ const Hero = () => {
           </div>
 
           {/* Center reserved for 3D explosion */}
-          <div className="w-full h-[40vh] md:h-auto md:flex-1" />
+          <div className="w-full h-[20vh] md:h-auto md:flex-1" />
 
           {/* Desktop: Right column */}
           <div className="hidden md:flex flex-col gap-20 text-right">
@@ -292,7 +292,7 @@ const Hero = () => {
         </div>
 
         {/* Bottom spacer */}
-        <div className="w-full h-[25vh]" />
+        <div className="w-full h-[10vh]" />
       </section>
     </div>
   )
