@@ -286,6 +286,69 @@ export const projects = [
     year: '2024',
     status: 'Complete',
     featured: false
+  },
+  {
+    id: 'customer-churn-analysis',
+    name: 'Customer Churn Prediction',
+    tagline: 'ML pipeline for predicting and explaining customer churn',
+    description: 'End-to-end machine learning pipeline predicting telco customer churn with XGBoost, featuring SHAP explainability and K-Means segmentation for targeted retention strategies.',
+    longDescription: 'Built a complete ML pipeline on a 7,000-row telco dataset — from data profiling and feature engineering through model evaluation and business recommendations. Trained Logistic Regression, Random Forest, and XGBoost classifiers achieving 0.84 ROC-AUC. Used SHAP to explain individual predictions and K-Means clustering to segment customers into actionable groups. The final notebook translates model outputs into concrete retention strategies with projected revenue impact.',
+    techStack: ['Python', 'scikit-learn', 'XGBoost', 'SHAP', 'Pandas', 'Matplotlib', 'Seaborn', 'K-Means'],
+    category: 'AI / Machine Learning',
+    highlights: [
+      'XGBoost classifier with 0.84 ROC-AUC',
+      'SHAP waterfall plots for individual prediction explainability',
+      'K-Means customer segmentation with RFM-style profiling',
+      'Business recommendations with projected revenue impact'
+    ],
+    github: 'https://github.com/AldrichVin/customer-churn-analysis',
+    live: '',
+    color: '#7c3aed',
+    year: '2025',
+    status: 'Complete',
+    featured: true
+  },
+  {
+    id: 'ecommerce-business-analytics',
+    name: 'E-Commerce Business Analytics',
+    tagline: 'SQL-driven analytics on 100K orders with statistical testing',
+    description: 'End-to-end SQL analytics project on a 100K-order e-commerce dataset — revenue trends, RFM customer segmentation, product performance, and hypothesis testing with Mann-Whitney U tests.',
+    longDescription: 'Designed a star-schema SQLite database across 9 tables and wrote advanced SQL queries using window functions (LAG, running totals), CTEs, and NTILE for RFM segmentation. Python notebooks visualize revenue growth, cohort retention, product-seller performance, and payment patterns. Includes statistical hypothesis testing (Mann-Whitney U) to validate whether credit card orders generate higher revenue than boleto payments.',
+    techStack: ['SQL', 'SQLite', 'Python', 'Pandas', 'Matplotlib', 'Seaborn', 'SciPy'],
+    category: 'Data Analytics',
+    highlights: [
+      'Star-schema database with 9 tables and 100K synthetic orders',
+      'Advanced SQL: window functions, CTEs, NTILE for RFM segmentation',
+      'Cohort retention analysis and revenue growth trends',
+      'Mann-Whitney U hypothesis testing for payment method comparison'
+    ],
+    github: 'https://github.com/AldrichVin/ecommerce-business-analytics',
+    live: '',
+    color: '#059669',
+    year: '2025',
+    status: 'Complete',
+    featured: true
+  },
+  {
+    id: 'asx-market-dashboard',
+    name: 'ASX Market Dashboard',
+    tagline: 'Real-time interactive analytics for ASX equities',
+    description: 'Live Streamlit dashboard for Australian Securities Exchange equities — price charts with technical overlays, risk metrics, sector analysis, trend signals, and portfolio backtesting.',
+    longDescription: 'A multi-page Streamlit app pulling real-time data from Yahoo Finance for 20 ASX stocks across 8 sectors. Features interactive Plotly charts with candlestick/line views, moving averages, Bollinger Bands, and RSI. The Risk page calculates beta, Sharpe ratio, rolling volatility, and correlation heatmaps. Sector analysis compares cumulative returns, while the Portfolio page backtests custom allocations against the ASX 200 benchmark. Designed with a minimalist white theme and deployed to Streamlit Community Cloud.',
+    techStack: ['Python', 'Streamlit', 'Plotly', 'yfinance', 'Pandas', 'NumPy', 'scikit-learn'],
+    category: 'Data Analytics',
+    highlights: [
+      'Live data from Yahoo Finance for 20 ASX stocks across 8 sectors',
+      'Interactive Plotly charts: candlestick, Bollinger Bands, RSI, drawdown',
+      'Portfolio backtesting engine with benchmark comparison',
+      'Minimalist white theme deployed to Streamlit Community Cloud'
+    ],
+    github: 'https://github.com/AldrichVin/asx-market-dashboard',
+    live: 'https://asx-market-dashboard-qfogxyora7ake9jpkjj5gf.streamlit.app',
+    color: '#1e3a5f',
+    year: '2025',
+    status: 'Complete',
+    featured: true
   }
 ]
 
@@ -318,4 +381,7 @@ export const projectImages = {
   'monash-mates': 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2540&auto=format&fit=crop&sat=-100',
   'imposter-game': 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2540&auto=format&fit=crop&sat=-100',
   'veve-clothing': 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=2532&auto=format&fit=crop&sat=-100',
+  'customer-churn-analysis': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2532&auto=format&fit=crop&sat=-100',
+  'ecommerce-business-analytics': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2532&auto=format&fit=crop&sat=-100',
+  'asx-market-dashboard': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2532&auto=format&fit=crop&sat=-100',
 }
