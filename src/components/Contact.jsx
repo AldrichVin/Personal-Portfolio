@@ -114,7 +114,7 @@ const Contact = () => {
         <footer className="mt-14 pt-10 border-t border-neutral-200 reveal delay-3">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             {/* Left — name */}
-            <span className="font-display text-lg font-semibold text-neutral-900 tracking-tight">
+            <span className="text-[15px] font-semibold text-neutral-900 tracking-tight">
               Aldrich Liem
             </span>
 

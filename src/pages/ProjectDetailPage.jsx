@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Github, ExternalLink, CheckCircle, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react'
+import { Github, ExternalLink, ChevronRight, ArrowLeft, ArrowRight } from 'lucide-react'
 import { projects, projectImages } from '../data/projects'
 import PageTransition from '../components/PageTransition'
 
@@ -52,16 +52,9 @@ const ProjectDetailPage = () => {
 
           {/* Hero Block */}
           <div className="mb-8">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="font-mono px-2.5 py-1 text-xs font-medium text-neutral-500 bg-neutral-100 rounded-md uppercase tracking-wide">
-                {project.category}
-              </span>
-              <span className="text-sm text-neutral-400">{project.year}</span>
-              <div className="flex items-center gap-2">
-                <span className={`w-1.5 h-1.5 rounded-full ${project.status === 'Complete' ? 'bg-emerald-500' : 'bg-amber-400 animate-pulse-dot'}`} />
-                <span className="text-sm text-neutral-400">{project.status}</span>
-              </div>
-            </div>
+            <p className="text-[13px] text-neutral-400 mb-4">
+              {project.category} — {project.year}
+            </p>
             <h1 className="text-display mb-3" style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)' }}>
               {project.name}
             </h1>
@@ -84,7 +77,7 @@ const ProjectDetailPage = () => {
             <div className="lg:col-span-8">
               {/* Overview */}
               <div className="mb-12">
-                <h2 className="font-mono text-xs font-medium text-neutral-400 uppercase tracking-[0.12em] mb-4">
+                <h2 className="text-[11px] font-medium text-neutral-400 uppercase tracking-widest mb-4">
                   Overview
                 </h2>
                 <p className="text-lg leading-[1.8] text-neutral-600">
@@ -94,15 +87,13 @@ const ProjectDetailPage = () => {
 
               {/* Key Features */}
               <div className="mb-12">
-                <h2 className="font-mono text-xs font-medium text-neutral-400 uppercase tracking-[0.12em] mb-4">
+                <h2 className="text-[11px] font-medium text-neutral-400 uppercase tracking-widest mb-4">
                   Key Features
                 </h2>
                 <ul className="flex flex-col gap-3.5">
                   {project.highlights.map((highlight, index) => (
                     <li key={index} className="flex items-start gap-3">
-                      <span className="flex-shrink-0 flex items-center justify-center w-[22px] h-[22px] bg-neutral-100 rounded-md text-neutral-500 mt-0.5">
-                        <CheckCircle size={14} strokeWidth={2} />
-                      </span>
+                      <span className="text-neutral-300 mt-0.5">—</span>
                       <span className="text-[15px] leading-relaxed text-neutral-600">
                         {highlight}
                       </span>
@@ -116,15 +107,12 @@ const ProjectDetailPage = () => {
             <div className="lg:col-span-4">
               {/* Tech Stack */}
               <div className="mb-10">
-                <h2 className="font-mono text-xs font-medium text-neutral-400 uppercase tracking-[0.12em] mb-4">
+                <h2 className="text-[11px] font-medium text-neutral-400 uppercase tracking-widest mb-4">
                   Built With
                 </h2>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-col gap-1.5">
                   {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="font-mono px-3 py-1.5 text-xs font-medium text-neutral-500 bg-neutral-50 border border-neutral-200 rounded-lg"
-                    >
+                    <span key={tech} className="text-[13px] text-neutral-500">
                       {tech}
                     </span>
                   ))}

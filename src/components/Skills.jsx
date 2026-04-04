@@ -1,12 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { BarChart3, Database, LineChart, Wrench } from 'lucide-react'
-
-const GROUP_ICONS = {
-  'Data Analysis & Modeling': BarChart3,
-  'Databases & Warehousing': Database,
-  'Visualization & BI': LineChart,
-  'Engineering & Tools': Wrench,
-}
 
 const skillGroups = [
   {
@@ -30,7 +22,6 @@ const skillGroups = [
 const SkillGroup = ({ group, groupIndex }) => {
   const ref = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
-  const Icon = GROUP_ICONS[group.name]
 
   useEffect(() => {
     const el = ref.current
@@ -52,41 +43,17 @@ const SkillGroup = ({ group, groupIndex }) => {
   return (
     <div
       ref={ref}
-      className={`reveal delay-${groupIndex + 1} skill-card`}
+      className={`reveal delay-${groupIndex + 1}`}
     >
-      {/* Icon */}
-      {Icon && (
-        <div className="w-10 h-10 rounded-xl bg-neutral-100 flex items-center justify-center mb-5">
-          <Icon size={20} strokeWidth={1.5} className="text-neutral-500" />
-        </div>
-      )}
-
-      {/* Title + count */}
-      <div className="mb-2">
-        <h3 className="text-h3 mb-1">
-          {group.name}
-        </h3>
-        <span className="text-xs font-mono text-neutral-400">
-          {group.skills.length} skills
-        </span>
-      </div>
-
-      {/* Accent line */}
-      <div className="w-10 h-0.5 bg-neutral-200 mb-5" />
-
-      {/* Badges */}
-      <div className="flex flex-wrap gap-2">
-        {group.skills.map((skill, badgeIndex) => (
-          <span
-            key={skill}
-            className={`px-3 py-1.5 text-xs font-mono font-medium tracking-wide
-                       bg-neutral-50/80 border border-neutral-200/60
-                       rounded-lg text-neutral-700
-                       hover:border-neutral-300 hover:bg-white hover:shadow-sm
-                       transition-all duration-200 cursor-default
-                       ${isVisible ? 'badge-stagger' : 'opacity-0'}`}
-            style={isVisible ? { animationDelay: `${groupIndex * 100 + badgeIndex * 50}ms` } : undefined}
-          >
+      <h3 className="text-[13px] font-medium text-neutral-900 mb-3">
+        {group.name}
+      </h3>
+      <div
+        className={`flex flex-col gap-1.5 ${isVisible ? 'badge-stagger' : 'opacity-0'}`}
+        style={isVisible ? { animationDelay: `${groupIndex * 80}ms` } : undefined}
+      >
+        {group.skills.map((skill) => (
+          <span key={skill} className="text-[13px] text-neutral-400">
             {skill}
           </span>
         ))}
@@ -98,18 +65,15 @@ const SkillGroup = ({ group, groupIndex }) => {
 const Skills = () => {
   return (
     <section id="skills" className="section section-border">
-      {/* Section gradient divider */}
       <div className="section-divider mb-10" />
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
-          {/* Section Label */}
           <div className="lg:col-span-2">
             <span className="text-label reveal">Expertise</span>
           </div>
 
-          {/* Skills Grid — 2x2 on desktop */}
           <div className="lg:col-span-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 lg:gap-10">
               {skillGroups.map((group, groupIndex) => (
                 <SkillGroup
                   key={group.name}
