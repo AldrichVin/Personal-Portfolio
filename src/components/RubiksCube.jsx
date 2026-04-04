@@ -304,16 +304,16 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         .to(topSliceRef.current.rotation, { y: 0, duration: t }, '<')
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
-      // Timeline 1: Hero → Details (move to center)
-      const centerPosDetails = isMobile ? [0, 0.5, 0] : [0, -0.5, 0]
-      const detailScale = isMobile ? 0.6 : 0.9
+      // Timeline 1: Hero → below the "Technical Expertise" paragraph
+      const belowParaPos = isMobile ? [0, -2.5, 0] : [0, -3, 0]
+      const detailScale = isMobile ? 0.6 : 0.85
 
       const tl1 = gsap.timeline({
         scrollTrigger: {
           trigger: '#hero-section',
           start: 'top top',
           endTrigger: '#details-section',
-          end: 'center center',
+          end: 'bottom center',
           scrub: 1.2,
           immediateRender: false,
         }
@@ -323,19 +323,20 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         x: 0.2, y: Math.PI * 0.25, z: 0, duration: 1, ease: 'power2.inOut'
       }, 0)
       .to(mainGroupRef.current.position, {
-        x: centerPosDetails[0], y: centerPosDetails[1], z: centerPosDetails[2], ease: 'power1.inOut'
+        x: belowParaPos[0], y: belowParaPos[1], z: belowParaPos[2], ease: 'power1.inOut'
       }, 0)
       .to(mainGroupRef.current.scale, {
         x: detailScale, y: detailScale, z: detailScale, ease: 'power1.inOut'
       }, 0)
 
-      // Timeline 2: Breakdown (Explosion)
+      // Timeline 2: Explosion — triggers below paragraph, into breakdown section
       const breakdownScale = isMobile ? 0.55 : 0.8
 
       const tl2 = gsap.timeline({
         scrollTrigger: {
-          trigger: '#breakdown-section',
-          start: 'top center',
+          trigger: '#details-section',
+          start: 'bottom center',
+          endTrigger: '#breakdown-section',
           end: 'center center',
           scrub: 1.2,
         }
@@ -346,10 +347,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         x: 0, y: 0, z: 0, duration: 0.3, ease: 'power2.inOut'
       }, 0)
 
-      tl2.to(mainGroupRef.current.position, {
-        x: 0, y: 0, z: 0, ease: 'power2.inOut'
-      }, 0)
-      .to(mainGroupRef.current.scale, {
+      tl2.to(mainGroupRef.current.scale, {
         x: breakdownScale, y: breakdownScale, z: breakdownScale, ease: 'power2.inOut'
       }, 0)
       .to(mainGroupRef.current.rotation, {
