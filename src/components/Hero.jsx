@@ -110,7 +110,7 @@ const SpecLabel = ({ label, numericValue, suffix = '', staticValue, sub, align =
         <div className="h-[2px] w-10 bg-neutral-900/50 group-hover:w-16 transition-all duration-500" />
         <span className="text-xs sm:text-sm font-mono tracking-widest text-neutral-500 uppercase">{label}</span>
       </div>
-      <h4 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif italic text-neutral-900 mb-2">
+      <h4 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-serif-accent text-neutral-900 mb-2">
         {displayValue}
       </h4>
       <p className="text-xs sm:text-sm font-medium text-neutral-700 max-w-[200px]">{sub}</p>

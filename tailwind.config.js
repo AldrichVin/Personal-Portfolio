@@ -22,9 +22,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        mono: ['IBM Plex Mono', 'monospace'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
