@@ -335,9 +335,9 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
       const tl2 = gsap.timeline({
         scrollTrigger: {
           trigger: '#breakdown-section',
-          start: 'top center',
-          end: 'center center',
-          scrub: 1.2,
+          start: 'top 70%',
+          end: 'top 30%',
+          scrub: 0.8,
         }
       })
 
