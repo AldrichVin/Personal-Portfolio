@@ -1,5 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const DecorativeBackground = () => {
   const svgRef = useRef(null)
@@ -138,6 +142,22 @@ const ConnectorLines = () => (
 )
 
 const Hero = () => {
+  const detailsRef = useRef(null)
+
+  useLayoutEffect(() => {
+    if (!detailsRef.current) return
+
+    const st = ScrollTrigger.create({
+      trigger: detailsRef.current,
+      start: 'top top',
+      end: '+=300',
+      pin: true,
+      pinSpacing: true,
+    })
+
+    return () => st.kill()
+  }, [])
+
   return (
     <div className="relative w-full">
       {/* ============================================
@@ -236,8 +256,9 @@ const Hero = () => {
           Cube idles through this section
           ============================================ */}
       <section
+        ref={detailsRef}
         id="details-section"
-        className="relative w-full min-h-[40dvh] flex flex-col items-center justify-start pt-12 md:pt-16 pointer-events-none px-6 sm:px-12 md:px-16"
+        className="relative w-full min-h-[40dvh] flex flex-col items-center justify-center pointer-events-none px-6 sm:px-12 md:px-16"
       >
         <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20">
           <div className="inline-flex items-center gap-2 text-[#94A3B8] font-medium uppercase tracking-widest text-xs">
