@@ -33,7 +33,7 @@
   --color-border-light: #F3F4F6;
 
   /* Accent — muted blue-gray */
-  --color-accent: #94A3B8;
+  --color-accent: #64748B;
   --color-accent-light: #F1F5F9;
   --color-accent-muted: rgba(148, 163, 184, 0.08);
 
@@ -169,9 +169,9 @@ body {
 
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(16px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.active {
@@ -181,9 +181,9 @@ body {
 
 .reveal-image {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(12px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-image.active {
@@ -207,14 +207,14 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(3rem, 7vw, 6rem);
   font-weight: 600;
-  line-height: 1.12;
+  line-height: 1.15;
   letter-spacing: -0.03em;
   color: var(--color-text);
 }
 
 @media (min-width: 768px) {
   .text-display {
-    line-height: 1.05;
+    line-height: 1.1;
   }
 }
 
@@ -222,7 +222,7 @@ body {
 .text-h1 {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: clamp(2rem, 3.5vw, 2.75rem);
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.02em;
   color: var(--color-text);
@@ -242,7 +242,7 @@ body {
 .text-h3 {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.4;
   color: var(--color-text);
 }
@@ -257,7 +257,7 @@ body {
 
 /* Body - Standard paragraphs */
 .text-body {
-  font-size: 1.0625rem;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 1.7;
   color: var(--color-text-muted);
@@ -302,22 +302,22 @@ body {
 
 @media (min-width: 640px) {
   .container {
-    padding-left: var(--space-xl);
-    padding-right: var(--space-xl);
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
   }
 }
 
 @media (min-width: 768px) {
   .container {
-    padding-left: var(--space-2xl);
-    padding-right: var(--space-2xl);
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
   }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding-left: 6rem;
-    padding-right: 6rem;
+    padding-left: var(--space-2xl);
+    padding-right: var(--space-2xl);
   }
 }
 
@@ -334,14 +334,14 @@ body {
 
 /* Consistent section spacing */
 .section {
-  padding-top: var(--space-2xl);
-  padding-bottom: var(--space-2xl);
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 }
 
@@ -1128,7 +1128,7 @@ body {
 @keyframes wordFadeIn {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -1139,17 +1139,17 @@ body {
 .word-stagger {
   display: inline-block;
   opacity: 0;
-  animation: wordFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: wordFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* CTA arrow pulse */
 @keyframes ctaArrowPulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.05); }
 }
 
 .cta-arrow-pulse {
-  animation: ctaArrowPulse 3s ease-in-out infinite;
+  animation: ctaArrowPulse 4s ease-in-out infinite;
 }
 
 /* Heading clip-mask reveal (slide up from below) */
@@ -1159,7 +1159,7 @@ body {
 
 .clip-reveal-child {
   transform: translateY(100%);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .clip-reveal-child.active {
@@ -1172,7 +1172,7 @@ body {
   height: 1px;
   background-color: rgba(148, 163, 184, 0.4);
   margin: 0 auto;
-  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 
 .hr-grow.active {
@@ -1182,7 +1182,7 @@ body {
 /* Image clip-path reveal (curtain unveil) — triggered by parent .reveal.active */
 .clip-reveal-inner {
   clip-path: inset(100% 0 0 0);
-  transition: clip-path 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: clip-path 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.active .clip-reveal-inner {
@@ -1207,7 +1207,7 @@ body {
   background: white;
   border: 1px solid var(--color-border-light);
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1.25rem;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
