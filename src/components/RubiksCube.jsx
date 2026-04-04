@@ -305,7 +305,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
       // Timeline 1: Hero → below the "Technical Expertise" paragraph
-      const belowParaPos = isMobile ? [0, -2.5, 0] : [0, -3, 0]
+      const belowParaPos = isMobile ? [0, -1.5, 0] : [0, -1.8, 0]
       const detailScale = isMobile ? 0.6 : 0.85
 
       const tl1 = gsap.timeline({
