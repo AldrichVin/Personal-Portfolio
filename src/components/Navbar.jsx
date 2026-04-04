@@ -35,8 +35,8 @@ const Navbar = () => {
     <nav
       className={`nav-entrance fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'py-5 bg-white/90 backdrop-blur-md shadow-sm shadow-neutral-900/[0.03]'
-          : 'py-7 md:py-10'
+          ? 'py-4 bg-white/90 backdrop-blur-md shadow-sm shadow-neutral-900/[0.03]'
+          : 'py-5 md:py-7'
       }`}
     >
       <div className="container flex items-center justify-between">
@@ -49,7 +49,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex items-center gap-10 lg:gap-12">
+        <div className="hidden md:flex items-center gap-8 lg:gap-10">
           {NAV_LINKS.map(({ to, label }) => (
             <Link
               key={to}

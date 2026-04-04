@@ -14,7 +14,7 @@ const About = () => {
       className="section section-border"
     >
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
           {/* Section Label */}
           <div className="lg:col-span-2">
             <span className="text-label reveal">About</span>
@@ -23,13 +23,13 @@ const About = () => {
           {/* Content */}
           <div className="lg:col-span-10">
             {/* Lead statement */}
-            <p className="text-h2 font-normal text-neutral-800 leading-relaxed mb-12 reveal delay-1 max-w-2xl">
+            <p className="text-h2 font-normal text-neutral-800 leading-relaxed mb-8 reveal delay-1 max-w-2xl">
               Computer Science graduate from Monash University with a passion
               for turning raw data into meaningful business insights.
             </p>
 
             {/* Body paragraphs — staggered entrance */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-2xl mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mb-8">
               <p className="text-base text-neutral-500 leading-relaxed reveal delay-2">
                 I specialize in data analysis, building ETL pipelines, and creating
                 interactive dashboards that help stakeholders make informed decisions.

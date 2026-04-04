@@ -25,7 +25,7 @@ const ProjectsPage = () => {
       <main className="relative z-[2] bg-white min-h-screen">
         <div className="container page-offset pb-24">
           {/* Page Header */}
-          <div className="mb-12">
+          <div className="mb-8">
             <span className="text-label mb-4 block">Archive</span>
             <h1 className="text-display mb-4" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
               All Projects
@@ -37,7 +37,7 @@ const ProjectsPage = () => {
           </div>
 
           {/* Filter Chips */}
-          <div className="flex flex-wrap gap-2 mb-12">
+          <div className="flex flex-wrap gap-2 mb-8">
             {activeCategories.map((category) => (
               <button
                 key={category}
@@ -50,7 +50,7 @@ const ProjectsPage = () => {
           </div>
 
           {/* Project Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {filteredProjects.map((project, index) => (
               <div
                 key={project.id}

@@ -40,7 +40,7 @@ const WordStagger = ({ text, baseDelay = 0, className = '' }) => {
         <span
           key={i}
           className={`word-stagger ${className}`}
-          style={{ animationDelay: `${baseDelay + i * 80}ms` }}
+          style={{ animationDelay: `${baseDelay + i * 50}ms` }}
         >
           {word}{i < words.length - 1 ? '\u00A0' : ''}
         </span>
@@ -157,7 +157,7 @@ const Hero = () => {
           }}
         />
 
-        <main className="relative z-10 flex-1 flex flex-col justify-center container max-w-none pt-32 pb-20">
+        <main className="relative z-10 flex-1 flex flex-col justify-center container max-w-none pt-24 pb-16">
           <div className="max-w-3xl">
           {/* Overline - Label style */}
           <div className="reveal delay-1 mb-14">
@@ -168,7 +168,7 @@ const Hero = () => {
           </div>
 
           {/* Headline - H1 with word-level stagger */}
-          <h1 className="text-display mb-16">
+          <h1 className="text-display mb-10">
             <span className="block mb-4">
               <WordStagger text="Turning" baseDelay={200} />
               {' '}<span className="word-stagger text-serif-accent text-[#111111]" style={{ animationDelay: '280ms' }}>data</span>
@@ -183,7 +183,7 @@ const Hero = () => {
           </h1>
 
           {/* Subtitle - Body text */}
-          <p className="reveal delay-2 text-neutral-600 text-lg leading-relaxed mb-16 max-w-md">
+          <p className="reveal delay-2 text-neutral-600 text-lg leading-relaxed mb-10 max-w-md">
             Leveraging SQL, Python, and visualization tools to uncover
             patterns, drive decisions, and deliver business value through data.
           </p>

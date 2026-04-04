@@ -99,9 +99,9 @@ const Skills = () => {
   return (
     <section id="skills" className="section section-border">
       {/* Section gradient divider */}
-      <div className="section-divider mb-16" />
+      <div className="section-divider mb-10" />
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
           {/* Section Label */}
           <div className="lg:col-span-2">
             <span className="text-label reveal">Expertise</span>
@@ -109,7 +109,7 @@ const Skills = () => {
 
           {/* Skills Grid — 2x2 on desktop */}
           <div className="lg:col-span-10">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
               {skillGroups.map((group, groupIndex) => (
                 <SkillGroup
                   key={group.name}

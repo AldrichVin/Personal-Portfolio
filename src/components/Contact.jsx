@@ -33,9 +33,9 @@ const Contact = () => {
   return (
     <section id="contact" className="section">
       {/* Section gradient divider */}
-      <div className="section-divider mb-16" />
+      <div className="section-divider mb-10" />
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
           {/* Section Label */}
           <div className="lg:col-span-2">
             <span className="text-label reveal">Contact</span>
@@ -43,7 +43,7 @@ const Contact = () => {
 
           {/* Content — two-zone layout */}
           <div className="lg:col-span-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               {/* Left zone — headline + message */}
               <div className="reveal delay-1">
                 <h2 className="text-h1 mb-4" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
@@ -111,7 +111,7 @@ const Contact = () => {
         </div>
 
         {/* Footer */}
-        <footer className="mt-20 pt-10 border-t border-neutral-200 reveal delay-3">
+        <footer className="mt-14 pt-10 border-t border-neutral-200 reveal delay-3">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             {/* Left — name */}
             <span className="font-display text-lg font-semibold text-neutral-900 tracking-tight">
