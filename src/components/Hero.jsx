@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
+import { gsap } from 'gsap'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+
+gsap.registerPlugin(ScrollToPlugin)
 
 const DecorativeBackground = () => {
   const svgRef = useRef(null)
@@ -145,7 +149,7 @@ const Hero = () => {
           ============================================ */}
       <section
         id="hero-section"
-        className="relative min-h-[100dvh] flex flex-col w-full overflow-hidden"
+        className="relative h-[100dvh] flex flex-col w-full overflow-hidden"
       >
         <DecorativeBackground />
 
@@ -188,33 +192,28 @@ const Hero = () => {
             patterns, drive decisions, and deliver business value through data.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="reveal delay-3 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            {/* Primary CTA — DataKeeper rounded pill */}
+          {/* CTA Buttons — Apple pill style */}
+          <div className="reveal delay-3 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <a
               href="#projects"
-              className="group inline-flex items-center bg-black text-white rounded-full
-                         shadow-[0_2px_12px_-2px_rgba(0,0,0,0.12)]
-                         hover:shadow-[0_4px_16px_-2px_rgba(0,0,0,0.18)]
-                         hover:translate-y-[-2px]
-                         transition-all duration-300 ease-out"
-              style={{ paddingLeft: '24px', paddingRight: '6px', paddingTop: '6px', paddingBottom: '6px' }}
+              onClick={(e) => { e.preventDefault(); gsap.to(window, { scrollTo: { y: '#projects', autoKill: false }, duration: 1, ease: 'power2.inOut' }) }}
+              className="inline-flex items-center justify-center py-3
+                         bg-[#1d1d1f] text-white text-[17px] font-normal rounded-[980px]
+                         hover:bg-[#1d1d1f]/80 active:scale-[0.97]
+                         transition-all duration-200 ease-out"
+              style={{ letterSpacing: '-0.022em', paddingLeft: '1.2rem', paddingRight: '1.2rem' }}
             >
-              <span className="text-[15px] font-medium mr-4">View Analytics Projects</span>
-              <div className="w-10 h-10 bg-white/15 rounded-full flex items-center justify-center
-                              group-hover:bg-white/25 transition-all duration-300">
-                <ArrowUpRight size={18} strokeWidth={2} className="cta-arrow-pulse" />
-              </div>
+              View Projects
             </a>
-
-            {/* Secondary CTA */}
             <a
               href="#contact"
-              className="inline-flex items-center justify-center px-7 py-3.5
-                         text-neutral-600 text-[15px] font-medium rounded-full
-                         border border-neutral-200
-                         hover:border-neutral-300 hover:bg-neutral-50
-                         transition-all duration-300 ease-out"
+              onClick={(e) => { e.preventDefault(); gsap.to(window, { scrollTo: { y: '#contact', autoKill: false }, duration: 1, ease: 'power2.inOut' }) }}
+              className="inline-flex items-center justify-center py-3
+                         text-[#1d1d1f] text-[17px] font-normal rounded-[980px]
+                         border border-[#1d1d1f]
+                         hover:bg-[#1d1d1f] hover:text-white active:scale-[0.97]
+                         transition-all duration-200 ease-out"
+              style={{ letterSpacing: '-0.022em', paddingLeft: '1.2rem', paddingRight: '1.2rem' }}
             >
               Get in Touch
             </a>
@@ -237,7 +236,8 @@ const Hero = () => {
           ============================================ */}
       <section
         id="details-section"
-        className="relative w-full min-h-[45dvh] flex flex-col items-center justify-start pt-[8vh] pointer-events-none px-6 sm:px-12 md:px-16"
+        className="relative w-full h-[100dvh] flex flex-col items-center pointer-events-none px-6 sm:px-12 md:px-16"
+        style={{ justifyContent: 'flex-start', paddingTop: '18vh' }}
       >
         <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20">
           <div className="inline-flex items-center gap-2 text-[#94A3B8] font-medium uppercase tracking-widest text-xs">
@@ -261,7 +261,7 @@ const Hero = () => {
           ============================================ */}
       <section
         id="breakdown-section"
-        className="relative w-full min-h-[100dvh] flex flex-col items-center justify-center pointer-events-none px-6 sm:px-12 md:px-16 pb-20"
+        className="relative w-full h-[100dvh] flex flex-col items-center justify-center pointer-events-none px-6 sm:px-12 md:px-16"
       >
         {/* Stats flanking layout with connector lines */}
         <div className="max-w-[1400px] w-full relative flex flex-col md:flex-row items-center justify-between z-10 pointer-events-auto">
