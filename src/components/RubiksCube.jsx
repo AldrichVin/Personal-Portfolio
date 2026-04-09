@@ -3,9 +3,10 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { RoundedBox, PresentationControls, Environment, Float } from '@react-three/drei'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import * as THREE from 'three'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
 
 // Physics constants
 const PHYSICS_FLOOR_Y = -4.5
@@ -280,7 +281,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
 
       // Initial position
       const startPos = isMobile ? [0, -2.8, 0] : [3.5, 0, 0]
-      const startScale = isMobile ? 0.65 : 0.95
+      const startScale = isMobile ? 0.5 : 0.7
 
       mainGroupRef.current.position.set(...startPos)
       mainGroupRef.current.scale.set(startScale, startScale, startScale)
@@ -305,7 +306,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
         .to(botSliceRef.current.rotation, { y: 0, duration: t }, '<')
 
       // Timeline 1: Hero → below the "Technical Expertise" paragraph
-      const belowParaPos = isMobile ? [0, -1.5, 0] : [0, -1.8, 0]
+      const belowParaPos = isMobile ? [0, -0.5, 0] : [0, -0.8, 0]
       const detailScale = isMobile ? 0.6 : 0.85
 
       const tl1 = gsap.timeline({
@@ -314,7 +315,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
           start: 'top top',
           endTrigger: '#details-section',
           end: 'bottom center',
-          scrub: 1.2,
+          scrub: 0.3,
           immediateRender: false,
         }
       })
@@ -337,7 +338,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
           trigger: '#breakdown-section',
           start: 'top 55%',
           end: 'center center',
-          scrub: 0.8,
+          scrub: 0.3,
         }
       })
 
@@ -393,7 +394,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
           start: 'center center',
           endTrigger: '#about',
           end: 'top top',
-          scrub: 2,
+          scrub: 0.3,
           onLeave: () => { physics.current.active = true },
           onEnterBack: () => {
             physics.current.active = false
@@ -433,6 +434,7 @@ const RubiksCubeGroup = ({ globalOpacity }) => {
           ease: 'power1.out'
         }, '<')
       })
+
     })
 
     return () => mm.revert()
