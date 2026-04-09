@@ -3,16 +3,16 @@ import { ArrowRight } from 'lucide-react'
 import { projects } from '../data/projects'
 import ProjectCard from './ProjectCard'
 
-const featuredProjects = projects.filter((p) => p.featured)
+const featuredProjects = projects.filter((p) => p.featured).slice(0, 6)
 
 const Projects = () => {
   return (
-    <section id="projects" className="section">
+    <section id="projects" style={{ height: '100dvh', minHeight: '100dvh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingTop: '8vh', paddingLeft: 'var(--space-xl)', paddingRight: 'var(--space-xl)', background: '#fff', overflow: 'hidden' }}>
       {/* Section gradient divider */}
       <div className="section-divider mb-10" />
       <div className="container">
         {/* Section Header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10" style={{ marginBottom: '2rem' }}>
           <div className="lg:col-span-2">
             <span className="text-label reveal">Selected Works</span>
           </div>
@@ -25,7 +25,7 @@ const Projects = () => {
         </div>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 reveal delay-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6 reveal delay-2">
           {featuredProjects.map((project) => (
             <ProjectCard
               key={project.id}
@@ -35,14 +35,14 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* View All Link */}
-        <div className="flex justify-center mt-10 reveal delay-3">
+        {/* View Projects Link */}
+        <div className="flex justify-center reveal delay-3" style={{ marginTop: '2rem' }}>
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
           >
-            View All Projects
-            <ArrowRight size={14} strokeWidth={2} />
+            View Projects
+            <ArrowRight size={14} strokeWidth={2} className="transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
       </div>
