@@ -1,49 +1,89 @@
-/**
- * About Section - Data Analytics Focus
- *
- * Typography System (consistent with Hero):
- * - H2: text-2xl md:text-3xl, font-semibold
- * - Body: text-base, text-neutral-600, leading-relaxed
- * - Label: text-xs, font-semibold, uppercase, tracking-widest
- */
+const QUICK_FACTS = [
+  { label: 'Education', value: 'BSc Computer Science' },
+  { label: 'University', value: 'Monash University' },
+  { label: 'Location', value: 'Melbourne, Australia' },
+  { label: 'Focus', value: 'Data Analytics & BI' },
+  { label: 'GPA', value: '3.81 / 4.0' },
+]
 
 const About = () => {
   return (
     <section
       id="about"
-      className="section section-border"
+      style={{
+        height: '100dvh',
+        minHeight: '100dvh',
+        display: 'flex',
+        alignItems: 'center',
+        paddingLeft: 'var(--space-xl)',
+        paddingRight: 'var(--space-xl)',
+        background: '#fff',
+        overflow: 'hidden',
+      }}
     >
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
-          {/* Section Label */}
-          <div className="lg:col-span-2">
-            <span className="text-label reveal">About</span>
+        {/* Section label */}
+        <div className="reveal" style={{ marginBottom: '3rem' }}>
+          <span className="text-label">About</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          {/* Left — narrative */}
+          <div className="lg:col-span-6">
+            <h2
+              className="text-h1 text-neutral-900 reveal delay-1"
+              style={{ marginBottom: '1.5rem' }}
+            >
+              Computer Science graduate with a passion for turning
+              raw data into{' '}
+              <span className="text-serif-accent">meaningful insights</span>.
+            </h2>
+
+            <p className="text-base text-neutral-500 leading-relaxed reveal delay-2" style={{ maxWidth: '480px' }}>
+              I specialize in data analysis, ETL pipelines, and interactive
+              dashboards that help stakeholders make informed decisions. From
+              climate analytics to business intelligence, I enjoy uncovering
+              patterns in complex datasets and translating numbers into
+              actionable narratives.
+            </p>
           </div>
 
-          {/* Content */}
-          <div className="lg:col-span-10">
-            {/* Lead statement */}
-            <p className="text-h2 font-normal text-neutral-800 leading-relaxed mb-8 reveal delay-1 max-w-2xl">
-              Computer Science graduate from Monash University with a passion
-              for turning raw data into meaningful business insights.
-            </p>
+          {/* Right — quick facts */}
+          <div className="lg:col-span-4 lg:col-start-9">
+            <div className="reveal delay-3">
+              <span
+                className="text-label"
+                style={{ display: 'block', marginBottom: '1.5rem' }}
+              >
+                Quick Facts
+              </span>
 
-            {/* Body paragraphs — staggered entrance */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mb-8">
-              <p className="text-base text-neutral-500 leading-relaxed reveal delay-2">
-                I specialize in data analysis, building ETL pipelines, and creating
-                interactive dashboards that help stakeholders make informed decisions.
-                My toolkit includes SQL, Python, and visualization platforms like
-                Power BI and Tableau.
-              </p>
-              <p className="text-base text-neutral-500 leading-relaxed reveal delay-4">
-                From climate analytics to business intelligence projects, I enjoy
-                uncovering patterns in complex datasets and presenting findings
-                in clear, actionable formats. I'm driven by the challenge of
-                translating numbers into narratives.
-              </p>
+              <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+                {QUICK_FACTS.map(({ label, value }) => (
+                  <div
+                    key={label}
+                    className="flex justify-between items-baseline transition-colors duration-200 hover:bg-neutral-50/50"
+                    style={{
+                      padding: '0.875rem 0.5rem',
+                      borderBottom: '1px solid rgba(0,0,0,0.06)',
+                      marginLeft: '-0.5rem',
+                      marginRight: '-0.5rem',
+                      borderRadius: '4px',
+                    }}
+                  >
+                    <span
+                      className="text-xs text-neutral-400 uppercase tracking-widest"
+                      style={{ fontFamily: "'IBM Plex Mono', monospace" }}
+                    >
+                      {label}
+                    </span>
+                    <span className="text-sm font-medium text-neutral-800">
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-
           </div>
         </div>
       </div>
