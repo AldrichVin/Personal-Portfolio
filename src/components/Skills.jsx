@@ -64,8 +64,8 @@ const SkillGroup = ({ group, groupIndex }) => {
 
 const Skills = () => {
   return (
-    <section id="skills" className="section section-border">
-      <div className="section-divider mb-10" />
+    <section id="skills" style={{ height: '100dvh', minHeight: '100dvh', overflow: 'hidden', background: '#fff' }}>
+      <div style={{ height: '25vh' }} />
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
           <div className="lg:col-span-2">
