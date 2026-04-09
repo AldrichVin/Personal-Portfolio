@@ -6,11 +6,15 @@ import CursorGlow from './components/CursorGlow'
 import HomePage from './pages/HomePage'
 import ProjectsPage from './pages/ProjectsPage'
 import ProjectDetailPage from './pages/ProjectDetailPage'
+import useSnapScroll from './hooks/useSnapScroll'
 import './index.css'
 
 function App() {
   const location = useLocation()
   const isHomePage = location.pathname === '/'
+
+  // Enable snap scrolling on homepage
+  useSnapScroll(isHomePage)
 
   // Re-init intersection observer on route change
   useEffect(() => {
