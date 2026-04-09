@@ -57,25 +57,27 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
   if (variant === 'homepage') {
     return (
       <Link to={`/projects/${project.id}`} className="block group">
-        <div className="relative aspect-[16/10] rounded-lg overflow-hidden mb-4 bg-neutral-100">
-          <img
-            src={imageUrl}
-            alt={project.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-            loading="lazy"
-          />
+        <div className="relative rounded-lg overflow-hidden bg-neutral-50 p-2 ring-1 ring-neutral-100" style={{ marginBottom: '0.5rem' }}>
+          <div className="relative rounded overflow-hidden" style={{ aspectRatio: '5/2' }}>
+            <img
+              src={imageUrl}
+              alt={project.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+              loading="lazy"
+            />
+          </div>
         </div>
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <h3 className="text-[15px] font-medium text-neutral-900 mb-1 group-hover:text-neutral-600 transition-colors duration-200">
+            <h3 className="text-[13px] font-medium text-neutral-900 group-hover:text-neutral-600 transition-colors duration-200">
               {project.name}
             </h3>
-            <p className="text-[13px] text-neutral-400 line-clamp-1">
+            <p className="text-[11px] text-neutral-400 line-clamp-1">
               {project.tagline}
             </p>
           </div>
           <ArrowUpRight
-            size={16}
+            size={14}
             strokeWidth={1.5}
             className="text-neutral-300 group-hover:text-neutral-900 transition-colors duration-200 flex-shrink-0 mt-0.5"
           />
