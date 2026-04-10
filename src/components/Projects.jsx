@@ -7,7 +7,7 @@ const featuredProjects = projects.filter((p) => p.featured).slice(0, 6)
 
 const Projects = () => {
   return (
-    <section id="projects" style={{ height: '100dvh', minHeight: '100dvh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingTop: '8vh', paddingLeft: 'var(--space-xl)', paddingRight: 'var(--space-xl)', background: '#fff', overflow: 'hidden' }}>
+    <section id="projects" style={{ height: '100dvh', minHeight: '100dvh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', paddingTop: '8vh', paddingLeft: 'var(--space-xl)', paddingRight: 'var(--space-xl)', background: '#fafaf9', overflow: 'hidden' }}>
       {/* Section gradient divider */}
       <div className="section-divider mb-10" />
       <div className="container">

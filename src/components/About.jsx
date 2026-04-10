@@ -36,7 +36,7 @@ const About = () => {
             >
               Computer Science graduate with a passion for turning
               raw data into{' '}
-              <span className="text-serif-accent">meaningful insights</span>.
+              <span className="text-serif-accent text-[#4f46e5]">meaningful insights</span>.
             </h2>
 
             <p className="text-base text-neutral-500 leading-relaxed reveal delay-2" style={{ maxWidth: '480px' }}>

@@ -1,41 +1,33 @@
-import { ArrowUpRight, Mail, ArrowUp, Github, Linkedin, MapPin } from 'lucide-react'
-import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
+import { ArrowUpRight, ArrowUp, MapPin } from 'lucide-react'
+import { useScroll } from '../context/ScrollContext'
 
-gsap.registerPlugin(ScrollToPlugin)
-
-const CONTACT_METHODS = [
+const CONTACT_LINKS = [
   {
-    icon: Mail,
     label: 'Email',
     value: 'aldrichvin040205@gmail.com',
     href: 'mailto:aldrichvin040205@gmail.com',
     external: false,
   },
   {
-    icon: Github,
     label: 'GitHub',
-    value: 'github.com/AldrichVin',
+    value: 'AldrichVin',
     href: 'https://github.com/AldrichVin',
     external: true,
   },
   {
-    icon: Linkedin,
     label: 'LinkedIn',
-    value: 'linkedin.com/in/aldrich-vincent',
+    value: 'aldrich-vincent',
     href: 'https://linkedin.com/in/aldrich-vincent-4463b2355',
     external: true,
   },
 ]
 
 const Contact = () => {
+  const { scrollTo } = useScroll()
+
   const handleBackToTop = (e) => {
     e.preventDefault()
-    gsap.to(window, {
-      scrollTo: { y: 0, autoKill: false },
-      duration: 1.2,
-      ease: 'power2.inOut',
-    })
+    scrollTo(0, { duration: 1.2 })
   }
 
   return (
@@ -53,7 +45,7 @@ const Contact = () => {
         position: 'relative',
       }}
     >
-      <div className="container" style={{ maxWidth: '640px', textAlign: 'center' }}>
+      <div className="container" style={{ maxWidth: '540px', textAlign: 'center' }}>
         {/* Label */}
         <div className="reveal" style={{ marginBottom: '2rem' }}>
           <span className="text-label">Contact</span>
@@ -61,7 +53,7 @@ const Contact = () => {
 
         {/* Headline */}
         <h2 className="text-h1 reveal delay-1" style={{ marginBottom: '1rem' }}>
-          Let's <span className="text-serif-accent">connect</span>.
+          Let's <span className="text-serif-accent text-[#4f46e5]">connect</span>.
         </h2>
 
         {/* Availability */}
@@ -81,50 +73,55 @@ const Contact = () => {
         {/* Description */}
         <p
           className="text-base text-neutral-500 leading-relaxed reveal delay-2"
-          style={{ marginBottom: '2.5rem', maxWidth: '420px', marginLeft: 'auto', marginRight: 'auto' }}
+          style={{ marginBottom: '2.5rem', maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}
         >
           Open to data analyst roles, analytics projects, and opportunities
           to drive business impact through data.
         </p>
 
-        {/* Contact cards — horizontal */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-3 gap-3 reveal delay-3"
-          style={{ marginBottom: '2rem' }}
-        >
-          {CONTACT_METHODS.map(({ icon: Icon, label, value, href, external }) => (
-            <a
-              key={label}
-              href={href}
-              target={external ? '_blank' : undefined}
-              rel={external ? 'noopener noreferrer' : undefined}
-              className="group flex flex-col items-center gap-3 rounded-xl transition-all duration-200 hover:shadow-sm"
-              style={{
-                padding: '1.25rem 1rem',
-                border: '1px solid rgba(0,0,0,0.06)',
-                background: 'rgba(0,0,0,0.01)',
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(0,0,0,0.025)'; e.currentTarget.style.borderColor = 'rgba(0,0,0,0.1)' }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(0,0,0,0.01)'; e.currentTarget.style.borderColor = 'rgba(0,0,0,0.06)' }}
-            >
-              <div className="w-10 h-10 rounded-xl bg-neutral-100 flex items-center justify-center group-hover:bg-neutral-200/60 transition-colors">
-                <Icon size={18} strokeWidth={1.5} className="text-neutral-500" />
-              </div>
-              <div className="text-center">
-                <span className="block text-sm font-semibold text-neutral-900">
+        {/* Contact links — clean inline list */}
+        <div className="reveal delay-3" style={{ marginBottom: '2rem' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 0,
+              maxWidth: '380px',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
+          >
+            {CONTACT_LINKS.map(({ label, value, href, external }) => (
+              <a
+                key={label}
+                href={href}
+                target={external ? '_blank' : undefined}
+                rel={external ? 'noopener noreferrer' : undefined}
+                className="group flex items-center justify-between transition-colors duration-200 hover:bg-neutral-50"
+                style={{
+                  padding: '0.875rem 0.75rem',
+                  borderBottom: '1px solid rgba(0,0,0,0.06)',
+                  borderRadius: '6px',
+                  textDecoration: 'none',
+                }}
+              >
+                <span
+                  className="text-xs text-neutral-400 uppercase tracking-widest"
+                  style={{ fontFamily: "'IBM Plex Mono', monospace", minWidth: '72px', textAlign: 'left' }}
+                >
                   {label}
                 </span>
-                <span className="block text-xs text-neutral-400 truncate" style={{ maxWidth: '180px' }}>
+                <span className="text-sm font-medium text-neutral-800 group-hover:text-neutral-900 transition-colors">
                   {value}
                 </span>
-              </div>
-              <ArrowUpRight
-                size={14}
-                strokeWidth={1.5}
-                className="text-neutral-300 group-hover:text-neutral-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
-              />
-            </a>
-          ))}
+                <ArrowUpRight
+                  size={13}
+                  strokeWidth={1.5}
+                  className="text-neutral-300 group-hover:text-neutral-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 ml-3 flex-shrink-0"
+                />
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Location */}
@@ -136,7 +133,7 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Footer — pinned to bottom */}
+      {/* Footer */}
       <footer
         className="reveal delay-5"
         style={{
