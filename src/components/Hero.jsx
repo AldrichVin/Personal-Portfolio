@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
-import { gsap } from 'gsap'
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
-
-gsap.registerPlugin(ScrollToPlugin)
+import { useScroll } from '../context/ScrollContext'
 
 const DecorativeBackground = () => {
   const svgRef = useRef(null)
@@ -111,10 +108,10 @@ const SpecLabel = ({ label, numericValue, suffix = '', staticValue, sub, align =
       <div className="absolute -inset-6 bg-[#E8EDF4]/60 backdrop-blur-md rounded-2xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 border border-[#CBD5E1]/40 shadow-sm" />
 
       <div className={`flex items-center gap-2 mb-3 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}>
-        <div className="h-[2px] w-10 bg-neutral-900/50 group-hover:w-16 transition-all duration-500" />
+        <div className="h-[2px] w-10 bg-[#4f46e5]/40 group-hover:w-16 group-hover:bg-[#4f46e5]/60 transition-all duration-500" />
         <span className="text-xs sm:text-sm font-mono tracking-widest text-neutral-500 uppercase">{label}</span>
       </div>
-      <h4 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-serif-accent text-neutral-900 mb-2">
+      <h4 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-serif-accent text-[#1d1d1f] mb-2" style={{ background: 'linear-gradient(135deg, #1d1d1f 60%, #4f46e5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
         {displayValue}
       </h4>
       <p className="text-xs sm:text-sm font-medium text-neutral-700 max-w-[200px]">{sub}</p>
@@ -142,6 +139,8 @@ const ConnectorLines = () => (
 )
 
 const Hero = () => {
+  const { scrollTo } = useScroll()
+
   return (
     <div className="relative w-full">
       {/* ============================================
@@ -166,7 +165,7 @@ const Hero = () => {
           {/* Overline - Label style */}
           <div className="reveal delay-1 mb-14">
             <div className="inline-flex items-center gap-4 text-label">
-              <span className="w-10 h-px bg-neutral-300" />
+              <span className="w-10 h-px bg-[#6366f1]/40" />
               <span>Data Analyst / Data Science Graduate</span>
             </div>
           </div>
@@ -175,13 +174,13 @@ const Hero = () => {
           <h1 className="text-display mb-10">
             <span className="block mb-4">
               <WordStagger text="Turning" baseDelay={200} />
-              {' '}<span className="word-stagger text-serif-accent text-[#111111]" style={{ animationDelay: '280ms' }}>data</span>
+              {' '}<span className="word-stagger text-serif-accent text-[#4f46e5]" style={{ animationDelay: '280ms' }}>data</span>
             </span>
             <span className="block text-[#9CA3AF] mb-4">
               <WordStagger text="into actionable" baseDelay={360} />
             </span>
             <span className="block">
-              <span className="word-stagger text-serif-accent text-[#111111]" style={{ animationDelay: '520ms' }}>insights</span>
+              <span className="word-stagger text-serif-accent text-[#4f46e5]" style={{ animationDelay: '520ms' }}>insights</span>
               <span className="word-stagger text-[#94A3B8] text-5xl" style={{ animationDelay: '600ms' }}>.</span>
             </span>
           </h1>
@@ -196,10 +195,10 @@ const Hero = () => {
           <div className="reveal delay-3 flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <a
               href="#projects"
-              onClick={(e) => { e.preventDefault(); gsap.to(window, { scrollTo: { y: '#projects', autoKill: false }, duration: 1, ease: 'power2.inOut' }) }}
+              onClick={(e) => { e.preventDefault(); scrollTo('#projects', { duration: 1.2 }) }}
               className="inline-flex items-center justify-center py-3
-                         bg-[#1d1d1f] text-white text-[17px] font-normal rounded-[980px]
-                         hover:bg-[#1d1d1f]/80 active:scale-[0.97]
+                         bg-[#4f46e5] text-white text-[17px] font-normal rounded-[980px]
+                         hover:bg-[#4338ca] active:scale-[0.97]
                          transition-all duration-200 ease-out"
               style={{ letterSpacing: '-0.022em', paddingLeft: '1.2rem', paddingRight: '1.2rem' }}
             >
@@ -207,11 +206,11 @@ const Hero = () => {
             </a>
             <a
               href="#contact"
-              onClick={(e) => { e.preventDefault(); gsap.to(window, { scrollTo: { y: '#contact', autoKill: false }, duration: 1, ease: 'power2.inOut' }) }}
+              onClick={(e) => { e.preventDefault(); scrollTo('#contact', { duration: 1.2 }) }}
               className="inline-flex items-center justify-center py-3
-                         text-[#1d1d1f] text-[17px] font-normal rounded-[980px]
-                         border border-[#1d1d1f]
-                         hover:bg-[#1d1d1f] hover:text-white active:scale-[0.97]
+                         text-[#4f46e5] text-[17px] font-normal rounded-[980px]
+                         border border-[#4f46e5]
+                         hover:bg-[#4f46e5] hover:text-white active:scale-[0.97]
                          transition-all duration-200 ease-out"
               style={{ letterSpacing: '-0.022em', paddingLeft: '1.2rem', paddingRight: '1.2rem' }}
             >
@@ -240,12 +239,12 @@ const Hero = () => {
         style={{ justifyContent: 'flex-start', paddingTop: '18vh' }}
       >
         <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20">
-          <div className="inline-flex items-center gap-2 text-[#94A3B8] font-medium uppercase tracking-widest text-xs">
-            <div className="w-2 h-2 rounded-full bg-[#94A3B8]" />
+          <div className="inline-flex items-center gap-2 text-[#6366f1] font-medium uppercase tracking-widest text-xs">
+            <div className="w-2 h-2 rounded-full bg-[#6366f1]" />
             <span>What I Do</span>
           </div>
           <h2 className="text-h1 reveal">
-            Technical <span className="text-serif-accent">Expertise</span>
+            Technical <span className="text-serif-accent text-[#4f46e5]">Expertise</span>
           </h2>
           {/* Animated horizontal rule accent */}
           <div className="hr-grow reveal" />
