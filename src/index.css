@@ -111,12 +111,12 @@ body {
   transition: opacity 0.3s ease;
 }
 
-/* Page transition — CSS-only fade+slide */
+/* Page transition — CSS-only fade+slide (tighter timing) */
 .page-transition {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(16px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .page-transition.page-entered {
@@ -1286,21 +1286,25 @@ body {
   background-color: var(--color-accent-light);
 }
 
-/* Skill badge stagger — applied via JS inline style delay */
+/* Skill badge stagger — spring-style overshoot entrance */
 @keyframes badgeFadeIn {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(10px) scale(0.9);
   }
-  to {
+  60% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-3px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
 .badge-stagger {
   opacity: 0;
-  animation: badgeFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: badgeFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Availability pulse glow */
@@ -1340,17 +1344,78 @@ body {
   transform-origin: center center;
 }
 
-/* Project card lift on hover */
+/* Project card lift + press feedback */
 .project-card-hover {
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s ease;
 }
 .project-card-hover:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }
 .project-card-hover:active {
-  transform: translateY(-2px) scale(0.98);
+  transform: translateY(-2px) scale(0.97);
+  transition: transform 50ms ease;
+}
+
+/* Hover proximity dim — siblings fade when one card is hovered */
+.project-grid:hover .project-card-hover:not(:hover) {
+  opacity: 0.5;
+}
+
+/* Nav link active underline indicator */
+.nav-link-active {
+  position: relative;
+}
+.nav-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #1d1d1f;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link-active.active::after {
+  transform: scaleX(1);
+}
+
+/* CTA button micro-interactions */
+.cta-btn {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease;
+}
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.cta-btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: none;
+  transition: transform 50ms ease;
+}
+
+/* Contact row slide feedback */
+.contact-row-enhanced {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.2s ease;
+}
+.contact-row-enhanced:hover {
+  transform: translateX(4px);
+  background-color: rgba(0, 0, 0, 0.02);
+}
+.contact-row-enhanced:hover .contact-arrow {
+  transform: translateX(4px);
+  opacity: 1;
+}
+.contact-arrow {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
 }
 
 /* Backdrop blur containment for performance */
