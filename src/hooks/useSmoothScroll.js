@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react'
 import Lenis from 'lenis'
-import Snap from 'lenis/snap'
+// Snap import removed — using manual section-by-section navigation instead
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { gsap } from 'gsap'
 
@@ -56,12 +56,16 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+    // Track which section we're currently on to enforce one-at-a-time navigation
+    let currentSectionIndex = 0
+    let isSnapping = false
+
     const lenis = new Lenis({
       lerp: prefersReducedMotion ? 1 : 0.1,
       duration: 1.2,
       smoothWheel: !prefersReducedMotion,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
+      wheelMultiplier: 0.5,
+      touchMultiplier: 1,
     })
 
     lenisInstanceRef.current = lenis
@@ -95,24 +99,72 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
     gsap.ticker.add(rafCallback)
     gsap.ticker.lagSmoothing(0)
 
-    // Set up snap after DOM renders
+    // Enforce one-section-at-a-time scrolling
+    const getSectionTops = () => {
+      return SECTION_SELECTORS.map((sel) => {
+        const el = document.querySelector(sel)
+        return el ? el.offsetTop : null
+      }).filter((v) => v !== null)
+    }
+
+    const scrollToSection = (index) => {
+      const tops = getSectionTops()
+      if (index < 0 || index >= tops.length || isSnapping) return
+      isSnapping = true
+      currentSectionIndex = index
+      lenis.scrollTo(tops[index], {
+        duration: 1.0,
+        easing: (t) => 1 - Math.pow(1 - t, 4),
+        onComplete: () => {
+          isSnapping = false
+        },
+      })
+    }
+
+    const handleWheel = (e) => {
+      if (isSnapping) {
+        e.preventDefault()
+        return
+      }
+      e.preventDefault()
+      if (e.deltaY > 0) {
+        scrollToSection(currentSectionIndex + 1)
+      } else if (e.deltaY < 0) {
+        scrollToSection(currentSectionIndex - 1)
+      }
+    }
+
+    const handleKeyDown = (e) => {
+      if (isSnapping) return
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+        e.preventDefault()
+        scrollToSection(currentSectionIndex + 1)
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault()
+        scrollToSection(currentSectionIndex - 1)
+      }
+    }
+
+    // Wait for DOM to be ready
     const snapTimer = setTimeout(() => {
       if (prefersReducedMotion) return
 
-      const snap = new Snap(lenis, {
-        type: 'mandatory',
-        lerp: 0.08,
-        easing: (t) => 1 - Math.pow(1 - t, 4),
-        duration: 1.0,
-        debounce: 50,
+      // Determine starting section
+      const tops = getSectionTops()
+      const scrollY = window.scrollY
+      let closestIdx = 0
+      let closestDist = Infinity
+      tops.forEach((top, i) => {
+        const dist = Math.abs(scrollY - top)
+        if (dist < closestDist) {
+          closestDist = dist
+          closestIdx = i
+        }
       })
+      currentSectionIndex = closestIdx
 
-      SECTION_SELECTORS.forEach((sel) => {
-        const el = document.querySelector(sel)
-        if (el) snap.addElement(el, { align: ['start'] })
-      })
-
-      snapInstanceRef.current = snap
+      window.addEventListener('wheel', handleWheel, { passive: false })
+      window.addEventListener('keydown', handleKeyDown)
     }, 500)
 
     const handleResize = () => {
@@ -124,6 +176,8 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
     return () => {
       clearTimeout(snapTimer)
       window.removeEventListener('resize', handleResize)
+      window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('keydown', handleKeyDown)
       gsap.ticker.remove(rafCallback)
       if (snapInstanceRef.current) {
         snapInstanceRef.current.destroy()
