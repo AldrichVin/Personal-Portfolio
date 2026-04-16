@@ -43,17 +43,17 @@ const SkillGroup = ({ group, groupIndex }) => {
   return (
     <div
       ref={ref}
-      className={`reveal delay-${groupIndex + 1}`}
+      className={`reveal delay-${groupIndex + 1} border-t border-neutral-200 pt-4`}
     >
-      <h3 className="text-[13px] font-medium text-neutral-900 mb-3">
+      <h3 className="text-small font-medium text-neutral-800 mb-4">
         {group.name}
       </h3>
       <div
         className={`flex flex-col gap-1.5 ${isVisible ? 'badge-stagger' : 'opacity-0'}`}
-        style={isVisible ? { animationDelay: `${groupIndex * 80}ms` } : undefined}
+        style={isVisible ? { animationDelay: `${groupIndex * 40}ms` } : undefined}
       >
         {group.skills.map((skill) => (
-          <span key={skill} className="text-[13px] text-neutral-400">
+          <span key={skill} className="text-small text-neutral-400 hover:text-neutral-600 transition-colors duration-200">
             {skill}
           </span>
         ))}
