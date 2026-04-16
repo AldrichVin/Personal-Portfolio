@@ -38,8 +38,8 @@ const useSectionTransitions = (enabled = true) => {
         const reveals = section.querySelectorAll('.reveal')
         if (reveals.length === 0) return
 
-        // Set initial state
-        gsap.set(reveals, { opacity: 0, y: 40 })
+        // Set initial state — subtle scale for depth
+        gsap.set(reveals, { opacity: 0, y: 24, scale: 0.98 })
 
         ScrollTrigger.create({
           trigger: section,
@@ -48,16 +48,18 @@ const useSectionTransitions = (enabled = true) => {
             gsap.to(reveals, {
               opacity: 1,
               y: 0,
+              scale: 1,
               duration: 0.6,
-              stagger: 0.08,
-              ease: 'power3.out',
+              stagger: { amount: 0.08 * reveals.length, from: 'start' },
+              ease: 'back.out(1.4)',
               overwrite: 'auto',
             })
           },
           onLeaveBack: () => {
             gsap.to(reveals, {
               opacity: 0,
-              y: -30,
+              y: -20,
+              scale: 0.98,
               duration: 0.3,
               stagger: 0.04,
               ease: 'power2.in',
