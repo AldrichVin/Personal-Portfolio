@@ -39,7 +39,7 @@ const About = () => {
               <span className="text-serif-accent text-[#4f46e5]">meaningful insights</span>.
             </h2>
 
-            <p className="text-body reveal delay-2" style={{ maxWidth: '480px' }}>
+            <p className="text-base text-neutral-500 leading-relaxed reveal delay-2" style={{ maxWidth: '480px' }}>
               I specialize in data analysis, ETL pipelines, and interactive
               dashboards that help stakeholders make informed decisions. From
               climate analytics to business intelligence, I enjoy uncovering
@@ -72,7 +72,8 @@ const About = () => {
                     }}
                   >
                     <span
-                      className="text-label"
+                      className="text-xs text-neutral-400 uppercase tracking-widest"
+                      style={{ fontFamily: "'IBM Plex Mono', monospace" }}
                     >
                       {label}
                     </span>

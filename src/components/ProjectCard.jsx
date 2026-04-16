@@ -56,7 +56,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
   // Homepage variant — clean, minimal card
   if (variant === 'homepage') {
     return (
-      <Link to={`/projects/${project.id}`} className="block group project-card-hover">
+      <Link to={`/projects/${project.id}`} className="block group">
         <div className="relative rounded-lg overflow-hidden bg-neutral-50 p-2 ring-1 ring-neutral-100" style={{ marginBottom: '0.5rem' }}>
           <div className="relative rounded overflow-hidden" style={{ aspectRatio: '5/2' }}>
             <img
@@ -69,7 +69,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
         </div>
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <h3 className="text-small font-medium text-neutral-900 group-hover:text-neutral-600 transition-colors duration-200">
+            <h3 className="text-[13px] font-medium text-neutral-900 group-hover:text-neutral-600 transition-colors duration-200">
               {project.name}
             </h3>
             <p className="text-[11px] text-neutral-400 line-clamp-1">
@@ -88,7 +88,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
 
   // Archive variant (default) — same clean approach
   return (
-    <Link to={`/projects/${project.id}`} className="block group project-card-hover">
+    <Link to={`/projects/${project.id}`} className="block group">
       <div className="relative aspect-[16/10] rounded-lg overflow-hidden mb-4 bg-neutral-100">
         <img
           src={imageUrl}
@@ -102,7 +102,7 @@ const ProjectCard = ({ project, variant = 'archive' }) => {
           <h3 className="text-[15px] font-medium text-neutral-900 mb-1 group-hover:text-neutral-600 transition-colors duration-200">
             {project.name}
           </h3>
-          <p className="text-small text-neutral-400 line-clamp-2">
+          <p className="text-[13px] text-neutral-400 line-clamp-2">
             {project.tagline}
           </p>
         </div>

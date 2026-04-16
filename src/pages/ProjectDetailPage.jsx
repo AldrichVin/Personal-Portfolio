@@ -117,7 +117,7 @@ const ProjectDetailPage = () => {
             {/* Overview */}
             <div className="mb-16">
               <h2 className="text-label mb-6">Overview</h2>
-              <p className="text-body">
+              <p className="text-[15px] leading-[1.8] text-neutral-600">
                 {project.longDescription}
               </p>
             </div>
@@ -129,7 +129,7 @@ const ProjectDetailPage = () => {
                 {project.highlights.map((highlight, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="text-neutral-300 mt-[1px] select-none">—</span>
-                    <span className="text-small leading-relaxed text-neutral-600">
+                    <span className="text-[14px] leading-[1.7] text-neutral-600">
                       {highlight}
                     </span>
                   </li>
@@ -167,8 +167,8 @@ const ProjectDetailPage = () => {
                     className="text-neutral-300 group-hover:text-neutral-600 transition-colors flex-shrink-0"
                   />
                   <div>
-                    <span className="text-label">Previous</span>
-                    <p className="text-body font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
+                    <span className="text-[11px] text-neutral-400 font-medium uppercase tracking-wider">Previous</span>
+                    <p className="text-[15px] font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
                       {prevProject.name}
                     </p>
                   </div>
@@ -182,8 +182,8 @@ const ProjectDetailPage = () => {
                   className="group flex items-center justify-end gap-4 p-5 rounded-xl border border-neutral-100 hover:border-neutral-200 hover:bg-neutral-50/50 transition-all duration-200 text-right"
                 >
                   <div>
-                    <span className="text-label">Next</span>
-                    <p className="text-body font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
+                    <span className="text-[11px] text-neutral-400 font-medium uppercase tracking-wider">Next</span>
+                    <p className="text-[15px] font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
                       {nextProject.name}
                     </p>
                   </div>

@@ -67,7 +67,7 @@ const Navbar = () => {
                 key={to}
                 href={to}
                 onClick={handleContactClick}
-                className="nav-link-active text-[12px] text-[rgba(0,0,0,0.48)] hover:text-[#1d1d1f] transition-colors duration-200"
+                className="text-[12px] text-[rgba(0,0,0,0.48)] hover:text-[#1d1d1f] transition-colors duration-200"
                 style={{ letterSpacing: '-0.01em' }}
               >
                 {label}
@@ -76,9 +76,9 @@ const Navbar = () => {
               <Link
                 key={to}
                 to={to}
-                className={`nav-link-active text-[12px] transition-colors duration-200 ${
+                className={`text-[12px] transition-colors duration-200 ${
                   isActive(to)
-                    ? 'text-[#1d1d1f] active'
+                    ? 'text-[#1d1d1f]'
                     : 'text-[rgba(0,0,0,0.48)] hover:text-[#1d1d1f]'
                 }`}
                 style={{ letterSpacing: '-0.01em' }}

@@ -25,7 +25,7 @@ const Projects = () => {
         </div>
 
         {/* Project Grid */}
-        <div className="project-grid grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6 reveal delay-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4 lg:gap-6 reveal delay-2">
           {featuredProjects.map((project) => (
             <ProjectCard
               key={project.id}
@@ -39,7 +39,7 @@ const Projects = () => {
         <div className="flex justify-center reveal delay-3" style={{ marginTop: '2rem' }}>
           <Link
             to="/projects"
-            className="group inline-flex items-center gap-2 text-small font-medium text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
           >
             View Projects
             <ArrowRight size={14} strokeWidth={2} className="transition-transform duration-200 group-hover:translate-x-1" />

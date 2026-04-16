@@ -68,7 +68,7 @@ const useCountUp = (target, duration = 1500) => {
         const start = performance.now()
         const animate = (now) => {
           const progress = Math.min((now - start) / duration, 1)
-          const eased = 1 - Math.pow(1 - progress, 5)
+          const eased = 1 - Math.pow(1 - progress, 3)
           setCount(Math.round(eased * target))
           if (progress < 1) {
             requestAnimationFrame(animate)
@@ -109,12 +109,12 @@ const SpecLabel = ({ label, numericValue, suffix = '', staticValue, sub, align =
 
       <div className={`flex items-center gap-2 mb-3 ${align === 'right' ? 'flex-row-reverse' : 'flex-row'}`}>
         <div className="h-[2px] w-10 bg-[#4f46e5]/40 group-hover:w-16 group-hover:bg-[#4f46e5]/60 transition-all duration-500" />
-        <span className="text-label text-neutral-500">{label}</span>
+        <span className="text-xs sm:text-sm font-mono tracking-widest text-neutral-500 uppercase">{label}</span>
       </div>
       <h4 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-serif-accent text-[#1d1d1f] mb-2" style={{ background: 'linear-gradient(135deg, #1d1d1f 60%, #4f46e5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
         {displayValue}
       </h4>
-      <p className="text-small font-medium text-neutral-700 max-w-[200px]">{sub}</p>
+      <p className="text-xs sm:text-sm font-medium text-neutral-700 max-w-[200px]">{sub}</p>
     </div>
   )
 }
@@ -196,9 +196,10 @@ const Hero = () => {
             <a
               href="#projects"
               onClick={(e) => { e.preventDefault(); scrollTo('#projects', { duration: 1.2 }) }}
-              className="cta-btn inline-flex items-center justify-center py-3
+              className="inline-flex items-center justify-center py-3
                          bg-[#4f46e5] text-white text-[17px] font-normal rounded-[980px]
-                         hover:bg-[#4338ca]"
+                         hover:bg-[#4338ca] active:scale-[0.97]
+                         transition-all duration-200 ease-out"
               style={{ letterSpacing: '-0.022em', paddingLeft: '1.2rem', paddingRight: '1.2rem' }}
             >
               View Projects
@@ -206,10 +207,11 @@ const Hero = () => {
             <a
               href="#contact"
               onClick={(e) => { e.preventDefault(); scrollTo('#contact', { duration: 1.2 }) }}
-              className="cta-btn inline-flex items-center justify-center py-3
+              className="inline-flex items-center justify-center py-3
                          text-[#4f46e5] text-[17px] font-normal rounded-[980px]
                          border border-[#4f46e5]
-                         hover:bg-[#4f46e5] hover:text-white"
+                         hover:bg-[#4f46e5] hover:text-white active:scale-[0.97]
+                         transition-all duration-200 ease-out"
               style={{ letterSpacing: '-0.022em', paddingLeft: '1.2rem', paddingRight: '1.2rem' }}
             >
               Get in Touch
@@ -237,16 +239,16 @@ const Hero = () => {
         style={{ justifyContent: 'flex-start', paddingTop: '18vh' }}
       >
         <div className="reveal flex flex-col items-center text-center space-y-6 pointer-events-auto p-6 sm:p-8 rounded-3xl max-w-4xl mx-auto z-20">
-          <div className="inline-flex items-center gap-2 text-[#6366f1]">
+          <div className="inline-flex items-center gap-2 text-[#6366f1] font-medium uppercase tracking-widest text-xs">
             <div className="w-2 h-2 rounded-full bg-[#6366f1]" />
-            <span className="text-label text-[#6366f1]">What I Do</span>
+            <span>What I Do</span>
           </div>
           <h2 className="text-h1 reveal">
             Technical <span className="text-serif-accent text-[#4f46e5]">Expertise</span>
           </h2>
           {/* Animated horizontal rule accent */}
           <div className="hr-grow reveal" />
-          <p className="text-lead max-w-md mx-auto reveal delay-1">
+          <p className="text-neutral-500 text-base sm:text-lg leading-relaxed max-w-md mx-auto reveal delay-1">
             From exploratory data analysis to interactive dashboards,
             I transform raw data into clear, actionable business intelligence.
           </p>
