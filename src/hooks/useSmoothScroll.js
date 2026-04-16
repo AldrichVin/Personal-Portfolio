@@ -1,6 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react'
 import Lenis from 'lenis'
-// Snap import removed — using manual section-by-section navigation instead
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { gsap } from 'gsap'
 
@@ -18,8 +17,6 @@ const SECTION_SELECTORS = [
 
 const useSmoothScroll = (enabled = true, scrollContext = null) => {
   const lenisInstanceRef = useRef(null)
-  const snapInstanceRef = useRef(null)
-  // Store scrollContext in ref to avoid dependency issues
   const scrollContextRef = useRef(scrollContext)
   scrollContextRef.current = scrollContext
 
@@ -42,10 +39,6 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
 
   useEffect(() => {
     if (!enabled) {
-      if (snapInstanceRef.current) {
-        snapInstanceRef.current.destroy()
-        snapInstanceRef.current = null
-      }
       if (lenisInstanceRef.current) {
         lenisInstanceRef.current.destroy()
         lenisInstanceRef.current = null
@@ -56,16 +49,17 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    // Track which section we're currently on to enforce one-at-a-time navigation
     let currentSectionIndex = 0
     let isSnapping = false
 
+    // Lenis with ALL user input disabled — we control scrolling entirely
     const lenis = new Lenis({
-      lerp: prefersReducedMotion ? 1 : 0.1,
+      lerp: prefersReducedMotion ? 1 : 0.08,
       duration: 1.2,
-      smoothWheel: !prefersReducedMotion,
-      wheelMultiplier: 0.5,
-      touchMultiplier: 1,
+      smoothWheel: false,
+      smoothTouch: false,
+      wheelMultiplier: 0,
+      touchMultiplier: 0,
     })
 
     lenisInstanceRef.current = lenis
@@ -99,7 +93,6 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
     gsap.ticker.add(rafCallback)
     gsap.ticker.lagSmoothing(0)
 
-    // Enforce one-section-at-a-time scrolling
     const getSectionTops = () => {
       return SECTION_SELECTORS.map((sel) => {
         const el = document.querySelector(sel)
@@ -113,7 +106,7 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
       isSnapping = true
       currentSectionIndex = index
       lenis.scrollTo(tops[index], {
-        duration: 1.0,
+        duration: 0.9,
         easing: (t) => 1 - Math.pow(1 - t, 4),
         onComplete: () => {
           isSnapping = false
@@ -121,17 +114,39 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
       })
     }
 
+    // Intercept ALL wheel events — block native scroll, trigger section nav
     const handleWheel = (e) => {
-      if (isSnapping) {
-        e.preventDefault()
-        return
-      }
       e.preventDefault()
+      if (isSnapping) return
       if (e.deltaY > 0) {
         scrollToSection(currentSectionIndex + 1)
       } else if (e.deltaY < 0) {
         scrollToSection(currentSectionIndex - 1)
       }
+    }
+
+    // Intercept touch for mobile swipe
+    let touchStartY = 0
+    const SWIPE_THRESHOLD = 50
+
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY
+    }
+
+    const handleTouchEnd = (e) => {
+      if (isSnapping) return
+      const deltaY = touchStartY - e.changedTouches[0].clientY
+      if (Math.abs(deltaY) < SWIPE_THRESHOLD) return
+      if (deltaY > 0) {
+        scrollToSection(currentSectionIndex + 1)
+      } else {
+        scrollToSection(currentSectionIndex - 1)
+      }
+    }
+
+    // Block native touchmove scroll
+    const handleTouchMove = (e) => {
+      e.preventDefault()
     }
 
     const handleKeyDown = (e) => {
@@ -145,11 +160,11 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
       }
     }
 
-    // Wait for DOM to be ready
+    // Wait for DOM to be ready, then attach listeners
     const snapTimer = setTimeout(() => {
       if (prefersReducedMotion) return
 
-      // Determine starting section
+      // Determine starting section from current scroll position
       const tops = getSectionTops()
       const scrollY = window.scrollY
       let closestIdx = 0
@@ -164,12 +179,14 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
       currentSectionIndex = closestIdx
 
       window.addEventListener('wheel', handleWheel, { passive: false })
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+      window.addEventListener('touchmove', handleTouchMove, { passive: false })
       window.addEventListener('keydown', handleKeyDown)
     }, 500)
 
     const handleResize = () => {
       ScrollTrigger.refresh()
-      if (snapInstanceRef.current) snapInstanceRef.current.resize()
     }
     window.addEventListener('resize', handleResize)
 
@@ -177,12 +194,11 @@ const useSmoothScroll = (enabled = true, scrollContext = null) => {
       clearTimeout(snapTimer)
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
+      window.removeEventListener('touchmove', handleTouchMove)
       window.removeEventListener('keydown', handleKeyDown)
       gsap.ticker.remove(rafCallback)
-      if (snapInstanceRef.current) {
-        snapInstanceRef.current.destroy()
-        snapInstanceRef.current = null
-      }
       lenis.destroy()
       lenisInstanceRef.current = null
       if (scrollContextRef.current?.lenisRef) scrollContextRef.current.lenisRef.current = null
