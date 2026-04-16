@@ -67,7 +67,6 @@ html.lenis body {
    ============================================ */
 
 *, *::before, *::after {
-  margin: 0;
   box-sizing: border-box;
 }
 
