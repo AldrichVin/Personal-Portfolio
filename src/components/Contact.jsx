@@ -97,7 +97,7 @@ const Contact = () => {
                 href={href}
                 target={external ? '_blank' : undefined}
                 rel={external ? 'noopener noreferrer' : undefined}
-                className="group flex items-center justify-between transition-colors duration-200 hover:bg-neutral-50"
+                className="contact-row-enhanced group flex items-center justify-between"
                 style={{
                   padding: '0.875rem 0.75rem',
                   borderBottom: '1px solid rgba(0,0,0,0.06)',
@@ -106,8 +106,8 @@ const Contact = () => {
                 }}
               >
                 <span
-                  className="text-xs text-neutral-400 uppercase tracking-widest"
-                  style={{ fontFamily: "'IBM Plex Mono', monospace", minWidth: '72px', textAlign: 'left' }}
+                  className="text-label"
+                  style={{ minWidth: '72px', textAlign: 'left' }}
                 >
                   {label}
                 </span>
@@ -117,7 +117,7 @@ const Contact = () => {
                 <ArrowUpRight
                   size={13}
                   strokeWidth={1.5}
-                  className="text-neutral-300 group-hover:text-neutral-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 ml-3 flex-shrink-0"
+                  className="contact-arrow text-neutral-300 group-hover:text-neutral-500 ml-3 flex-shrink-0"
                 />
               </a>
             ))}
@@ -146,7 +146,7 @@ const Contact = () => {
         }}
       >
         <div className="container flex flex-col sm:flex-row justify-between items-center gap-4">
-          <span className="text-[13px] font-semibold text-neutral-900 tracking-tight">
+          <span className="text-small font-semibold text-neutral-900 tracking-tight">
             Aldrich Liem
           </span>
 
