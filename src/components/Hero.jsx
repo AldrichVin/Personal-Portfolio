@@ -74,15 +74,6 @@ const useCountUp = (target, duration = 1500) => {
             requestAnimationFrame(animate)
           } else {
             animating.current = false
-            // Scale pulse when counter reaches target
-            if (el) {
-              const valueEl = el.querySelector('h4')
-              if (valueEl) {
-                valueEl.style.transition = 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)'
-                valueEl.style.transform = 'scale(1.05)'
-                setTimeout(() => { valueEl.style.transform = 'scale(1)' }, 200)
-              }
-            }
           }
         }
         requestAnimationFrame(animate)

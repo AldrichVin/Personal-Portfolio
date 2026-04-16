@@ -53,7 +53,7 @@ const SkillGroup = ({ group, groupIndex }) => {
         style={isVisible ? { animationDelay: `${groupIndex * 40}ms` } : undefined}
       >
         {group.skills.map((skill) => (
-          <span key={skill} className="text-small text-neutral-400 hover:text-neutral-600 transition-colors duration-200">
+          <span key={skill} className="text-small text-neutral-400">
             {skill}
           </span>
         ))}
